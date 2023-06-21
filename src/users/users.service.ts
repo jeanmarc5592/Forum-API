@@ -26,7 +26,7 @@ export class UsersService {
     const user = await this.usersRepository.findOneBy({ id });
 
     if (!user) {
-      throw new NotFoundException(`User with id "${id}" not found.`);
+      throw new NotFoundException(`User with id '${id}' not found.`);
     }
 
     return await this.usersRepository.remove(user);
@@ -39,7 +39,7 @@ export class UsersService {
 
     if (user) {
       throw new BadRequestException(
-        `A user with the email "${email}" already exists.`,
+        `A user with the email '${email}' already exists.`,
       );
     }
 
