@@ -9,6 +9,11 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dtos/create-user.dto';
+import { UpdateUserDTO } from './dtos/update-user.dto';
+
+// TODO: Add Middleware to check if the id param is a UUID
+// TODO: Serialize User Response and remove sensible Data
+// TODO: Hash Password when creating user
 
 @Controller('users')
 export class UsersController {
@@ -20,8 +25,8 @@ export class UsersController {
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string) {
-    return this.usersService.updateUser();
+  updateUser(@Param('id') id: string, @Body() body: UpdateUserDTO) {
+    return this.usersService.updateUser(body, id);
   }
 
   @Delete('/:id')

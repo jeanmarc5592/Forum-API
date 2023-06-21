@@ -4,11 +4,11 @@
     "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
     "containerId": "",
     "name": "Get User By Id",
-    "url": "http://localhost:3000/users/1",
+    "url": "http://localhost:3000/users/5d7a4b32-eec0-46a9-9962-64f1425f0d73",
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-06-21T11:03:47.408Z",
-    "modified": "2023-06-21T11:04:01.275Z",
+    "modified": "2023-06-21T12:53:23.034Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -18,13 +18,18 @@
     "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
     "containerId": "",
     "name": "Update User",
-    "url": "http://localhost:3000/users/1",
+    "url": "http://localhost:3000/users/e20b9b44-5dd8-46cb-9c95-b823c2e3d94c",
     "method": "PATCH",
     "sortNum": 20000,
     "created": "2023-06-21T11:04:16.155Z",
-    "modified": "2023-06-21T11:04:23.447Z",
+    "modified": "2023-06-21T12:51:34.861Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"age\": \"40\"\n}",
+      "form": []
+    },
     "tests": []
   },
   {
@@ -32,11 +37,11 @@
     "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
     "containerId": "",
     "name": "Delete User",
-    "url": "http://localhost:3000/users/1",
+    "url": "http://localhost:3000/users/e20b9b44-5dd8-46cb-9c95-b823c2e3d94c",
     "method": "DELETE",
     "sortNum": 40000,
     "created": "2023-06-21T11:04:38.680Z",
-    "modified": "2023-06-21T11:04:45.184Z",
+    "modified": "2023-06-21T12:51:44.560Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -50,12 +55,12 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-06-21T11:05:00.606Z",
-    "modified": "2023-06-21T11:51:14.510Z",
+    "modified": "2023-06-21T12:49:59.364Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Jonny\",\n  \"age\": \"31\",\n  \"email\": \"jonny@example.com\",\n  \"password\": \"asdfasdklöjw3örkjöasjdf\"\n}",
+      "raw": "{\n  \"name\": \"Caro\",\n  \"age\": \"31\",\n  \"email\": \"caro@example.com\",\n  \"password\": \"dasdfwer4234asdfasef\"\n}",
       "form": []
     },
     "tests": []
