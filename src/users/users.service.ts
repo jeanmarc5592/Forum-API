@@ -17,21 +17,11 @@ export class UsersService {
   ) {}
 
   async getUserById(id: string) {
-    const user = await this.usersRepository.findOneBy({ id });
-
-    if (!user) {
-      throw new NotFoundException(`User with id '${id}' not found.`);
-    }
-
-    return user;
+    return await this.findUserById(id);
   }
 
   async updateUser(userDTO: UpdateUserDTO, id: string) {
-    const user = await this.usersRepository.findOneBy({ id });
-
-    if (!user) {
-      throw new NotFoundException(`User with id '${id}' not found.`);
-    }
+    const user = await this.findUserById(id);
 
     Object.assign(user, userDTO);
 
@@ -39,11 +29,7 @@ export class UsersService {
   }
 
   async deleteUser(id: string) {
-    const user = await this.usersRepository.findOneBy({ id });
-
-    if (!user) {
-      throw new NotFoundException(`User with id '${id}' not found.`);
-    }
+    const user = await this.findUserById(id);
 
     return await this.usersRepository.remove(user);
   }
@@ -68,5 +54,20 @@ export class UsersService {
   private async hashPassword(password: string) {
     const hashedPassword = await hash(password, 10);
     return hashedPassword;
+  }
+
+  private async findUserById(id: string) {
+    try {
+      const user = await this.usersRepository.findOneBy({ id });
+
+      if (!user) {
+        throw new NotFoundException(`User with id '${id}' not found.`);
+      }
+
+      return user;
+    } catch (error) {
+      console.error(error);
+      throw new NotFoundException(`User with id '${id}' not found.`);
+    }
   }
 }

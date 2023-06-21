@@ -4,11 +4,11 @@
     "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
     "containerId": "",
     "name": "Get User By Id",
-    "url": "http://localhost:3000/users/5d7a4b32-eec0-46a9-9962-64f1425f0d73",
+    "url": "http://localhost:3000/users/f10795f7-8afe-4536-b37b-c07d0bce888c",
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-06-21T11:03:47.408Z",
-    "modified": "2023-06-21T12:53:23.034Z",
+    "modified": "2023-06-21T13:36:10.843Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -55,12 +55,12 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-06-21T11:05:00.606Z",
-    "modified": "2023-06-21T13:05:28.227Z",
+    "modified": "2023-06-21T13:34:33.061Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Ella\",\n  \"age\": \"31\",\n  \"email\": \"ella@example.com\",\n  \"password\": \"dasdfwer4234asdfasef\"\n}",
+      "raw": "{\n  \"name\": \"Sarah\",\n  \"age\": \"31\",\n  \"email\": \"sarah@example.com\",\n  \"password\": \"dasdfwer4234asdfasef\"\n}",
       "form": []
     },
     "tests": []

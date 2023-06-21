@@ -13,9 +13,6 @@ import { UsersService } from './users.service';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 
-// TODO: Add Middleware to check if the id param is a UUID
-// TODO: Hash Password when creating user
-
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
