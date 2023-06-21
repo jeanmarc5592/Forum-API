@@ -5,6 +5,7 @@ import {
   BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
+  Unique,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,6 +21,7 @@ export class User {
   age: string;
 
   @Column()
+  @Unique(['email'])
   email: string;
 
   @Column()
