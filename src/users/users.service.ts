@@ -1,7 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
+import { CreateUserDTO } from './dtos/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +32,19 @@ export class UsersService {
     return await this.usersRepository.remove(user);
   }
 
-  createUser() {
-    return 'CREATED USER';
+  async createUser(userDTO: CreateUserDTO) {
+    const { email } = userDTO;
+
+    const user = await this.usersRepository.findOneBy({ email });
+
+    if (user) {
+      throw new BadRequestException(
+        `A user with the email "${email}" already exists.`,
+      );
+    }
+
+    const newUser = this.usersRepository.create(userDTO);
+
+    return await this.usersRepository.save(newUser);
   }
 }

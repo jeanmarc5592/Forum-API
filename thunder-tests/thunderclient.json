@@ -50,9 +50,14 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-06-21T11:05:00.606Z",
-    "modified": "2023-06-21T11:05:30.988Z",
+    "modified": "2023-06-21T11:51:14.510Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"Jonny\",\n  \"age\": \"31\",\n  \"email\": \"jonny@example.com\",\n  \"password\": \"asdfasdklöjw3örkjöasjdf\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]
