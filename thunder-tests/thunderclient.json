@@ -64,5 +64,30 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "d7e6f832-3349-4e84-bda3-4873e55243f4",
+    "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
+    "containerId": "",
+    "name": "Get Users",
+    "url": "http://localhost:3000/users?limit=4&page=1",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-06-21T13:42:23.949Z",
+    "modified": "2023-06-21T13:53:02.831Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "limit",
+        "value": "4",
+        "isPath": false
+      },
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "tests": []
   }
 ]

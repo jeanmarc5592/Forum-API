@@ -16,6 +16,13 @@ export class UsersService {
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {}
 
+  async getUsers(limit: number, page: number) {
+    const skip = (page - 1) * limit;
+    const take = limit;
+
+    return await this.usersRepository.find({ skip, take });
+  }
+
   async getUserById(id: string) {
     return await this.findUserById(id);
   }
