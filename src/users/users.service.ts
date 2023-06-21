@@ -64,17 +64,12 @@ export class UsersService {
   }
 
   private async findUserById(id: string) {
-    try {
-      const user = await this.usersRepository.findOneBy({ id });
+    const user = await this.usersRepository.findOneBy({ id });
 
-      if (!user) {
-        throw new NotFoundException(`User with id '${id}' not found.`);
-      }
-
-      return user;
-    } catch (error) {
-      console.error(error);
+    if (!user) {
       throw new NotFoundException(`User with id '${id}' not found.`);
     }
+
+    return user;
   }
 }
