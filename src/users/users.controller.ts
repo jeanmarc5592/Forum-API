@@ -14,7 +14,6 @@ import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 
 // TODO: Add Middleware to check if the id param is a UUID
-// TODO: Serialize User Response and remove sensible Data
 // TODO: Hash Password when creating user
 
 @UseInterceptors(ClassSerializerInterceptor)

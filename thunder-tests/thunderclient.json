@@ -55,12 +55,12 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-06-21T11:05:00.606Z",
-    "modified": "2023-06-21T12:49:59.364Z",
+    "modified": "2023-06-21T13:05:28.227Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Caro\",\n  \"age\": \"31\",\n  \"email\": \"caro@example.com\",\n  \"password\": \"dasdfwer4234asdfasef\"\n}",
+      "raw": "{\n  \"name\": \"Ella\",\n  \"age\": \"31\",\n  \"email\": \"ella@example.com\",\n  \"password\": \"dasdfwer4234asdfasef\"\n}",
       "form": []
     },
     "tests": []
