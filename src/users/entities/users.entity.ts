@@ -8,6 +8,7 @@ import {
   Unique,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -22,9 +23,11 @@ export class User {
 
   @Column()
   @Unique(['email'])
+  @Exclude()
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column({ nullable: true })
@@ -34,6 +37,7 @@ export class User {
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
+  @Exclude()
   updated_at: Date;
 
   @BeforeInsert()

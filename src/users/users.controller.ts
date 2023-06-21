@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Body,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dtos/create-user.dto';
@@ -15,6 +17,7 @@ import { UpdateUserDTO } from './dtos/update-user.dto';
 // TODO: Serialize User Response and remove sensible Data
 // TODO: Hash Password when creating user
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
