@@ -7,21 +7,21 @@ export class UsersController {
 
   @Get('/:id')
   getUserById() {
-    return 'GET USER';
+    return this.usersService.getUserById();
   }
 
   @Patch('/:id')
   updateUser() {
-    return 'UPDATE USER';
+    return this.usersService.updateUser();
   }
 
   @Delete('/:id')
   deleteUser() {
-    return 'DELETE USER';
+    return this.usersService.deleteUser();
   }
 
   @Post()
   createUser() {
-    return 'CREATE USER';
+    return this.usersService.createUser();
   }
 }
