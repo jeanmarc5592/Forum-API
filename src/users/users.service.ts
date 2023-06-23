@@ -13,7 +13,8 @@ import { UpdateUserDTO } from './dtos/update-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly usersRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
   ) {}
 
   async getUsers(limit: number, page: number) {
@@ -42,13 +43,15 @@ export class UsersService {
   }
 
   async createUser(userDTO: CreateUserDTO) {
-    const { email, password } = userDTO;
+    const { email, password, name } = userDTO;
 
-    const user = await this.usersRepository.findOneBy({ email });
+    const user = await this.usersRepository.findOne({
+      where: [{ email }, { name }],
+    });
 
     if (user) {
       throw new BadRequestException(
-        `A user with the email '${email}' already exists.`,
+        `A user with the email '${email}' or the name '${name}' already exists.`,
       );
     }
 
