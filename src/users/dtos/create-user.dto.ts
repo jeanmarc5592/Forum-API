@@ -24,5 +24,5 @@ export class CreateUserDTO {
 
   @IsString()
   @IsOptional()
-  bio: string;
+  bio?: string;
 }

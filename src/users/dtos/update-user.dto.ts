@@ -10,24 +10,24 @@ export class UpdateUserDTO {
   @IsString()
   @Length(3, 50)
   @IsOptional()
-  name: string;
+  name?: string;
 
   @IsNumberString()
   @IsOptional()
-  age: string;
+  age?: string;
 
   @IsString()
   @IsEmail()
   @IsOptional()
-  email: string;
+  email?: string;
 
   @IsString()
   @Length(8, 32)
   @IsOptional()
-  password: string;
+  password?: string;
 
   @IsString()
   @IsOptional()
   @IsOptional()
-  bio: string;
+  bio?: string;
 }
