@@ -1,0 +1,23 @@
+{
+    "_id": "1e4705bd-0678-4a08-bcb5-e11d2a976374",
+    "colName": "auth",
+    "created": "2023-06-27T15:32:37.100Z",
+    "sortNum": 20000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "f1616fb1-e58a-4ac0-afbf-d40403e44e2b",
+            "colId": "1e4705bd-0678-4a08-bcb5-e11d2a976374",
+            "containerId": "",
+            "name": "login",
+            "url": "http://localhost:3000/auth/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-06-27T15:32:42.824Z",
+            "modified": "2023-06-27T15:32:58.836Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
