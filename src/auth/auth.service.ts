@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { compare } from 'bcrypt';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
+import { LoginDTO } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,8 @@ export class AuthService {
     };
   }
 
-  async validateUser(email: string, password: string) {
+  async validateUser(credentials: LoginDTO) {
+    const { email, password } = credentials;
     const user = await this.usersService.getUserByEmail(email);
 
     if (!user) {
