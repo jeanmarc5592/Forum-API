@@ -3,15 +3,24 @@ import { compare } from 'bcrypt';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   login(user: User) {
-    // TODO: Sign and return new JWT as "access_token"
+    const payload = {
+      sub: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
     return {
-      access_token: user,
+      access_token: this.jwtService.sign(payload),
     };
   }
 
