@@ -24,17 +24,21 @@
             "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
             "containerId": "",
             "name": "Update User",
-            "url": "http://localhost:3000/users/e20b9b44-5dd8-46cb-9c95-b823c2e3d94c",
+            "url": "http://localhost:3000/users/1d0f8085-0741-4bf9-a6ef-641aae937dfa",
             "method": "PATCH",
             "sortNum": 20000,
             "created": "2023-06-21T11:04:16.155Z",
-            "modified": "2023-06-21T12:51:34.861Z",
+            "modified": "2023-06-28T09:45:57.646Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"age\": \"40\"\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4Nzk0NTUwNywiZXhwIjoxNjg3OTQ1NTY3fQ.JSPDR-e7ptcEKR92HPgGBT8ZsHlTDl6RRXGRFsqgYlo"
             },
             "tests": []
         },
@@ -80,7 +84,7 @@
             "method": "GET",
             "sortNum": 70000,
             "created": "2023-06-21T13:42:23.949Z",
-            "modified": "2023-06-23T09:05:52.014Z",
+            "modified": "2023-06-28T09:46:12.113Z",
             "headers": [],
             "params": [
                 {
@@ -94,6 +98,10 @@
                     "isPath": false
                 }
             ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4Nzk0NTUwNywiZXhwIjoxNjg3OTQ1NTY3fQ.JSPDR-e7ptcEKR92HPgGBT8ZsHlTDl6RRXGRFsqgYlo"
+            },
             "tests": []
         }
     ]
