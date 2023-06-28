@@ -12,17 +12,18 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   imports: [
     UsersModule,
     PassportModule,
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          secret: config.get<string>('JWT_SECRET'),
-          signOptions: {
-            expiresIn: config.get<string>('JWT_EXPIRATION'),
-          },
-        };
-      },
-    }),
+    JwtModule,
+    // JwtModule.registerAsync({
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => {
+    //     return {
+    //       secret: config.get<string>('JWT_ACCESS_SECRET'),
+    //       signOptions: {
+    //         expiresIn: config.get<string>('JWT_ACCESS_EXPIRATION'),
+    //       },
+    //     };
+    //   },
+    // }),
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],

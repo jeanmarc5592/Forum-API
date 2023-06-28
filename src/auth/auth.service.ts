@@ -5,24 +5,21 @@ import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './auth.types';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
-  generateAccessToken(user: User) {
-    const payload: JwtPayload = {
-      sub: user.id,
-      name: user.name,
-      email: user.email,
-    };
+  signin(user: User) {
+    const accessToken = this.generateAccessToken(user);
+    const refreshToken = this.generateRefreshToken(user);
 
-    // TODO: Adjust expireDate (env)
-
-    return this.jwtService.sign(payload);
+    return { accessToken, refreshToken };
   }
 
   async validateUser(credentials: LoginDTO) {
@@ -40,5 +37,29 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  private generateAccessToken(user: User) {
+    const payload: JwtPayload = {
+      sub: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION'),
+    });
+  }
+
+  private generateRefreshToken(user: User) {
+    const payload: JwtPayload = {
+      sub: user.id,
+    };
+
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION'),
+    });
   }
 }

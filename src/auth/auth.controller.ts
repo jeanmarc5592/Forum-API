@@ -9,14 +9,8 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   // TODO: Type "req" correctly
-  login(@Req() req: { user: any }) {
-    const accessToken = this.authService.generateAccessToken(req.user);
-
-    // TODO: Create refreshToken and add to response
-
-    return {
-      accessToken,
-    };
+  signin(@Req() req: { user: any }) {
+    return this.authService.signin(req.user);
   }
 
   // TODO: Implement signup
