@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { compare, hash } from 'bcrypt';
+import { compare } from 'bcrypt';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
@@ -18,10 +18,11 @@ export class AuthService {
   ) {}
 
   signin(user: User) {
-    const accessToken = this.generateAccessToken(user);
-    const refreshToken = this.generateRefreshToken(user);
+    const tokens = this.generateTokens(user);
 
-    return { accessToken, refreshToken };
+    // TODO: Update User and store refresh Token
+
+    return tokens;
   }
 
   async signup(userDTO: CreateUserDTO) {
@@ -29,15 +30,15 @@ export class AuthService {
     const user = await this.usersService.createUser(userDTO);
 
     // Create accessToken and refreshToken based on that new user
-    const accessToken = this.generateAccessToken(user);
-    const refreshToken = this.generateRefreshToken(user);
+    const tokens = this.generateTokens(user);
+    const { refreshToken } = tokens;
 
     // Update the new user and store the refreshToken
     const updates: UpdateUserDTO = { ...user, refreshToken };
     await this.usersService.updateUser(updates, user.id);
 
     // Return accessToken and refreshToken
-    return { accessToken, refreshToken };
+    return tokens;
   }
 
   async validateUser(credentials: LoginDTO) {
@@ -57,32 +58,27 @@ export class AuthService {
     return user;
   }
 
-  private generateAccessToken(user: User) {
-    const payload: JwtPayload = {
+  private generateTokens(user: User) {
+    const accessTokenPayload: JwtPayload = {
       sub: user.id,
       name: user.name,
       email: user.email,
     };
 
-    return this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION'),
-    });
-  }
-
-  private generateRefreshToken(user: User) {
-    const payload: JwtPayload = {
+    const refreshTokenPayload: JwtPayload = {
       sub: user.id,
     };
 
-    return this.jwtService.sign(payload, {
+    const accessToken = this.jwtService.sign(accessTokenPayload, {
+      secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION'),
+    });
+
+    const refreshToken = this.jwtService.sign(refreshTokenPayload, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
       expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION'),
     });
-  }
 
-  private async hashData(data: string) {
-    const hashedPassword = await hash(data, 10);
-    return hashedPassword;
+    return { accessToken, refreshToken };
   }
 }
