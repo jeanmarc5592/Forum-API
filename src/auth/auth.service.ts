@@ -7,7 +7,6 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './auth.types';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
-import { UpdateUserDTO } from 'src/users/dtos/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,10 +16,11 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  signin(user: User) {
+  async signin(user: User) {
     const tokens = this.generateTokens(user);
+    const { refreshToken } = tokens;
 
-    // TODO: Update User and store refresh Token
+    await this.updateRefreshToken(user.id, refreshToken);
 
     return tokens;
   }
