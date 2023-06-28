@@ -13,9 +13,9 @@ import {
 import { UsersService } from './users.service';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AccessTokenGuard } from 'src/auth/guards/access-token.guard';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
