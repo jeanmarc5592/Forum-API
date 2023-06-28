@@ -35,7 +35,7 @@ export class User {
   bio: string;
 
   @Column({ nullable: true })
-  @Exclude()
+  // @Exclude()
   refreshToken: string;
 
   @CreateDateColumn({ type: 'timestamp' })

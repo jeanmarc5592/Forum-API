@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/users.entity';
-import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
+import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 
@@ -29,7 +29,7 @@ export class UsersService {
   }
 
   async getUserByEmail(email: string) {
-    return this.usersRepository.findOneBy({ email });
+    return await this.usersRepository.findOneBy({ email });
   }
 
   async updateUser(userDTO: UpdateUserDTO, id: string) {
@@ -60,14 +60,9 @@ export class UsersService {
     }
 
     const newUser = this.usersRepository.create(userDTO);
-    newUser.password = await this.hashPassword(password);
+    newUser.password = await hash(password, 10);
 
     return await this.usersRepository.save(newUser);
-  }
-
-  private async hashPassword(password: string) {
-    const hashedPassword = await hash(password, 10);
-    return hashedPassword;
   }
 
   private async findUserById(id: string) {

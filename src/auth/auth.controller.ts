@@ -1,6 +1,7 @@
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +14,10 @@ export class AuthController {
     return this.authService.signin(req.user);
   }
 
-  // TODO: Implement signup
+  @Post('signup')
+  signup(@Body() body: CreateUserDTO) {
+    return this.authService.signup(body);
+  }
 
   // TODO: Implement refresh
 

@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './auth.types';
 import { ConfigService } from '@nestjs/config';
+import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
+import { UpdateUserDTO } from 'src/users/dtos/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,22 @@ export class AuthService {
     const accessToken = this.generateAccessToken(user);
     const refreshToken = this.generateRefreshToken(user);
 
+    return { accessToken, refreshToken };
+  }
+
+  async signup(userDTO: CreateUserDTO) {
+    // Create a new user based on the userDTO
+    const user = await this.usersService.createUser(userDTO);
+
+    // Create accessToken and refreshToken based on that new user
+    const accessToken = this.generateAccessToken(user);
+    const refreshToken = this.generateRefreshToken(user);
+
+    // Update the new user and store the refreshToken
+    const updates: UpdateUserDTO = { ...user, refreshToken };
+    await this.usersService.updateUser(updates, user.id);
+
+    // Return accessToken and refreshToken
     return { accessToken, refreshToken };
   }
 
@@ -61,5 +79,10 @@ export class AuthService {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
       expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION'),
     });
+  }
+
+  private async hashData(data: string) {
+    const hashedPassword = await hash(data, 10);
+    return hashedPassword;
   }
 }

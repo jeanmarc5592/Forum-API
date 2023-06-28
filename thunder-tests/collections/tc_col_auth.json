@@ -23,6 +23,25 @@
                 "form": []
             },
             "tests": []
+        },
+        {
+            "_id": "cd338079-f2cb-4f7a-9296-825ab9f1dd73",
+            "colId": "1e4705bd-0678-4a08-bcb5-e11d2a976374",
+            "containerId": "",
+            "name": "Sign Up",
+            "url": "http://localhost:3000/auth/signup",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2023-06-28T14:37:46.374Z",
+            "modified": "2023-06-28T14:38:13.873Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"user2\",\n  \"age\": \"31\",\n  \"email\": \"user2@example.com\",\n  \"password\": \"password\"\n}",
+                "form": []
+            },
+            "tests": []
         }
     ]
 }
