@@ -33,12 +33,12 @@
             "method": "POST",
             "sortNum": 5000,
             "created": "2023-06-28T14:37:46.374Z",
-            "modified": "2023-06-28T14:44:00.876Z",
+            "modified": "2023-06-28T14:46:52.704Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"user3\",\n  \"age\": \"31\",\n  \"email\": \"user3@example.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"name\": \"user4\",\n  \"age\": \"31\",\n  \"email\": \"user4@example.com\",\n  \"password\": \"password\"\n}",
                 "form": []
             },
             "tests": []

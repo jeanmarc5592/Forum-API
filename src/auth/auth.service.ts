@@ -26,18 +26,13 @@ export class AuthService {
   }
 
   async signup(userDTO: CreateUserDTO) {
-    // Create a new user based on the userDTO
     const user = await this.usersService.createUser(userDTO);
 
-    // Create accessToken and refreshToken based on that new user
     const tokens = this.generateTokens(user);
     const { refreshToken } = tokens;
 
-    // Update the new user and store the refreshToken
-    const updates: UpdateUserDTO = { ...user, refreshToken };
-    await this.usersService.updateUser(updates, user.id);
+    await this.updateRefreshToken(user.id, refreshToken);
 
-    // Return accessToken and refreshToken
     return tokens;
   }
 
@@ -56,6 +51,10 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  private async updateRefreshToken(userId: string, refreshToken: string) {
+    return await this.usersService.updateUser({ refreshToken }, userId);
   }
 
   private generateTokens(user: User) {
