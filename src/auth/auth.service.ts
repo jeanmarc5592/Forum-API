@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
+import * as argon2 from 'argon2';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
@@ -36,6 +37,23 @@ export class AuthService {
     return tokens;
   }
 
+  async refresh(userId: string, token: string) {
+    const user = await this.usersService.getUserById(userId);
+
+    const match = await argon2.verify(user.refreshToken, token);
+
+    if (!match) {
+      throw new UnauthorizedException();
+    }
+
+    const tokens = this.generateTokens(user);
+    const { refreshToken } = tokens;
+
+    await this.updateRefreshToken(user.id, refreshToken);
+
+    return tokens;
+  }
+
   async validateUser(credentials: LoginDTO) {
     const { email, password } = credentials;
     const user = await this.usersService.getUserByEmail(email);
@@ -53,8 +71,8 @@ export class AuthService {
     return user;
   }
 
-  private async updateRefreshToken(userId: string, rawRefreshToken: string) {
-    const refreshToken = await hash(rawRefreshToken, 10);
+  async updateRefreshToken(userId: string, rawRefreshToken: string) {
+    const refreshToken = await argon2.hash(rawRefreshToken, { saltLength: 10 });
     return await this.usersService.updateUser({ refreshToken }, userId);
   }
 

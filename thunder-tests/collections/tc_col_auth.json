@@ -14,7 +14,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T15:32:42.824Z",
-            "modified": "2023-06-28T14:09:28.572Z",
+            "modified": "2023-06-28T15:07:16.984Z",
             "headers": [],
             "params": [],
             "body": {
@@ -40,6 +40,24 @@
                 "type": "json",
                 "raw": "{\n  \"name\": \"user4\",\n  \"age\": \"31\",\n  \"email\": \"user4@example.com\",\n  \"password\": \"password\"\n}",
                 "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e54b26ce-a181-428c-9634-6019c194bd2f",
+            "colId": "1e4705bd-0678-4a08-bcb5-e11d2a976374",
+            "containerId": "",
+            "name": "Refresh Tokens",
+            "url": "http://localhost:3000/auth/refresh",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-06-28T15:06:33.257Z",
+            "modified": "2023-06-28T15:40:06.907Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJpYXQiOjE2ODc5NjY3OTksImV4cCI6MTY4ODU3MTU5OX0.hH0dykn4DaIAtdYYw_D_Bi7KsJ8enRQgPvoOFtl_A_E"
             },
             "tests": []
         }
