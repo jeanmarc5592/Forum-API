@@ -4,6 +4,7 @@ import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './auth.types';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
   ) {}
 
   login(user: User) {
-    const payload = {
+    const payload: JwtPayload = {
       sub: user.id,
       name: user.name,
       email: user.email,
