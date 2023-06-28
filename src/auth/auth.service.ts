@@ -1,28 +1,57 @@
-import { Injectable } from '@nestjs/common';
-import { compare } from 'bcrypt';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './auth.types';
+import { ConfigService } from '@nestjs/config';
+import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
+import { CryptographyUtils } from 'src/utils/cryptography.utils';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+    private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
-  login(user: User) {
-    const payload: JwtPayload = {
-      sub: user.id,
-      name: user.name,
-      email: user.email,
-    };
+  async signin(user: User) {
+    const tokens = this.generateTokens(user);
+    const { refreshToken } = tokens;
 
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    await this.updateRefreshToken(user.id, refreshToken);
+
+    return tokens;
+  }
+
+  async signup(userDTO: CreateUserDTO) {
+    const user = await this.usersService.createUser(userDTO);
+
+    const tokens = this.generateTokens(user);
+    const { refreshToken } = tokens;
+
+    await this.updateRefreshToken(user.id, refreshToken);
+
+    return tokens;
+  }
+
+  async refresh(userId: string, token: string) {
+    const user = await this.usersService.getUserById(userId);
+
+    const match = await this.cryptographyUtils.verify(user.refreshToken, token);
+
+    if (!match) {
+      throw new UnauthorizedException();
+    }
+
+    const tokens = this.generateTokens(user);
+    const { refreshToken } = tokens;
+
+    await this.updateRefreshToken(user.id, refreshToken);
+
+    return tokens;
   }
 
   async validateUser(credentials: LoginDTO) {
@@ -33,12 +62,41 @@ export class AuthService {
       return null;
     }
 
-    const match = await compare(password, user.password);
+    const match = await this.cryptographyUtils.verify(user.password, password);
 
     if (!match) {
       return null;
     }
 
     return user;
+  }
+
+  async updateRefreshToken(userId: string, rawRefreshToken: string) {
+    const refreshToken = await this.cryptographyUtils.hash(rawRefreshToken);
+    return await this.usersService.updateUser({ refreshToken }, userId);
+  }
+
+  private generateTokens(user: User) {
+    const accessTokenPayload: JwtPayload = {
+      sub: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
+    const refreshTokenPayload: JwtPayload = {
+      sub: user.id,
+    };
+
+    const accessToken = this.jwtService.sign(accessTokenPayload, {
+      secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION'),
+    });
+
+    const refreshToken = this.jwtService.sign(refreshTokenPayload, {
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION'),
+    });
+
+    return { accessToken, refreshToken };
   }
 }
