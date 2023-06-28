@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
@@ -53,7 +53,8 @@ export class AuthService {
     return user;
   }
 
-  private async updateRefreshToken(userId: string, refreshToken: string) {
+  private async updateRefreshToken(userId: string, rawRefreshToken: string) {
+    const refreshToken = await hash(rawRefreshToken, 10);
     return await this.usersService.updateUser({ refreshToken }, userId);
   }
 
