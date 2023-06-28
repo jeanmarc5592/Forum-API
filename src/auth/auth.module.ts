@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AccessTokenStrategy } from './strategies/access-token.strategy';
 import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
+import { CryptographyUtils } from 'src/utils/cryptography.utils';
 
 @Module({
   imports: [UsersModule, PassportModule, JwtModule],
@@ -16,6 +17,7 @@ import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
     LocalStrategy,
     AccessTokenStrategy,
     RefreshTokenStrategy,
+    CryptographyUtils,
   ],
   exports: [AuthService],
 })

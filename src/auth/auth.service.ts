@@ -1,6 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { compare, hash } from 'bcrypt';
-import * as argon2 from 'argon2';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dtos/login.dto';
@@ -8,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './auth.types';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
+import { CryptographyUtils } from 'src/utils/cryptography.utils';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +14,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
   async signin(user: User) {
@@ -40,7 +40,7 @@ export class AuthService {
   async refresh(userId: string, token: string) {
     const user = await this.usersService.getUserById(userId);
 
-    const match = await argon2.verify(user.refreshToken, token);
+    const match = await this.cryptographyUtils.verify(user.refreshToken, token);
 
     if (!match) {
       throw new UnauthorizedException();
@@ -62,7 +62,7 @@ export class AuthService {
       return null;
     }
 
-    const match = await compare(password, user.password);
+    const match = await this.cryptographyUtils.verify(user.password, password);
 
     if (!match) {
       return null;
@@ -72,7 +72,7 @@ export class AuthService {
   }
 
   async updateRefreshToken(userId: string, rawRefreshToken: string) {
-    const refreshToken = await argon2.hash(rawRefreshToken, { saltLength: 10 });
+    const refreshToken = await this.cryptographyUtils.hash(rawRefreshToken);
     return await this.usersService.updateUser({ refreshToken }, userId);
   }
 

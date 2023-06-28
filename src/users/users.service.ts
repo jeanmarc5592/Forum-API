@@ -5,16 +5,17 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/users.entity';
-import { hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
+import { CryptographyUtils } from 'src/utils/cryptography.utils';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
   async getUsers(limit: number, page: number) {
@@ -60,7 +61,7 @@ export class UsersService {
     }
 
     const newUser = this.usersRepository.create(userDTO);
-    newUser.password = await hash(password, 10);
+    newUser.password = await this.cryptographyUtils.hash(password);
 
     return await this.usersRepository.save(newUser);
   }
