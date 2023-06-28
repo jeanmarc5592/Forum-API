@@ -47,13 +47,17 @@
             "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
             "containerId": "",
             "name": "Delete User",
-            "url": "http://localhost:3000/users/5d7a4b32-eec0-46a9-9962-64f1425f0d73",
+            "url": "http://localhost:3000/users/ffcd8944-9b0a-49a3-b74c-27e065985b6c",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-06-21T11:04:38.680Z",
-            "modified": "2023-06-23T09:05:43.316Z",
+            "modified": "2023-06-28T15:52:51.228Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4Nzk2NTk3MiwiZXhwIjoxNjg3OTk0NzcyfQ.8UM2gEIh5MsoRl5UQWOcLGeASiEGWoMgsw0L7PyEy2w"
+            },
             "tests": []
         },
         {
