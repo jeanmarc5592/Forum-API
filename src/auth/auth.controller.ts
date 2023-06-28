@@ -7,11 +7,21 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('login')
+  @Post('signin')
   // TODO: Type "req" correctly
   login(@Req() req: { user: any }) {
-    return this.authService.login(req.user);
+    const accessToken = this.authService.generateAccessToken(req.user);
+
+    // TODO: Create refreshToken and add to response
+
+    return {
+      accessToken,
+    };
   }
+
+  // TODO: Implement signup
+
+  // TODO: Implement refresh
 
   // TODO: Implement logout
 }

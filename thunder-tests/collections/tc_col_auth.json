@@ -9,17 +9,17 @@
             "_id": "f1616fb1-e58a-4ac0-afbf-d40403e44e2b",
             "colId": "1e4705bd-0678-4a08-bcb5-e11d2a976374",
             "containerId": "",
-            "name": "login",
-            "url": "http://localhost:3000/auth/login",
+            "name": "Sign In",
+            "url": "http://localhost:3000/auth/signin",
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T15:32:42.824Z",
-            "modified": "2023-06-27T16:31:16.982Z",
+            "modified": "2023-06-28T13:49:33.676Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"passwordd\"\n}",
                 "form": []
             },
             "tests": []

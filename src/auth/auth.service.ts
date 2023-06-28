@@ -13,16 +13,16 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  login(user: User) {
+  generateAccessToken(user: User) {
     const payload: JwtPayload = {
       sub: user.id,
       name: user.name,
       email: user.email,
     };
 
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    // TODO: Adjust expireDate (env)
+
+    return this.jwtService.sign(payload);
   }
 
   async validateUser(credentials: LoginDTO) {
