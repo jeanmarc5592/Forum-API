@@ -11,8 +11,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  // TODO: Type "req" correctly
-  signin(@Req() req: { user: any }) {
+  signin(@Req() req: any) {
     return this.authService.signin(req.user);
   }
 
@@ -23,8 +22,7 @@ export class AuthController {
 
   @UseGuards(RefreshTokenGuard)
   @Post('refresh')
-  // TODO: Type "req" correctly
-  refresh(@Req() req: { user: any; refreshToken: any }) {
+  refresh(@Req() req: any) {
     const userId = req.user['id'];
     const refreshToken = req.user['refreshToken'];
 
@@ -33,7 +31,7 @@ export class AuthController {
 
   @UseGuards(AccessTokenGuard)
   @Post('signout')
-  signout(@Req() req: { user: any }) {
+  signout(@Req() req: any) {
     return this.authService.signout(req.user);
   }
 }
