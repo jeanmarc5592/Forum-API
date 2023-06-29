@@ -14,12 +14,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T15:32:42.824Z",
-            "modified": "2023-06-28T15:49:31.230Z",
+            "modified": "2023-06-29T09:27:17.265Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"email\": \"user2@example.com\",\n  \"password\": \"password\"\n}",
                 "form": []
             },
             "tests": []
@@ -33,12 +33,12 @@
             "method": "POST",
             "sortNum": 5000,
             "created": "2023-06-28T14:37:46.374Z",
-            "modified": "2023-06-28T15:53:16.410Z",
+            "modified": "2023-06-29T09:18:28.681Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"user1\",\n  \"age\": \"31\",\n  \"email\": \"user5@example.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"name\": \"user2\",\n  \"age\": \"31\",\n  \"email\": \"user2@example.com\",\n  \"password\": \"password\"\n}",
                 "form": []
             },
             "tests": []
@@ -52,12 +52,30 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-28T15:06:33.257Z",
-            "modified": "2023-06-28T15:53:27.903Z",
+            "modified": "2023-06-29T09:30:53.995Z",
             "headers": [],
             "params": [],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMjlmZjIxNy0zMjIyLTQ4NTctYjllZi0wZTk0ZmE1NTExZWEiLCJpYXQiOjE2ODc5Njc1OTYsImV4cCI6MTY4ODU3MjM5Nn0.fu03dWgCh8M9cNAlvE3-nYz7h1axGFnJIfYQ1Ozyhuo"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NmQxYmYyNy01Njg2LTQzNGUtYTcxNi01M2Y1OGEzOTE3MTgiLCJpYXQiOjE2ODgwMzEwNDUsImV4cCI6MTY4ODYzNTg0NX0.gZywMKQ0-PT2hJ7hgjWQq-mfphJCsp_GqquCOpDf-d4"
+            },
+            "tests": []
+        },
+        {
+            "_id": "dc2040da-b30a-4007-a6a6-83cadcb44113",
+            "colId": "1e4705bd-0678-4a08-bcb5-e11d2a976374",
+            "containerId": "",
+            "name": "Sign Out",
+            "url": "http://localhost:3000/auth/signout",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-06-29T09:17:09.389Z",
+            "modified": "2023-06-29T09:27:57.705Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NmQxYmYyNy01Njg2LTQzNGUtYTcxNi01M2Y1OGEzOTE3MTgiLCJuYW1lIjoidXNlcjIiLCJlbWFpbCI6InVzZXIyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg4MDMwODQ3LCJleHAiOjE2ODgwNTk2NDd9.-s4NqTFVf0VgKTNSHPEd_mPGDLkY1Ufje2w74EviBzs"
             },
             "tests": []
         }

@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
+import { AccessTokenGuard } from './guards/access-token.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -30,5 +31,9 @@ export class AuthController {
     return this.authService.refresh(userId, refreshToken);
   }
 
-  // TODO: Implement logout
+  @UseGuards(AccessTokenGuard)
+  @Post('signout')
+  signout(@Req() req: { user: any }) {
+    return this.authService.signout(req.user);
+  }
 }

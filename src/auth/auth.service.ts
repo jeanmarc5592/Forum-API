@@ -40,6 +40,11 @@ export class AuthService {
   async refresh(userId: string, token: string) {
     const user = await this.usersService.getUserById(userId);
 
+    // "refreshToken" is null when the user is logged out
+    if (user.refreshToken === null) {
+      throw new UnauthorizedException();
+    }
+
     const match = await this.cryptographyUtils.verify(user.refreshToken, token);
 
     if (!match) {
@@ -52,6 +57,10 @@ export class AuthService {
     await this.updateRefreshToken(user.id, refreshToken);
 
     return tokens;
+  }
+
+  async signout(user: User) {
+    await this.usersService.updateUser({ refreshToken: null }, user.id);
   }
 
   async validateUser(credentials: LoginDTO) {
@@ -71,7 +80,7 @@ export class AuthService {
     return user;
   }
 
-  async updateRefreshToken(userId: string, rawRefreshToken: string) {
+  private async updateRefreshToken(userId: string, rawRefreshToken: string) {
     const refreshToken = await this.cryptographyUtils.hash(rawRefreshToken);
     return await this.usersService.updateUser({ refreshToken }, userId);
   }

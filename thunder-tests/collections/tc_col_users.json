@@ -69,7 +69,7 @@
             "method": "GET",
             "sortNum": 70000,
             "created": "2023-06-21T13:42:23.949Z",
-            "modified": "2023-06-28T15:27:41.440Z",
+            "modified": "2023-06-29T09:27:40.996Z",
             "headers": [],
             "params": [
                 {
@@ -85,7 +85,7 @@
             ],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4Nzk2NTk3MiwiZXhwIjoxNjg3OTk0NzcyfQ.8UM2gEIh5MsoRl5UQWOcLGeASiEGWoMgsw0L7PyEy2w"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NmQxYmYyNy01Njg2LTQzNGUtYTcxNi01M2Y1OGEzOTE3MTgiLCJuYW1lIjoidXNlcjIiLCJlbWFpbCI6InVzZXIyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg4MDMwODQ3LCJleHAiOjE2ODgwNTk2NDd9.-s4NqTFVf0VgKTNSHPEd_mPGDLkY1Ufje2w74EviBzs"
             },
             "tests": []
         }
