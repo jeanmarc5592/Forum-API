@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { TestUtils } from '../utils/test.utils';
 import { AuthService } from './auth.service';
+import { CreateUserDTO } from '../users/dtos/create-user.dto';
+import { User } from '../users/entities/users.entity';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -28,8 +30,21 @@ describe('AuthController', () => {
   });
 
   it('should return token pair', async () => {
+    const mockUser: User = {
+      id: '1',
+      name: 'Test User',
+      email: 'test@example.com',
+      password: 'My Password',
+      age: '18',
+      bio: 'User bio',
+      created_at: new Date(),
+      updated_at: new Date(),
+      refreshToken: 'Token',
+      generateId: jest.fn(),
+    };
+
     // SIGNIN
-    const signinTokens = await controller.signin({});
+    const signinTokens = await controller.signin({ user: mockUser });
 
     expect(signinTokens).toHaveProperty('accessToken');
     expect(typeof signinTokens.accessToken).toBe('string');
@@ -38,7 +53,7 @@ describe('AuthController', () => {
     expect(typeof signinTokens.refreshToken).toBe('string');
 
     // SIGNUP
-    const mockCreateUser = {
+    const mockCreateUser: CreateUserDTO = {
       name: 'User 1',
       email: 'test@example.com',
       password: 'password',
