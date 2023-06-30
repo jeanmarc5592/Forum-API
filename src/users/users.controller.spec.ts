@@ -1,41 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { User } from './entities/users.entity';
-import { UpdateUserDTO } from './dtos/update-user.dto';
+import { TestUtils } from '../utils/test.utils';
 
 describe('UsersController', () => {
   let controller: UsersController;
   let mockUsersService: Partial<UsersService>;
 
   beforeEach(async () => {
-    mockUsersService = {
-      getUsers: () => {
-        return Promise.resolve([
-          { id: '1', name: 'User 1' },
-          { id: '2', name: 'User 2' },
-          { id: '3', name: 'User 3' },
-        ] as User[]);
-      },
-      getUserById: (id: string) => {
-        return Promise.resolve({
-          id,
-          name: `User ${id}`,
-        } as User);
-      },
-      updateUser: (userDTO: UpdateUserDTO, id: string) => {
-        return Promise.resolve({
-          id,
-          ...userDTO,
-        } as User);
-      },
-      deleteUser: (id: string) => {
-        return Promise.resolve({
-          id,
-          name: `User ${id}`,
-        } as User);
-      },
-    };
+    mockUsersService = TestUtils.mockUsersService;
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
