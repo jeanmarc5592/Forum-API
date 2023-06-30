@@ -61,6 +61,7 @@ export class AuthService {
 
   async signout(user: User) {
     await this.usersService.updateUser({ refreshToken: null }, user.id);
+    return 'OK';
   }
 
   async validateUser(credentials: LoginDTO) {

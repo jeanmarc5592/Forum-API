@@ -4,7 +4,7 @@ import { UsersService } from '../users/users.service';
 import { AuthService } from 'src/auth/auth.service';
 
 export class TestUtils {
-  static readonly mockUsersService: Partial<UsersService> = {
+  static mockUsersService: Partial<UsersService> = {
     getUsers: () => {
       return Promise.resolve([
         { id: '1', name: 'User 1' },
@@ -32,7 +32,7 @@ export class TestUtils {
     },
   };
 
-  static readonly mockAuthService: Partial<AuthService> = {
+  static mockAuthService: Partial<AuthService> = {
     signin: () => {
       return Promise.resolve({
         accessToken: 'Access_Token',
@@ -52,7 +52,7 @@ export class TestUtils {
       });
     },
     signout: () => {
-      return Promise.resolve();
+      return Promise.resolve('OK');
     },
     validateUser: () => {
       return Promise.resolve({

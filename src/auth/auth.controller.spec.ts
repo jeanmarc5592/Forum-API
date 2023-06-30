@@ -1,25 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
-import { UsersService } from '../users/users.service';
 import { TestUtils } from '../utils/test.utils';
 import { AuthService } from './auth.service';
 
 describe('AuthController', () => {
   let controller: AuthController;
-  let mockUsersService: Partial<UsersService>;
   let mockAuthService: Partial<AuthService>;
 
   beforeEach(async () => {
-    mockUsersService = TestUtils.mockUsersService;
     mockAuthService = TestUtils.mockAuthService;
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [
-        {
-          provide: UsersService,
-          useValue: mockUsersService,
-        },
         {
           provide: AuthService,
           useValue: mockAuthService,
@@ -32,5 +25,46 @@ describe('AuthController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('should return token pair', async () => {
+    // SIGNIN
+    const signinTokens = await controller.signin({});
+
+    expect(signinTokens).toHaveProperty('accessToken');
+    expect(typeof signinTokens.accessToken).toBe('string');
+
+    expect(signinTokens).toHaveProperty('refreshToken');
+    expect(typeof signinTokens.refreshToken).toBe('string');
+
+    // SIGNUP
+    const mockCreateUser = {
+      name: 'User 1',
+      email: 'test@example.com',
+      password: 'password',
+      age: '30',
+    };
+    const signupTokens = await controller.signup(mockCreateUser);
+
+    expect(signupTokens).toHaveProperty('accessToken');
+    expect(typeof signupTokens.accessToken).toBe('string');
+
+    expect(signupTokens).toHaveProperty('refreshToken');
+    expect(typeof signupTokens.refreshToken).toBe('string');
+
+    // REFRESH
+    const refreshTokens = await controller.refresh({ user: { id: '1' } });
+
+    expect(refreshTokens).toHaveProperty('accessToken');
+    expect(typeof refreshTokens.accessToken).toBe('string');
+
+    expect(refreshTokens).toHaveProperty('refreshToken');
+    expect(typeof refreshTokens.refreshToken).toBe('string');
+  });
+
+  it('should return OK after successful signout', async () => {
+    const result = await controller.signout({});
+
+    expect(result).toBe('OK');
   });
 });
