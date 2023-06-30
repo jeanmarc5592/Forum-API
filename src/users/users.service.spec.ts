@@ -5,6 +5,7 @@ import { User } from './entities/users.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CryptographyUtils } from '../utils/cryptography.utils';
+import { CreateUserDTO } from './dtos/create-user.dto';
 
 const mockUser: User = {
   id: '1',
@@ -17,6 +18,13 @@ const mockUser: User = {
   updated_at: new Date(),
   refreshToken: 'Token',
   generateId: jest.fn(),
+};
+
+const mockCreateUser: CreateUserDTO = {
+  name: 'User 1',
+  email: 'test@example.com',
+  password: 'password',
+  age: '30',
 };
 
 export type MockType<T> = {
@@ -140,7 +148,7 @@ describe('UsersService', () => {
     repositoryMock.create?.mockReturnValue(mockUser);
     repositoryMock.save?.mockReturnValue({ ...mockUser, password: 'Hash123!' });
 
-    const user = await service.createUser(mockUser);
+    const user = await service.createUser(mockCreateUser);
 
     expect(user.id).toBe(mockUser.id);
     expect(user.email).toBe(mockUser.email);
@@ -154,7 +162,7 @@ describe('UsersService', () => {
   it('should throw a BadRequestException if a user already exists', async () => {
     repositoryMock.findOne?.mockReturnValue(mockUser);
 
-    await expect(service.createUser(mockUser)).rejects.toThrow(
+    await expect(service.createUser(mockCreateUser)).rejects.toThrow(
       BadRequestException,
     );
   });
