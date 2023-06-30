@@ -3,7 +3,6 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './entities/users.entity';
 import { UpdateUserDTO } from './dtos/update-user.dto';
-import { CreateUserDTO } from './dtos/create-user.dto';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -34,12 +33,6 @@ describe('UsersController', () => {
         return Promise.resolve({
           id,
           name: `User ${id}`,
-        } as User);
-      },
-      createUser: (userDTO: CreateUserDTO) => {
-        return Promise.resolve({
-          id: '1',
-          ...userDTO,
         } as User);
       },
     };
@@ -90,27 +83,5 @@ describe('UsersController', () => {
     const user = await controller.deleteUser(userId);
 
     expect(user.id).toBe(userId);
-  });
-
-  it('should return the created user', async () => {
-    const email = 'test@example.com';
-    const name = 'Test User';
-    const age = '66';
-    const password = 'My Password';
-
-    const newUser: CreateUserDTO = {
-      email,
-      name,
-      age,
-      password,
-    };
-
-    const user = await controller.createUser(newUser);
-
-    expect(user.email).toBe(email);
-    expect(user.name).toBe(name);
-    expect(user.age).toBe(age);
-    expect(user.password).toBe(password);
-    expect(user.bio).toBeFalsy();
   });
 });

@@ -8,7 +8,7 @@ import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
-import { CryptographyUtils } from 'src/utils/cryptography.utils';
+import { CryptographyUtils } from '../utils/cryptography.utils';
 
 @Injectable()
 export class UsersService {

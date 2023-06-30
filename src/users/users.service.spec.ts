@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/users.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { CryptographyUtils } from '../utils/cryptography.utils';
 
 const mockUser: User = {
   id: '1',
@@ -14,6 +15,7 @@ const mockUser: User = {
   bio: 'User bio',
   created_at: new Date(),
   updated_at: new Date(),
+  refreshToken: 'Token',
   generateId: jest.fn(),
 };
 
@@ -46,6 +48,7 @@ describe('UsersService', () => {
           provide: getRepositoryToken(User),
           useFactory: repositoryMockFactory,
         },
+        CryptographyUtils,
       ],
     }).compile();
 
@@ -154,15 +157,5 @@ describe('UsersService', () => {
     await expect(service.createUser(mockUser)).rejects.toThrow(
       BadRequestException,
     );
-  });
-
-  it('should hash a password', async () => {
-    const hashPassword = Reflect.get(service, 'hashPassword');
-
-    const password = 'MySuperCoolPassword123!';
-
-    const newPassword = await hashPassword(password);
-
-    expect(newPassword).not.toBe(password);
   });
 });

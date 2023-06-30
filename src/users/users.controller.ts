@@ -13,7 +13,7 @@ import {
 import { UsersService } from './users.service';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
-import { AccessTokenGuard } from 'src/auth/guards/access-token.guard';
+import { AccessTokenGuard } from '../auth/guards/access-token.guard';
 
 @UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
