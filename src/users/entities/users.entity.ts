@@ -32,11 +32,11 @@ export class User {
   password: string;
 
   @Column({ nullable: true })
-  bio: string;
+  bio: string | null;
 
   @Column({ nullable: true })
   @Exclude()
-  refreshToken: string;
+  refreshToken: string | null;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
