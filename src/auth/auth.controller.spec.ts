@@ -1,84 +1,110 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
-import { TestUtils } from '../utils/test.utils';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { User } from '../users/entities/users.entity';
 
+const mockUser: User = {
+  id: '1',
+  name: 'Test User',
+  email: 'test@example.com',
+  password: 'My Password',
+  age: '18',
+  bio: 'User bio',
+  created_at: new Date(),
+  updated_at: new Date(),
+  refreshToken: 'Token',
+  generateId: jest.fn(),
+};
+
+const mockCreateUser: CreateUserDTO = {
+  name: 'User 1',
+  email: 'test@example.com',
+  password: 'password',
+  age: '30',
+};
+
+const mockTokens = {
+  accessToken: 'access-token',
+  refreshToken: 'refresh-token',
+};
+
 describe('AuthController', () => {
   let controller: AuthController;
-  let mockAuthService: Partial<AuthService>;
+  let authService: AuthService;
 
   beforeEach(async () => {
-    mockAuthService = TestUtils.mockAuthService;
-
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [
         {
           provide: AuthService,
-          useValue: mockAuthService,
+          useValue: {
+            signin: jest.fn(),
+            signup: jest.fn(),
+            refresh: jest.fn(),
+            signout: jest.fn(),
+          },
         },
       ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
+    authService = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return token pair', async () => {
-    const mockUser: User = {
-      id: '1',
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'My Password',
-      age: '18',
-      bio: 'User bio',
-      created_at: new Date(),
-      updated_at: new Date(),
-      refreshToken: 'Token',
-      generateId: jest.fn(),
-    };
+  describe('signin', () => {
+    it('should return the correct token pair', async () => {
+      jest.spyOn(authService, 'signin').mockResolvedValue(mockTokens);
 
-    // SIGNIN
-    const signinTokens = await controller.signin({ user: mockUser });
+      const tokens = await controller.signin({ user: mockUser });
 
-    expect(signinTokens).toHaveProperty('accessToken');
-    expect(typeof signinTokens.accessToken).toBe('string');
+      expect(tokens).toHaveProperty('accessToken');
+      expect(tokens.accessToken).toBe(mockTokens.accessToken);
 
-    expect(signinTokens).toHaveProperty('refreshToken');
-    expect(typeof signinTokens.refreshToken).toBe('string');
+      expect(tokens).toHaveProperty('refreshToken');
+      expect(tokens.refreshToken).toBe(mockTokens.refreshToken);
+    });
+  });
 
-    // SIGNUP
-    const mockCreateUser: CreateUserDTO = {
-      name: 'User 1',
-      email: 'test@example.com',
-      password: 'password',
-      age: '30',
-    };
-    const signupTokens = await controller.signup(mockCreateUser);
+  describe('signup', () => {
+    it('should return the correct token pair', async () => {
+      jest.spyOn(authService, 'signup').mockResolvedValue(mockTokens);
 
-    expect(signupTokens).toHaveProperty('accessToken');
-    expect(typeof signupTokens.accessToken).toBe('string');
+      const tokens = await controller.signup(mockCreateUser);
 
-    expect(signupTokens).toHaveProperty('refreshToken');
-    expect(typeof signupTokens.refreshToken).toBe('string');
+      expect(tokens).toHaveProperty('accessToken');
+      expect(tokens.accessToken).toBe(mockTokens.accessToken);
 
-    // REFRESH
-    const refreshTokens = await controller.refresh({ user: { id: '1' } });
+      expect(tokens).toHaveProperty('refreshToken');
+      expect(tokens.refreshToken).toBe(mockTokens.refreshToken);
+    });
+  });
 
-    expect(refreshTokens).toHaveProperty('accessToken');
-    expect(typeof refreshTokens.accessToken).toBe('string');
+  describe('refresh', () => {
+    it('should return the correct token pair', async () => {
+      jest.spyOn(authService, 'refresh').mockResolvedValue(mockTokens);
 
-    expect(refreshTokens).toHaveProperty('refreshToken');
-    expect(typeof refreshTokens.refreshToken).toBe('string');
+      const user = { id: '1', refreshToken: 'refresh-token' };
+      const tokens = await controller.refresh({ user });
+
+      expect(tokens).toHaveProperty('accessToken');
+      expect(tokens.accessToken).toBe(mockTokens.accessToken);
+
+      expect(tokens).toHaveProperty('refreshToken');
+      expect(tokens.refreshToken).toBe(mockTokens.refreshToken);
+    });
   });
 
   it('should return OK after successful signout', async () => {
-    const result = await controller.signout({});
+    jest.spyOn(authService, 'signout').mockResolvedValue('OK');
+
+    const user = { id: '1', name: 'User', email: 'user@example.com' };
+    const result = await controller.signout({ user });
 
     expect(result).toBe('OK');
   });
