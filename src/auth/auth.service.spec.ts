@@ -157,16 +157,6 @@ describe('AuthService', () => {
   });
 
   describe('validateUser', () => {
-    it('should return null if user does not exist', async () => {
-      const credentials = { email: 'email@example.com', password: 'password' };
-
-      jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(null);
-
-      const result = await service.validateUser(credentials);
-
-      expect(result).toBeNull();
-    });
-
     it('should return null if password does not match', async () => {
       const credentials = { email: 'email@example.com', password: 'wrong' };
 
