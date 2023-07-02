@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Delete,
   Patch,
   Param,
@@ -9,12 +8,14 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
+import { AccessTokenGuard } from '../auth/guards/access-token.guard';
 
+@UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
@@ -40,10 +41,5 @@ export class UsersController {
   @Delete('/:id')
   deleteUser(@Param('id') id: string) {
     return this.usersService.deleteUser(id);
-  }
-
-  @Post()
-  createUser(@Body() body: CreateUserDTO) {
-    return this.usersService.createUser(body);
   }
 }

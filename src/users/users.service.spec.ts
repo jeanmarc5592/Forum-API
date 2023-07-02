@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { User } from './entities/users.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { CryptographyUtils } from '../utils/cryptography.utils';
+import { CreateUserDTO } from './dtos/create-user.dto';
 
 const mockUser: User = {
   id: '1',
@@ -14,7 +16,15 @@ const mockUser: User = {
   bio: 'User bio',
   created_at: new Date(),
   updated_at: new Date(),
+  refreshToken: 'Token',
   generateId: jest.fn(),
+};
+
+const mockCreateUser: CreateUserDTO = {
+  name: 'User 1',
+  email: 'test@example.com',
+  password: 'password',
+  age: '30',
 };
 
 export type MockType<T> = {
@@ -46,6 +56,7 @@ describe('UsersService', () => {
           provide: getRepositoryToken(User),
           useFactory: repositoryMockFactory,
         },
+        CryptographyUtils,
       ],
     }).compile();
 
@@ -57,112 +68,152 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return a list of users', async () => {
-    repositoryMock.find?.mockReturnValue([mockUser]);
+  describe('getUsers', () => {
+    it('should return a list of users', async () => {
+      repositoryMock.find?.mockReturnValue([mockUser]);
 
-    const users = await service.getUsers(1, 1);
+      const users = await service.getUsers(1, 1);
 
-    expect(users).toEqual([mockUser]);
+      expect(users).toEqual([mockUser]);
+    });
+
+    it('should return an empty list', async () => {
+      repositoryMock.find?.mockReturnValue([]);
+
+      const users = await service.getUsers(1, 1);
+
+      expect(users).toEqual([]);
+    });
   });
 
-  it('should return an empty list', async () => {
-    repositoryMock.find?.mockReturnValue([]);
+  describe('getUserById', () => {
+    it('should return a single user', async () => {
+      repositoryMock.findOneBy?.mockReturnValue(mockUser);
 
-    const users = await service.getUsers(1, 1);
+      const user = await service.getUserById(mockUser.id);
 
-    expect(users).toEqual([]);
+      expect(user.id).toBe(mockUser.id);
+      expect(user.email).toBe(mockUser.email);
+      expect(user.name).toBe(mockUser.name);
+      expect(user.password).toBe(mockUser.password);
+      expect(user.age).toBe(mockUser.age);
+      expect(user.bio).toBe(mockUser.bio);
+    });
+
+    it('should throw a NotFoundException if a user was not found', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      repositoryMock.findOneBy?.mockReturnValue(null);
+
+      await expect(service.getUserById('3234123423')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
   });
 
-  it('should return a single user', async () => {
-    repositoryMock.findOneBy?.mockReturnValue(mockUser);
+  describe('getUserByEmail', () => {
+    it('should return a single user', async () => {
+      repositoryMock.findOneBy?.mockReturnValue(mockUser);
 
-    const user = await service.getUserById('1');
+      const user = await service.getUserByEmail(mockUser.email);
 
-    expect(user.id).toBe(mockUser.id);
-    expect(user.email).toBe(mockUser.email);
-    expect(user.name).toBe(mockUser.name);
-    expect(user.password).toBe(mockUser.password);
-    expect(user.age).toBe(mockUser.age);
-    expect(user.bio).toBe(mockUser.bio);
+      expect(user.id).toBe(mockUser.id);
+      expect(user.email).toBe(mockUser.email);
+      expect(user.name).toBe(mockUser.name);
+      expect(user.password).toBe(mockUser.password);
+      expect(user.age).toBe(mockUser.age);
+      expect(user.bio).toBe(mockUser.bio);
+    });
+
+    it('should throw a NotFoundException if a user was not found', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      repositoryMock.findOneBy?.mockReturnValue(null);
+
+      await expect(service.getUserByEmail('3234123423')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
   });
 
-  it('should throw a NotFoundException if a user was not found', async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    repositoryMock.findOneBy?.mockReturnValue(null);
+  describe('updateUser', () => {
+    it('should update an existing user', async () => {
+      const updates = { name: 'Updated Name' };
 
-    await expect(service.getUserById('3234123423')).rejects.toThrow(
-      NotFoundException,
-    );
+      repositoryMock.findOneBy?.mockReturnValue(mockUser);
+      repositoryMock.save?.mockReturnValue({ ...mockUser, ...updates });
 
-    await expect(service.updateUser({}, '3234123423')).rejects.toThrow(
-      NotFoundException,
-    );
+      const user = await service.updateUser(updates, '1');
 
-    await expect(service.deleteUser('3234123423')).rejects.toThrow(
-      NotFoundException,
-    );
+      expect(user.id).toBe(mockUser.id);
+      expect(user.name).toBe(updates.name);
+    });
+
+    it('should throw a NotFoundException if a user was not found', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      repositoryMock.findOneBy?.mockReturnValue(null);
+
+      await expect(service.updateUser({}, '3234123423')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
   });
 
-  it('should update an existing user', async () => {
-    const updates = { name: 'Updated Name' };
+  describe('deleteUser', () => {
+    it('should delete an existing user', async () => {
+      repositoryMock.findOneBy?.mockReturnValue(mockUser);
+      repositoryMock.delete?.mockReturnValue(mockUser);
 
-    repositoryMock.findOneBy?.mockReturnValue(mockUser);
-    repositoryMock.save?.mockReturnValue({ ...mockUser, ...updates });
+      const user = await service.deleteUser('1');
 
-    const user = await service.updateUser(updates, '1');
+      expect(user.id).toBe(mockUser.id);
+      expect(user.email).toBe(mockUser.email);
+      expect(user.name).toBe(mockUser.name);
+      expect(user.password).toBe(mockUser.password);
+      expect(user.age).toBe(mockUser.age);
+      expect(user.bio).toBe(mockUser.bio);
+    });
 
-    expect(user.id).toBe(mockUser.id);
-    expect(user.name).toBe(updates.name);
+    it('should throw a NotFoundException if a user was not found', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      repositoryMock.findOneBy?.mockReturnValue(null);
+
+      await expect(service.deleteUser('3234123423')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
   });
 
-  it('should delete an existing user', async () => {
-    repositoryMock.findOneBy?.mockReturnValue(mockUser);
-    repositoryMock.delete?.mockReturnValue(mockUser);
+  describe('createUser', () => {
+    it('should create a new user', async () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      repositoryMock.findOne?.mockReturnValue(null);
+      repositoryMock.create?.mockReturnValue(mockUser);
+      repositoryMock.save?.mockReturnValue({
+        ...mockUser,
+        password: 'Hash123!',
+      });
 
-    const user = await service.deleteUser('1');
+      const user = await service.createUser(mockCreateUser);
 
-    expect(user.id).toBe(mockUser.id);
-    expect(user.email).toBe(mockUser.email);
-    expect(user.name).toBe(mockUser.name);
-    expect(user.password).toBe(mockUser.password);
-    expect(user.age).toBe(mockUser.age);
-    expect(user.bio).toBe(mockUser.bio);
-  });
+      expect(user.id).toBe(mockUser.id);
+      expect(user.email).toBe(mockUser.email);
+      expect(user.name).toBe(mockUser.name);
+      expect(user.password).not.toBe(mockUser.password);
+      expect(user.password).toBe('Hash123!');
+      expect(user.age).toBe(mockUser.age);
+      expect(user.bio).toBe(mockUser.bio);
+    });
 
-  it('should create a new user', async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    repositoryMock.findOne?.mockReturnValue(null);
-    repositoryMock.create?.mockReturnValue(mockUser);
-    repositoryMock.save?.mockReturnValue({ ...mockUser, password: 'Hash123!' });
+    it('should throw a BadRequestException if a user already exists', async () => {
+      repositoryMock.findOne?.mockReturnValue(mockUser);
 
-    const user = await service.createUser(mockUser);
-
-    expect(user.id).toBe(mockUser.id);
-    expect(user.email).toBe(mockUser.email);
-    expect(user.name).toBe(mockUser.name);
-    expect(user.password).not.toBe(mockUser.password);
-    expect(user.password).toBe('Hash123!');
-    expect(user.age).toBe(mockUser.age);
-    expect(user.bio).toBe(mockUser.bio);
-  });
-
-  it('should throw a BadRequestException if a user already exists', async () => {
-    repositoryMock.findOne?.mockReturnValue(mockUser);
-
-    await expect(service.createUser(mockUser)).rejects.toThrow(
-      BadRequestException,
-    );
-  });
-
-  it('should hash a password', async () => {
-    const hashPassword = Reflect.get(service, 'hashPassword');
-
-    const password = 'MySuperCoolPassword123!';
-
-    const newPassword = await hashPassword(password);
-
-    expect(newPassword).not.toBe(password);
+      await expect(service.createUser(mockCreateUser)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
   });
 });

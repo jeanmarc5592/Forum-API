@@ -28,6 +28,9 @@ export class UpdateUserDTO {
 
   @IsString()
   @IsOptional()
-  @IsOptional()
   bio?: string;
+
+  @IsString()
+  @IsOptional()
+  refreshToken?: string | null;
 }

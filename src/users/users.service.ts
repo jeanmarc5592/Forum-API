@@ -6,15 +6,16 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
-import { hash } from 'bcrypt';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
+import { CryptographyUtils } from '../utils/cryptography.utils';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
   async getUsers(limit: number, page: number) {
@@ -26,6 +27,16 @@ export class UsersService {
 
   async getUserById(id: string) {
     return await this.findUserById(id);
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this.usersRepository.findOneBy({ email });
+
+    if (!user) {
+      throw new NotFoundException(`User with email '${email}' not found.`);
+    }
+
+    return user;
   }
 
   async updateUser(userDTO: UpdateUserDTO, id: string) {
@@ -56,14 +67,9 @@ export class UsersService {
     }
 
     const newUser = this.usersRepository.create(userDTO);
-    newUser.password = await this.hashPassword(password);
+    newUser.password = await this.cryptographyUtils.hash(password);
 
     return await this.usersRepository.save(newUser);
-  }
-
-  private async hashPassword(password: string) {
-    const hashedPassword = await hash(password, 10);
-    return hashedPassword;
   }
 
   private async findUserById(id: string) {

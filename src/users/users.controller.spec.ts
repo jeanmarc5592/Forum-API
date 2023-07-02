@@ -2,115 +2,98 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './entities/users.entity';
-import { UpdateUserDTO } from './dtos/update-user.dto';
-import { CreateUserDTO } from './dtos/create-user.dto';
+
+const mockUsers = [
+  { id: '1', name: 'User 1' },
+  { id: '2', name: 'User 2' },
+  { id: '3', name: 'User 3' },
+] as User[];
+
+const mockUser: User = {
+  id: '1',
+  name: 'Test User',
+  email: 'test@example.com',
+  password: 'My Password',
+  age: '18',
+  bio: 'User bio',
+  created_at: new Date(),
+  updated_at: new Date(),
+  refreshToken: 'Token',
+  generateId: jest.fn(),
+};
 
 describe('UsersController', () => {
   let controller: UsersController;
-  let mockUsersService: Partial<UsersService>;
+  let usersService: UsersService;
 
   beforeEach(async () => {
-    mockUsersService = {
-      getUsers: () => {
-        return Promise.resolve([
-          { id: '1', name: 'User 1' },
-          { id: '2', name: 'User 2' },
-          { id: '3', name: 'User 3' },
-        ] as User[]);
-      },
-      getUserById: (id: string) => {
-        return Promise.resolve({
-          id,
-          name: `User ${id}`,
-        } as User);
-      },
-      updateUser: (userDTO: UpdateUserDTO, id: string) => {
-        return Promise.resolve({
-          id,
-          ...userDTO,
-        } as User);
-      },
-      deleteUser: (id: string) => {
-        return Promise.resolve({
-          id,
-          name: `User ${id}`,
-        } as User);
-      },
-      createUser: (userDTO: CreateUserDTO) => {
-        return Promise.resolve({
-          id: '1',
-          ...userDTO,
-        } as User);
-      },
-    };
-
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
         {
           provide: UsersService,
-          useValue: mockUsersService,
+          useValue: {
+            getUsers: jest.fn(),
+            getUserById: jest.fn(),
+            updateUser: jest.fn(),
+            deleteUser: jest.fn(),
+          },
         },
       ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
+    usersService = module.get<UsersService>(UsersService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return a list of users', async () => {
-    const users = await controller.getUsers({ limit: 3, page: 1 });
-    expect(users).toHaveLength(3);
+  describe('getUsers', () => {
+    it('should return a list of users', async () => {
+      jest.spyOn(usersService, 'getUsers').mockResolvedValue(mockUsers);
+
+      const users = await controller.getUsers({ limit: 3, page: 1 });
+
+      expect(users).toEqual(mockUsers);
+    });
   });
 
-  it('should return the user with the provided id', async () => {
-    const userId = '54';
+  describe('getUsersById', () => {
+    it('should return the user with the provided id', async () => {
+      jest.spyOn(usersService, 'getUserById').mockResolvedValue(mockUser);
 
-    const user = await controller.getUserById(userId);
+      const user = await controller.getUserById(mockUser.id);
 
-    expect(user.id).toBe(userId);
+      expect(user.id).toBe(mockUser.id);
+    });
   });
 
-  it('should return the updated user', async () => {
-    const userId = '3';
-    const userName = 'Updated Name';
+  describe('updateUser', () => {
+    it('should return the updated user', async () => {
+      const userId = mockUser.id;
+      const userName = 'Updated Name';
 
-    const user = await controller.updateUser(userId, { name: userName });
+      Object.assign(mockUser, { name: userName });
+      jest.spyOn(usersService, 'updateUser').mockResolvedValue(mockUser);
 
-    expect(user.id).toBe(userId);
-    expect(user.name).toBe(userName);
+      const user = await controller.updateUser(userId, { name: userName });
+
+      expect(user.id).toBe(userId);
+      expect(user.name).toBe(userName);
+    });
   });
 
-  it('should return the deleted user', async () => {
-    const userId = '5';
+  describe('deleteUser', () => {
+    it('should return the deleted user', async () => {
+      const userId = mockUser.id;
 
-    const user = await controller.deleteUser(userId);
+      jest.spyOn(usersService, 'deleteUser').mockResolvedValue(mockUser);
 
-    expect(user.id).toBe(userId);
-  });
+      const user = await controller.deleteUser(userId);
 
-  it('should return the created user', async () => {
-    const email = 'test@example.com';
-    const name = 'Test User';
-    const age = '66';
-    const password = 'My Password';
-
-    const newUser: CreateUserDTO = {
-      email,
-      name,
-      age,
-      password,
-    };
-
-    const user = await controller.createUser(newUser);
-
-    expect(user.email).toBe(email);
-    expect(user.name).toBe(name);
-    expect(user.age).toBe(age);
-    expect(user.password).toBe(password);
-    expect(user.bio).toBeFalsy();
+      expect(user).toBe(mockUser);
+    });
   });
 });
