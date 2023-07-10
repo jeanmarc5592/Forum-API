@@ -3,3 +3,9 @@ export type JwtPayload = {
   email?: string;
   name?: string;
 };
+
+export enum Roles {
+  ADMIN = 'admin',
+  MODERATOR = 'moderator',
+  USER = 'user',
+}
