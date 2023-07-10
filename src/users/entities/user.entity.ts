@@ -40,6 +40,8 @@ export class User {
   refreshToken: string;
 
   @Column({ type: 'enum', enum: Roles, default: Roles.USER })
+  role: Roles;
+
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
