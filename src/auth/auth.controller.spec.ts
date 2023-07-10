@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 
 const mockUser: User = {
   id: '1',

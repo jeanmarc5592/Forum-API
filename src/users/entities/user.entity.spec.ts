@@ -1,4 +1,4 @@
-import { User } from './users.entity';
+import { User } from './user.entity';
 
 describe('User Entity', () => {
   it('should create an instance of User entity', () => {

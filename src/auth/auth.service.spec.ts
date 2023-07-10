@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { CryptographyUtils } from '../utils/cryptography.utils';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { UnauthorizedException } from '@nestjs/common';
 

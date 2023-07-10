@@ -4,7 +4,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { AccessTokenGuard } from './guards/access-token.guard';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
