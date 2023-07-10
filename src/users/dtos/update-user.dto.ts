@@ -4,7 +4,9 @@ import {
   IsString,
   Length,
   IsOptional,
+  IsEnum,
 } from 'class-validator';
+import { Roles } from 'src/auth/auth.types';
 
 export class UpdateUserDTO {
   @IsString()
@@ -29,6 +31,10 @@ export class UpdateUserDTO {
   @IsString()
   @IsOptional()
   bio?: string;
+
+  @IsEnum(Roles)
+  @IsOptional()
+  role?: string | null;
 
   @IsString()
   @IsOptional()
