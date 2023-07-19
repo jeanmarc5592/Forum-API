@@ -24,21 +24,21 @@
             "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
             "containerId": "",
             "name": "Update User",
-            "url": "http://localhost:3000/users/1d0f8085-0741-4bf9-a6ef-641aae937dfa",
+            "url": "http://localhost:3000/users/c3ec6ff9-d50a-462c-bf79-4373ae374ba6",
             "method": "PATCH",
             "sortNum": 20000,
             "created": "2023-06-21T11:04:16.155Z",
-            "modified": "2023-06-28T09:45:57.646Z",
+            "modified": "2023-07-19T13:03:31.209Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"age\": \"40\"\n}",
+                "raw": "{\n  \"role\": \"moderator\"\n}",
                 "form": []
             },
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4Nzk0NTUwNywiZXhwIjoxNjg3OTQ1NTY3fQ.JSPDR-e7ptcEKR92HPgGBT8ZsHlTDl6RRXGRFsqgYlo"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGQ4MTBkOC1hNWViLTRjZDgtYjFhMC00ZjlmNmRkOGY5MjEiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjg5NzcxNzgyLCJleHAiOjE2ODk4MDA1ODJ9.YqkfINonzQg7fK7_xwQyfq6URWY6aQ52YXKHUOhsY74"
             },
             "tests": []
         },
@@ -47,16 +47,16 @@
             "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
             "containerId": "",
             "name": "Delete User",
-            "url": "http://localhost:3000/users/ffcd8944-9b0a-49a3-b74c-27e065985b6c",
+            "url": "http://localhost:3000/users/c3ec6ff9-d50a-462c-bf79-4373ae374ba6",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-06-21T11:04:38.680Z",
-            "modified": "2023-06-28T15:52:51.228Z",
+            "modified": "2023-07-19T13:04:13.327Z",
             "headers": [],
             "params": [],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZDBmODA4NS0wNzQxLTRiZjktYTZlZi02NDFhYWU5MzdkZmEiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4Nzk2NTk3MiwiZXhwIjoxNjg3OTk0NzcyfQ.8UM2gEIh5MsoRl5UQWOcLGeASiEGWoMgsw0L7PyEy2w"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGQ4MTBkOC1hNWViLTRjZDgtYjFhMC00ZjlmNmRkOGY5MjEiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjg5NzcxNzgyLCJleHAiOjE2ODk4MDA1ODJ9.YqkfINonzQg7fK7_xwQyfq6URWY6aQ52YXKHUOhsY74"
             },
             "tests": []
         },
@@ -69,7 +69,7 @@
             "method": "GET",
             "sortNum": 70000,
             "created": "2023-06-21T13:42:23.949Z",
-            "modified": "2023-06-29T09:27:40.996Z",
+            "modified": "2023-07-19T12:20:46.528Z",
             "headers": [],
             "params": [
                 {
@@ -85,7 +85,7 @@
             ],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NmQxYmYyNy01Njg2LTQzNGUtYTcxNi01M2Y1OGEzOTE3MTgiLCJuYW1lIjoidXNlcjIiLCJlbWFpbCI6InVzZXIyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjg4MDMwODQ3LCJleHAiOjE2ODgwNTk2NDd9.-s4NqTFVf0VgKTNSHPEd_mPGDLkY1Ufje2w74EviBzs"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMzQ5ZWFiNS01NTkwLTQ1NzYtOTI0ZC04NjgwYjMxYjAwMGQiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg5NzY5MjM0LCJleHAiOjE2ODk3OTgwMzR9.le_BCbmZYpR3EYrb4M_OiDa-5RYd1W-dFS62qFp6wf0"
             },
             "tests": []
         }
