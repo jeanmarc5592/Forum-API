@@ -3,7 +3,7 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { LoginDTO } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './auth.types';
+import { JwtPayload, RequestUser } from './auth.types';
 import { ConfigService } from '@nestjs/config';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { CryptographyUtils } from '../utils/cryptography.utils';
@@ -17,7 +17,7 @@ export class AuthService {
     private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
-  async signin(user: User) {
+  async signin(user: RequestUser) {
     const tokens = this.generateTokens(user);
     const { refreshToken } = tokens;
 
@@ -86,7 +86,7 @@ export class AuthService {
     return await this.usersService.updateUser({ refreshToken }, userId);
   }
 
-  private generateTokens(user: User) {
+  private generateTokens(user: RequestUser) {
     const accessTokenPayload: JwtPayload = {
       sub: user.id,
       name: user.name,

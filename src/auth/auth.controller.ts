@@ -4,7 +4,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { AccessTokenGuard } from './guards/access-token.guard';
-import { User } from '../users/entities/user.entity';
+import { RequestUser } from './auth.types';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +12,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  signin(@Req() req: { user: User }) {
+  signin(@Req() req: { user: RequestUser }) {
     return this.authService.signin(req.user);
   }
 
