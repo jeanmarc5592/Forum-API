@@ -10,3 +10,10 @@ export enum Roles {
   MODERATOR = 'moderator',
   USER = 'user',
 }
+
+export type RequestUser = {
+  id: string;
+  email?: string;
+  name?: string;
+  role?: string;
+};
