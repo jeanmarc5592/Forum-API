@@ -22,8 +22,3 @@ export type AppAbility = MongoAbility<[Actions, Subjects]>;
 export type BuilderType = AbilityBuilder<
   MongoAbility<AbilityTuple, MongoQuery>
 >;
-
-export interface RequiredRule {
-  action: Actions;
-  subject: Subjects;
-}
