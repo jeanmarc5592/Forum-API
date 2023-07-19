@@ -5,32 +5,34 @@ import {
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/users/entities/user.entity';
-import { Roles } from 'src/auth/auth.types';
+import { RequestUser, Roles } from 'src/auth/auth.types';
 import { Subjects, Actions, BuilderType } from './ability.types';
 
 @Injectable()
 export class AbilityFactory {
-  defineAbility(user: User) {
-    const builder = new AbilityBuilder(createMongoAbility);
+  defineAbility(user: RequestUser) {
+    this.builder = new AbilityBuilder(createMongoAbility);
 
     if (user.role === Roles.ADMIN) {
-      this.defineAdminAbilities(builder);
+      this.defineAdminAbilities();
     }
 
     if (user.role === Roles.MODERATOR) {
-      this.defineModeratorAbilities(builder);
+      this.defineModeratorAbilities(user);
     }
 
     if (user.role === Roles.USER) {
-      this.defineUserAbilities(builder);
+      this.defineUserAbilities(user);
     }
 
-    return builder.build({
+    return this.builder.build({
       detectSubjectType(subject) {
         return subject.constructor as ExtractSubjectType<Subjects>;
       },
     });
   }
+
+  private builder: BuilderType;
 
   private ALLOWED_USER_UPDATE_FIELDS = [
     'age',
@@ -40,25 +42,29 @@ export class AbilityFactory {
     'name',
   ];
 
-  private defineAdminAbilities(builder: BuilderType) {
-    const { can } = builder;
+  private defineAdminAbilities() {
+    const { can } = this.builder;
 
     can(Actions.MANAGE, 'all');
   }
 
-  private defineModeratorAbilities(builder: BuilderType) {
-    const { can } = builder;
+  private defineModeratorAbilities(user: RequestUser) {
+    const { can } = this.builder;
 
-    can(Actions.DELETE, User);
-    can(Actions.UPDATE, User);
+    can(Actions.DELETE, User, { id: { $eq: user.id } });
+    can(Actions.UPDATE, User, this.ALLOWED_USER_UPDATE_FIELDS, {
+      id: { $eq: user.id },
+    });
     can(Actions.READ, User);
   }
 
-  private defineUserAbilities(builder: BuilderType) {
-    const { can } = builder;
+  private defineUserAbilities(user: RequestUser) {
+    const { can } = this.builder;
 
-    can(Actions.DELETE, User);
-    can(Actions.UPDATE, User);
+    can(Actions.DELETE, User, { id: { $eq: user.id } });
+    can(Actions.UPDATE, User, this.ALLOWED_USER_UPDATE_FIELDS, {
+      id: { $eq: user.id },
+    });
     can(Actions.READ, User);
   }
 }
