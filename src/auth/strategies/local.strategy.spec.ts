@@ -3,6 +3,7 @@ import { Strategy } from 'passport-local';
 import { AuthService } from '../auth.service';
 import { LocalStrategy } from './local.strategy';
 import { User } from 'src/users/entities/user.entity';
+import { Roles } from '../auth.types';
 
 const mockUser: User = {
   id: '1',
@@ -14,6 +15,7 @@ const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
+  role: Roles.USER,
   generateId: jest.fn(),
 };
 

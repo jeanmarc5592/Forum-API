@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { Exclude } from 'class-transformer';
-import { Roles } from 'src/auth/auth.types';
+import { Roles } from '../../auth/auth.types';
 
 @Entity()
 export class User {

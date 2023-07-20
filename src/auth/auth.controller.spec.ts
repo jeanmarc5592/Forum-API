@@ -3,6 +3,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { User } from '../users/entities/user.entity';
+import { Roles } from './auth.types';
 
 const mockUser: User = {
   id: '1',
@@ -14,6 +15,7 @@ const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
+  role: Roles.USER,
   generateId: jest.fn(),
 };
 

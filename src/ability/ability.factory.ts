@@ -4,8 +4,8 @@ import {
   createMongoAbility,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/users/entities/user.entity';
-import { RequestUser, Roles } from 'src/auth/auth.types';
+import { User } from '../users/entities/user.entity';
+import { RequestUser, Roles } from '../auth/auth.types';
 import { Subjects, Actions, BuilderType } from './ability.types';
 
 @Injectable()

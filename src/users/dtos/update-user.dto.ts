@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
-import { Roles } from 'src/auth/auth.types';
+import { Roles } from '../../auth/auth.types';
 
 export class UpdateUserDTO {
   @IsString()
