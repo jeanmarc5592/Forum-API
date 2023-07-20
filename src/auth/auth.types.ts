@@ -2,7 +2,7 @@ export type JwtPayload = {
   sub: string;
   email?: string;
   name?: string;
-  role?: string;
+  role?: Roles;
 };
 
 export enum Roles {
@@ -15,5 +15,5 @@ export type RequestUser = {
   id: string;
   email?: string;
   name?: string;
-  role?: string;
+  role?: Roles;
 };

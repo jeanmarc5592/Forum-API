@@ -21,6 +21,8 @@ export class AbilityService {
     if (!isAllowed) {
       throw new ForbiddenException();
     }
+
+    return;
   }
 
   canDelete(reqUser: RequestUser, subjectToDelete: any) {
@@ -30,5 +32,7 @@ export class AbilityService {
     if (!isAllowed) {
       throw new ForbiddenException();
     }
+
+    return;
   }
 }
