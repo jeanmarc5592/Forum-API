@@ -9,17 +9,23 @@ import {
   ClassSerializerInterceptor,
   Query,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
 import { AccessTokenGuard } from '../auth/guards/access-token.guard';
+import { RequestUser } from '../auth/auth.types';
+import { AbilityService } from '../ability/ability.service';
 
 @UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly abilityService: AbilityService,
+  ) {}
 
   @Get()
   getUsers(@Query() query: UsersQueryDTO) {
@@ -34,12 +40,22 @@ export class UsersController {
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UpdateUserDTO) {
+  async updateUser(
+    @Param('id') id: string,
+    @Body() body: UpdateUserDTO,
+    @Req() req: { user: RequestUser },
+  ) {
+    const userToUpdate = await this.usersService.getUserById(id);
+    this.abilityService.canUpdate(req.user, body, userToUpdate);
+
     return this.usersService.updateUser(body, id);
   }
 
   @Delete('/:id')
-  deleteUser(@Param('id') id: string) {
+  async deleteUser(@Param('id') id: string, @Req() req: { user: RequestUser }) {
+    const userToDelete = await this.usersService.getUserById(id);
+    this.abilityService.canDelete(req.user, userToDelete);
+
     return this.usersService.deleteUser(id);
   }
 }

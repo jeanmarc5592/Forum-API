@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { Exclude } from 'class-transformer';
+import { Roles } from '../../auth/auth.types';
 
 @Entity()
 export class User {
@@ -37,6 +38,9 @@ export class User {
   @Column({ nullable: true })
   @Exclude()
   refreshToken: string;
+
+  @Column({ type: 'enum', enum: Roles, default: Roles.USER })
+  role: Roles;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

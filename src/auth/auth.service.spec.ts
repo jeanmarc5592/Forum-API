@@ -4,9 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { CryptographyUtils } from '../utils/cryptography.utils';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 import { CreateUserDTO } from '../users/dtos/create-user.dto';
 import { UnauthorizedException } from '@nestjs/common';
+import { Roles } from './auth.types';
 
 const mockUser: User = {
   id: '1',
@@ -18,6 +19,7 @@ const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
+  role: Roles.USER,
   generateId: jest.fn(),
 };
 

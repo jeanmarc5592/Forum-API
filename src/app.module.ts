@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { APP_PIPE } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
+import { AbilityModule } from './ability/ability.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    AbilityModule,
   ],
   controllers: [],
   providers: [

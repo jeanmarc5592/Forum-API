@@ -1,7 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { User } from './entities/users.entity';
+import { User } from './entities/user.entity';
+import { RequestUser, Roles } from '../auth/auth.types';
+import { AbilityService } from '../ability/ability.service';
 
 const mockUsers = [
   { id: '1', name: 'User 1' },
@@ -19,7 +21,17 @@ const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
+  role: Roles.USER,
   generateId: jest.fn(),
+};
+
+const mockRequest = {
+  user: {
+    id: '123',
+    name: 'Request User',
+    email: 'requser@email.com',
+    role: Roles.USER,
+  } as RequestUser,
 };
 
 describe('UsersController', () => {
@@ -37,6 +49,13 @@ describe('UsersController', () => {
             getUserById: jest.fn(),
             updateUser: jest.fn(),
             deleteUser: jest.fn(),
+          },
+        },
+        {
+          provide: AbilityService,
+          useValue: {
+            canUpdate: jest.fn(),
+            canDelete: jest.fn(),
           },
         },
       ],
@@ -78,7 +97,11 @@ describe('UsersController', () => {
       Object.assign(mockUser, { name: userName });
       jest.spyOn(usersService, 'updateUser').mockResolvedValue(mockUser);
 
-      const user = await controller.updateUser(userId, { name: userName });
+      const user = await controller.updateUser(
+        userId,
+        { name: userName },
+        mockRequest,
+      );
 
       expect(user.id).toBe(userId);
       expect(user.name).toBe(userName);
@@ -91,7 +114,7 @@ describe('UsersController', () => {
 
       jest.spyOn(usersService, 'deleteUser').mockResolvedValue(mockUser);
 
-      const user = await controller.deleteUser(userId);
+      const user = await controller.deleteUser(userId, mockRequest);
 
       expect(user).toBe(mockUser);
     });
