@@ -66,12 +66,8 @@ export class AuthService {
 
   async validateUser(credentials: LoginDTO) {
     const { email, password } = credentials;
+
     const user = await this.usersService.getUserByEmail(email);
-
-    if (!user) {
-      return null;
-    }
-
     const match = await this.cryptographyUtils.verify(user.password, password);
 
     if (!match) {
