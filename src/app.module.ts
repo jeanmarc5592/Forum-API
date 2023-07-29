@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { APP_PIPE } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { AbilityModule } from './ability/ability.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AbilityModule } from './ability/ability.module';
     UsersModule,
     AuthModule,
     AbilityModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [
