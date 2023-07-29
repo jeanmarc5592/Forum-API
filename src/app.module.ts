@@ -17,11 +17,11 @@ import { AbilityModule } from './ability/ability.module';
       useFactory: (config: ConfigService) => {
         return {
           type: config.get<any>('DB_TYPE'),
-          host: config.get<string>('PG_HOST'),
-          port: config.get<string>('PG_PORT'),
-          username: config.get<string>('PG_USER'),
-          password: config.get<string>('PG_PASSWORD'),
-          database: config.get<string>('PG_DB'),
+          host: config.get<string>('DB_HOST'),
+          port: config.get<string>('DB_PORT'),
+          username: config.get<string>('DB_USER'),
+          password: config.get<string>('DB_PASSWORD'),
+          database: config.get<string>('DB_NAME'),
           ssl: true,
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           migrations: ['migrations/*.js'],
