@@ -1,0 +1,86 @@
+{
+    "_id": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
+    "colName": "main-categories",
+    "created": "2023-07-29T09:56:09.900Z",
+    "sortNum": 30000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "77460557-f462-4e45-99bd-e38fffb05dea",
+            "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
+            "containerId": "",
+            "name": "Get Main Categories",
+            "url": "http://localhost:3000/main-categories",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-07-29T09:56:21.406Z",
+            "modified": "2023-07-29T09:56:39.944Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "7a957997-1c01-4f5b-881d-f9536b80e5e6",
+            "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
+            "containerId": "",
+            "name": "Get Main Category By Id",
+            "url": "http://localhost:3000/main-categories/234234",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-07-29T09:57:01.958Z",
+            "modified": "2023-07-29T09:57:11.016Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a39b40c5-9482-4246-913e-1d40f2b88417",
+            "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
+            "containerId": "",
+            "name": "Update Main Category",
+            "url": "http://localhost:3000/main-categories/35353",
+            "method": "PATCH",
+            "sortNum": 30000,
+            "created": "2023-07-29T09:57:23.305Z",
+            "modified": "2023-07-29T09:57:37.150Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2bd5cdcb-36cf-4788-b56a-8c0dc5f3326a",
+            "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
+            "containerId": "",
+            "name": "Add Main Category",
+            "url": "http://localhost:3000/main-categories",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-07-29T09:59:16.017Z",
+            "modified": "2023-07-29T09:59:24.126Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "0db956ab-8c37-4cf3-955e-1a32ad05c3c0",
+            "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
+            "containerId": "",
+            "name": "Delete Main Category",
+            "url": "http://localhost:3000/main-categories/83737",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2023-07-29T09:59:42.000Z",
+            "modified": "2023-07-29T10:00:11.073Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "runOptions": {
+            "delay": 1000,
+            "iterations": 1,
+            "dataFilePath": ""
+        }
+    }
+}
