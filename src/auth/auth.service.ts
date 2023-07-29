@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   async refresh(userId: string, token: string) {
-    const user = await this.usersService.getUserById(userId);
+    const user = await this.usersService.getById(userId);
 
     // "refreshToken" is null when the user is logged out
     if (user.refreshToken === null) {
@@ -60,14 +60,14 @@ export class AuthService {
   }
 
   async signout(user: User) {
-    await this.usersService.updateUser({ refreshToken: null }, user.id);
+    await this.usersService.update({ refreshToken: null }, user.id);
     return 'OK';
   }
 
   async validateUser(credentials: LoginDTO) {
     const { email, password } = credentials;
 
-    const user = await this.usersService.getUserByEmail(email);
+    const user = await this.usersService.getByEmail(email);
     const match = await this.cryptographyUtils.verify(user.password, password);
 
     if (!match) {
@@ -79,7 +79,7 @@ export class AuthService {
 
   private async updateRefreshToken(userId: string, rawRefreshToken: string) {
     const refreshToken = await this.cryptographyUtils.hash(rawRefreshToken);
-    return await this.usersService.updateUser({ refreshToken }, userId);
+    return await this.usersService.update({ refreshToken }, userId);
   }
 
   private generateTokens(user: RequestUser) {
