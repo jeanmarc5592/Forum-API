@@ -24,11 +24,11 @@
             "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
             "containerId": "",
             "name": "Get Main Category By Id",
-            "url": "http://localhost:3000/main-categories/1de95ede-98ac-4137-9f11-497aed51c649",
+            "url": "http://localhost:3000/main-categories/6bb1e98b-f338-4d27-8773-561c6deff16f",
             "method": "GET",
             "sortNum": 20000,
             "created": "2023-07-29T09:57:01.958Z",
-            "modified": "2023-07-29T10:57:40.091Z",
+            "modified": "2023-07-29T11:02:28.770Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -61,13 +61,17 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2023-07-29T09:59:16.017Z",
-            "modified": "2023-07-29T10:57:05.544Z",
+            "modified": "2023-07-29T11:43:09.841Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Frontend\",\n  \"description\": \"All stuff that is related to frontend development.\"\n}",
+                "raw": "{\n  \"name\": \"Backend\",\n  \"description\": \"All stuff that is related to  development.\"\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODE3ZTQzNi1iODBhLTQwMGItODQ0YS02Njg5NGU1NWRhNWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkwNjMwNzc5LCJleHAiOjE2OTA2NTk1Nzl9.f-5Z7aR0_RUsto_Bl74gL4IsMWeWKNcQHvM5fmHpm1c"
             },
             "tests": []
         },

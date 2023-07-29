@@ -24,11 +24,11 @@
             "colId": "111a8abd-dfe4-4d17-ad03-feaf0d69c010",
             "containerId": "",
             "name": "Update User",
-            "url": "http://localhost:3000/users/c3ec6ff9-d50a-462c-bf79-4373ae374ba6",
+            "url": "http://localhost:3000/users/0f5d2227-1330-4f8f-90d5-48242031b100",
             "method": "PATCH",
             "sortNum": 20000,
             "created": "2023-06-21T11:04:16.155Z",
-            "modified": "2023-07-19T13:03:31.209Z",
+            "modified": "2023-07-29T11:40:59.399Z",
             "headers": [],
             "params": [],
             "body": {
@@ -38,7 +38,7 @@
             },
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGQ4MTBkOC1hNWViLTRjZDgtYjFhMC00ZjlmNmRkOGY5MjEiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjg5NzcxNzgyLCJleHAiOjE2ODk4MDA1ODJ9.YqkfINonzQg7fK7_xwQyfq6URWY6aQ52YXKHUOhsY74"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODE3ZTQzNi1iODBhLTQwMGItODQ0YS02Njg5NGU1NWRhNWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkwNjMwNzc5LCJleHAiOjE2OTA2NTk1Nzl9.f-5Z7aR0_RUsto_Bl74gL4IsMWeWKNcQHvM5fmHpm1c"
             },
             "tests": []
         },
@@ -69,7 +69,7 @@
             "method": "GET",
             "sortNum": 70000,
             "created": "2023-06-21T13:42:23.949Z",
-            "modified": "2023-07-19T12:20:46.528Z",
+            "modified": "2023-07-29T11:40:08.283Z",
             "headers": [],
             "params": [
                 {
@@ -85,7 +85,7 @@
             ],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMzQ5ZWFiNS01NTkwLTQ1NzYtOTI0ZC04NjgwYjMxYjAwMGQiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg5NzY5MjM0LCJleHAiOjE2ODk3OTgwMzR9.le_BCbmZYpR3EYrb4M_OiDa-5RYd1W-dFS62qFp6wf0"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODE3ZTQzNi1iODBhLTQwMGItODQ0YS02Njg5NGU1NWRhNWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkwNjMwNzc5LCJleHAiOjE2OTA2NTk1Nzl9.f-5Z7aR0_RUsto_Bl74gL4IsMWeWKNcQHvM5fmHpm1c"
             },
             "tests": []
         }

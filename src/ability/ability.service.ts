@@ -35,4 +35,15 @@ export class AbilityService {
 
     return;
   }
+
+  canCreate(reqUser: RequestUser, subjectToCreate: any) {
+    const ability = this.abilityFactory.defineAbility(reqUser);
+    const isAllowed = ability.can(Actions.CREATE, subjectToCreate);
+
+    if (!isAllowed) {
+      throw new ForbiddenException();
+    }
+
+    return;
+  }
 }

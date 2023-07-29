@@ -7,15 +7,22 @@ import {
   Delete,
   Body,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { MainCategoriesService } from './main-categories.service';
 import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
 import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
 import { AccessTokenGuard } from 'src/auth/guards/access-token.guard';
+import { AbilityService } from '../../ability/ability.service';
+import { RequestUser } from 'src/auth/auth.types';
+import { MainCategory } from './entities/main-category.entity';
 
 @Controller('main-categories')
 export class MainCategoriesController {
-  constructor(private readonly mainCategoriesService: MainCategoriesService) {}
+  constructor(
+    private readonly mainCategoriesService: MainCategoriesService,
+    private readonly abilityService: AbilityService,
+  ) {}
 
   @Get()
   getAll() {
@@ -29,19 +36,34 @@ export class MainCategoriesController {
 
   @UseGuards(AccessTokenGuard)
   @Patch('/:id')
-  update(@Param('id') id: string, @Body() body: UpdateMainCategoryDTO) {
+  async update(
+    @Param('id') id: string,
+    @Body() body: UpdateMainCategoryDTO,
+    @Req() req: { user: RequestUser },
+  ) {
+    const categoryToUpdate = await this.mainCategoriesService.getById(id);
+    this.abilityService.canUpdate(req.user, body, categoryToUpdate);
+
     return this.mainCategoriesService.update(body, id);
   }
 
   @UseGuards(AccessTokenGuard)
   @Delete('/:id')
-  delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {
+    const categoryToDelete = await this.mainCategoriesService.getById(id);
+    this.abilityService.canDelete(req.user, categoryToDelete);
+
     return this.mainCategoriesService.delete(id);
   }
 
   @UseGuards(AccessTokenGuard)
   @Post()
-  create(@Body() body: CreateMainCategoryDTO) {
+  create(
+    @Body() body: CreateMainCategoryDTO,
+    @Req() req: { user: RequestUser },
+  ) {
+    this.abilityService.canCreate(req.user, MainCategory);
+
     return this.mainCategoriesService.create(body);
   }
 }

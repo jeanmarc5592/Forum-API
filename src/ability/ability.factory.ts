@@ -7,6 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { RequestUser, Roles } from '../auth/auth.types';
 import { Subjects, Actions, BuilderType } from './ability.types';
+import { MainCategory } from 'src/categories/main-categories/entities/main-category.entity';
 
 @Injectable()
 export class AbilityFactory {
@@ -51,20 +52,28 @@ export class AbilityFactory {
   private defineModeratorAbilities(user: RequestUser) {
     const { can } = this.builder;
 
+    // USER
     can(Actions.DELETE, User, { id: { $eq: user.id } });
     can(Actions.UPDATE, User, this.ALLOWED_USER_UPDATE_FIELDS, {
       id: { $eq: user.id },
     });
     can(Actions.READ, User);
+
+    // MAIN CATEGORY
+    can(Actions.READ, MainCategory);
   }
 
   private defineUserAbilities(user: RequestUser) {
     const { can } = this.builder;
 
+    // USER
     can(Actions.DELETE, User, { id: { $eq: user.id } });
     can(Actions.UPDATE, User, this.ALLOWED_USER_UPDATE_FIELDS, {
       id: { $eq: user.id },
     });
     can(Actions.READ, User);
+
+    // MAIN CATEGORY
+    can(Actions.READ, MainCategory);
   }
 }
