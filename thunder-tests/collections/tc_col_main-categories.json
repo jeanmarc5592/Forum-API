@@ -24,11 +24,11 @@
             "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
             "containerId": "",
             "name": "Get Main Category By Id",
-            "url": "http://localhost:3000/main-categories/234234",
+            "url": "http://localhost:3000/main-categories/1de95ede-98ac-4137-9f11-497aed51c649",
             "method": "GET",
             "sortNum": 20000,
             "created": "2023-07-29T09:57:01.958Z",
-            "modified": "2023-07-29T09:57:11.016Z",
+            "modified": "2023-07-29T10:57:40.091Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -38,13 +38,18 @@
             "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
             "containerId": "",
             "name": "Update Main Category",
-            "url": "http://localhost:3000/main-categories/35353",
+            "url": "http://localhost:3000/main-categories/1de95ede-98ac-4137-9f11-497aed51c649",
             "method": "PATCH",
             "sortNum": 30000,
             "created": "2023-07-29T09:57:23.305Z",
-            "modified": "2023-07-29T09:57:37.150Z",
+            "modified": "2023-07-29T10:58:31.815Z",
             "headers": [],
             "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Fullstack\",\n  \"description\": \"All about Fullstack Development\"\n}",
+                "form": []
+            },
             "tests": []
         },
         {
@@ -56,9 +61,14 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2023-07-29T09:59:16.017Z",
-            "modified": "2023-07-29T09:59:24.126Z",
+            "modified": "2023-07-29T10:57:05.544Z",
             "headers": [],
             "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Frontend\",\n  \"description\": \"All stuff that is related to frontend development.\"\n}",
+                "form": []
+            },
             "tests": []
         },
         {
@@ -66,11 +76,11 @@
             "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
             "containerId": "",
             "name": "Delete Main Category",
-            "url": "http://localhost:3000/main-categories/83737",
+            "url": "http://localhost:3000/main-categories/1de95ede-98ac-4137-9f11-497aed51c649",
             "method": "DELETE",
             "sortNum": 50000,
             "created": "2023-07-29T09:59:42.000Z",
-            "modified": "2023-07-29T10:00:11.073Z",
+            "modified": "2023-07-29T10:58:42.156Z",
             "headers": [],
             "params": [],
             "tests": []

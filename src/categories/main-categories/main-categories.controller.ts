@@ -1,5 +1,15 @@
-import { Controller, Param, Get, Patch, Post, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Param,
+  Get,
+  Patch,
+  Post,
+  Delete,
+  Body,
+} from '@nestjs/common';
 import { MainCategoriesService } from './main-categories.service';
+import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
+import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
 
 @Controller('main-categories')
 export class MainCategoriesController {
@@ -16,17 +26,17 @@ export class MainCategoriesController {
   }
 
   @Patch('/:id')
-  update(@Param('id') id: string) {
-    return this.mainCategoriesService.update(id);
-  }
-
-  @Post()
-  add() {
-    return this.mainCategoriesService.add();
+  update(@Param('id') id: string, @Body() body: UpdateMainCategoryDTO) {
+    return this.mainCategoriesService.update(body, id);
   }
 
   @Delete('/:id')
   delete(@Param('id') id: string) {
     return this.mainCategoriesService.delete(id);
+  }
+
+  @Post()
+  create(@Body() body: CreateMainCategoryDTO) {
+    return this.mainCategoriesService.create(body);
   }
 }

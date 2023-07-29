@@ -1,24 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MainCategory } from './entities/main-category.entity';
+import { Repository } from 'typeorm';
+import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
+import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
 
 @Injectable()
 export class MainCategoriesService {
-  getAll() {
-    return 'GET ALL';
+  constructor(
+    @InjectRepository(MainCategory)
+    private readonly mainCategoriesRepository: Repository<MainCategory>,
+  ) {}
+
+  async getAll() {
+    return this.mainCategoriesRepository.find();
   }
 
-  getById(id: string) {
-    return 'GET WITH ID ' + id;
+  async getById(id: string) {
+    return await this.findById(id);
   }
 
-  update(id: string) {
-    return 'UPDATE WITH ID ' + id;
+  async update(mainCategoryDTO: UpdateMainCategoryDTO, id: string) {
+    const mainCategory = await this.findById(id);
+
+    Object.assign(mainCategory, mainCategoryDTO);
+
+    return await this.mainCategoriesRepository.save(mainCategory);
   }
 
-  add() {
-    return 'ADD A NEW ONE';
+  async delete(id: string) {
+    const mainCategory = await this.findById(id);
+
+    return this.mainCategoriesRepository.remove(mainCategory);
   }
 
-  delete(id: string) {
-    return 'DELETE WITH ID ' + id;
+  async create(mainCategoryDTO: CreateMainCategoryDTO) {
+    const { name } = mainCategoryDTO;
+
+    const mainCategory = await this.mainCategoriesRepository.findOne({
+      where: [{ name }],
+    });
+
+    if (mainCategory) {
+      throw new BadRequestException(
+        `A main category with the name '${name}' already exists.`,
+      );
+    }
+
+    const newMainCat = this.mainCategoriesRepository.create(mainCategoryDTO);
+
+    return this.mainCategoriesRepository.save(newMainCat);
+  }
+
+  private async findById(id: string) {
+    const mainCategory = await this.mainCategoriesRepository.findOneBy({ id });
+
+    if (!mainCategory) {
+      throw new NotFoundException(`Main Category with id '${id}' not found.`);
+    }
+
+    return mainCategory;
   }
 }
