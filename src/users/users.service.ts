@@ -53,7 +53,7 @@ export class UsersService {
     return await this.usersRepository.remove(user);
   }
 
-  async createUser(userDTO: CreateUserDTO) {
+  async create(userDTO: CreateUserDTO) {
     const { email, password, name } = userDTO;
 
     const user = await this.usersRepository.findOne({

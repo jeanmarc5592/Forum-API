@@ -7,6 +7,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CryptographyUtils } from '../utils/cryptography.utils';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { Roles } from '../auth/auth.types';
+import { MockType, repositoryMockFactory } from '../app.types';
 
 const mockUser: User = {
   id: '1',
@@ -28,23 +29,6 @@ const mockCreateUser: CreateUserDTO = {
   password: 'password',
   age: '30',
 };
-
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<object>;
-};
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
-  () => ({
-    find: jest.fn((entity) => entity),
-    findOneBy: jest.fn((entity) => entity),
-    findOne: jest.fn((entity) => entity),
-    save: jest.fn((entity) => entity),
-    create: jest.fn((entity) => entity),
-    remove: jest.fn((entity) => entity),
-  }),
-);
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -70,11 +54,11 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getUsers', () => {
+  describe('getAll', () => {
     it('should return a list of users', async () => {
       repositoryMock.find?.mockReturnValue([mockUser]);
 
-      const users = await service.getUsers(1, 1);
+      const users = await service.getAll(1, 1);
 
       expect(users).toEqual([mockUser]);
     });
@@ -82,17 +66,17 @@ describe('UsersService', () => {
     it('should return an empty list', async () => {
       repositoryMock.find?.mockReturnValue([]);
 
-      const users = await service.getUsers(1, 1);
+      const users = await service.getAll(1, 1);
 
       expect(users).toEqual([]);
     });
   });
 
-  describe('getUserById', () => {
+  describe('getById', () => {
     it('should return a single user', async () => {
       repositoryMock.findOneBy?.mockReturnValue(mockUser);
 
-      const user = await service.getUserById(mockUser.id);
+      const user = await service.getById(mockUser.id);
 
       expect(user.id).toBe(mockUser.id);
       expect(user.email).toBe(mockUser.email);
@@ -107,17 +91,17 @@ describe('UsersService', () => {
       // @ts-ignore
       repositoryMock.findOneBy?.mockReturnValue(null);
 
-      await expect(service.getUserById('3234123423')).rejects.toThrow(
+      await expect(service.getById('3234123423')).rejects.toThrow(
         NotFoundException,
       );
     });
   });
 
-  describe('getUserByEmail', () => {
+  describe('getByEmail', () => {
     it('should return a single user', async () => {
       repositoryMock.findOneBy?.mockReturnValue(mockUser);
 
-      const user = await service.getUserByEmail(mockUser.email);
+      const user = await service.getByEmail(mockUser.email);
 
       expect(user.id).toBe(mockUser.id);
       expect(user.email).toBe(mockUser.email);
@@ -132,7 +116,7 @@ describe('UsersService', () => {
       // @ts-ignore
       repositoryMock.findOneBy?.mockReturnValue(null);
 
-      await expect(service.getUserByEmail('3234123423')).rejects.toThrow(
+      await expect(service.getByEmail('3234123423')).rejects.toThrow(
         NotFoundException,
       );
     });
@@ -145,7 +129,7 @@ describe('UsersService', () => {
       repositoryMock.findOneBy?.mockReturnValue(mockUser);
       repositoryMock.save?.mockReturnValue({ ...mockUser, ...updates });
 
-      const user = await service.updateUser(updates, '1');
+      const user = await service.update(updates, '1');
 
       expect(user.id).toBe(mockUser.id);
       expect(user.name).toBe(updates.name);
@@ -156,18 +140,18 @@ describe('UsersService', () => {
       // @ts-ignore
       repositoryMock.findOneBy?.mockReturnValue(null);
 
-      await expect(service.updateUser({}, '3234123423')).rejects.toThrow(
+      await expect(service.update({}, '3234123423')).rejects.toThrow(
         NotFoundException,
       );
     });
   });
 
-  describe('deleteUser', () => {
+  describe('delete', () => {
     it('should delete an existing user', async () => {
       repositoryMock.findOneBy?.mockReturnValue(mockUser);
       repositoryMock.delete?.mockReturnValue(mockUser);
 
-      const user = await service.deleteUser('1');
+      const user = await service.delete('1');
 
       expect(user.id).toBe(mockUser.id);
       expect(user.email).toBe(mockUser.email);
@@ -182,13 +166,13 @@ describe('UsersService', () => {
       // @ts-ignore
       repositoryMock.findOneBy?.mockReturnValue(null);
 
-      await expect(service.deleteUser('3234123423')).rejects.toThrow(
+      await expect(service.delete('3234123423')).rejects.toThrow(
         NotFoundException,
       );
     });
   });
 
-  describe('createUser', () => {
+  describe('create', () => {
     it('should create a new user', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -199,7 +183,7 @@ describe('UsersService', () => {
         password: 'Hash123!',
       });
 
-      const user = await service.createUser(mockCreateUser);
+      const user = await service.create(mockCreateUser);
 
       expect(user.id).toBe(mockUser.id);
       expect(user.email).toBe(mockUser.email);
@@ -213,7 +197,7 @@ describe('UsersService', () => {
     it('should throw a BadRequestException if a user already exists', async () => {
       repositoryMock.findOne?.mockReturnValue(mockUser);
 
-      await expect(service.createUser(mockCreateUser)).rejects.toThrow(
+      await expect(service.create(mockCreateUser)).rejects.toThrow(
         BadRequestException,
       );
     });

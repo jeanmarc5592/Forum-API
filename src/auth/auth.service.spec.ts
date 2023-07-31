@@ -44,10 +44,10 @@ describe('AuthService', () => {
         {
           provide: UsersService,
           useValue: {
-            createUser: jest.fn(),
-            updateUser: jest.fn(),
-            getUserByEmail: jest.fn(),
-            getUserById: jest.fn(),
+            create: jest.fn(),
+            update: jest.fn(),
+            getByEmail: jest.fn(),
+            getById: jest.fn(),
           },
         },
         {
@@ -93,8 +93,8 @@ describe('AuthService', () => {
   describe('signup', () => {
     it('should return the correct token pair', async () => {
       jest.spyOn(jwtService, 'sign').mockReturnValue('mocked-token');
-      jest.spyOn(usersService, 'createUser').mockResolvedValue(mockUser);
-      jest.spyOn(usersService, 'getUserById').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'create').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getById').mockResolvedValue(mockUser);
 
       const tokens = await service.signup(mockCreateUser);
 
@@ -110,7 +110,7 @@ describe('AuthService', () => {
     it('should return the correct token pair', async () => {
       jest.spyOn(jwtService, 'sign').mockReturnValue('mocked-token');
       jest.spyOn(cryptographyUtils, 'verify').mockResolvedValue(true);
-      jest.spyOn(usersService, 'getUserById').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getById').mockResolvedValue(mockUser);
 
       const tokens = await service.refresh('1', 'token');
 
@@ -124,7 +124,7 @@ describe('AuthService', () => {
     it('should throw UnauthorizedException if user.refreshToken is null', async () => {
       Object.assign(mockUser, { refreshToken: null });
 
-      jest.spyOn(usersService, 'getUserById').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getById').mockResolvedValue(mockUser);
 
       await expect(service.refresh('123', 'Token')).rejects.toThrow(
         UnauthorizedException,
@@ -133,7 +133,7 @@ describe('AuthService', () => {
 
     it('should throw UnauthorizedException if tokens do not match', async () => {
       jest.spyOn(cryptographyUtils, 'verify').mockResolvedValue(false);
-      jest.spyOn(usersService, 'getUserById').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getById').mockResolvedValue(mockUser);
 
       await expect(service.refresh('123', 'InvalidToken')).rejects.toThrow(
         UnauthorizedException,
@@ -145,7 +145,7 @@ describe('AuthService', () => {
     it('should update the user and return "OK"', async () => {
       await service.signout(mockUser);
 
-      expect(usersService.updateUser).toHaveBeenCalledWith(
+      expect(usersService.update).toHaveBeenCalledWith(
         { refreshToken: null },
         mockUser.id,
       );
@@ -162,7 +162,7 @@ describe('AuthService', () => {
     it('should return null if password does not match', async () => {
       const credentials = { email: 'email@example.com', password: 'wrong' };
 
-      jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getByEmail').mockResolvedValue(mockUser);
       jest.spyOn(cryptographyUtils, 'verify').mockResolvedValue(false);
 
       const result = await service.validateUser(credentials);
@@ -173,7 +173,7 @@ describe('AuthService', () => {
     it('should return the user if credentials are valid', async () => {
       const credentials = { email: 'email@example.com', password: 'password' };
 
-      jest.spyOn(usersService, 'getUserByEmail').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getByEmail').mockResolvedValue(mockUser);
       jest.spyOn(cryptographyUtils, 'verify').mockResolvedValue(true);
 
       const result = await service.validateUser(credentials);

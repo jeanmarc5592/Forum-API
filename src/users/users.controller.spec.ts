@@ -45,10 +45,11 @@ describe('UsersController', () => {
         {
           provide: UsersService,
           useValue: {
-            getUsers: jest.fn(),
-            getUserById: jest.fn(),
-            updateUser: jest.fn(),
-            deleteUser: jest.fn(),
+            getAll: jest.fn(),
+            getById: jest.fn(),
+            update: jest.fn(),
+            delete: jest.fn(),
+            create: jest.fn(),
           },
         },
         {
@@ -71,9 +72,9 @@ describe('UsersController', () => {
 
   describe('getUsers', () => {
     it('should return a list of users', async () => {
-      jest.spyOn(usersService, 'getUsers').mockResolvedValue(mockUsers);
+      jest.spyOn(usersService, 'getAll').mockResolvedValue(mockUsers);
 
-      const users = await controller.getUsers({ limit: 3, page: 1 });
+      const users = await controller.getAll({ limit: 3, page: 1 });
 
       expect(users).toEqual(mockUsers);
     });
@@ -81,9 +82,9 @@ describe('UsersController', () => {
 
   describe('getUsersById', () => {
     it('should return the user with the provided id', async () => {
-      jest.spyOn(usersService, 'getUserById').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getById').mockResolvedValue(mockUser);
 
-      const user = await controller.getUserById(mockUser.id);
+      const user = await controller.getById(mockUser.id);
 
       expect(user.id).toBe(mockUser.id);
     });
@@ -95,9 +96,9 @@ describe('UsersController', () => {
       const userName = 'Updated Name';
 
       Object.assign(mockUser, { name: userName });
-      jest.spyOn(usersService, 'updateUser').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'update').mockResolvedValue(mockUser);
 
-      const user = await controller.updateUser(
+      const user = await controller.update(
         userId,
         { name: userName },
         mockRequest,
@@ -112,9 +113,9 @@ describe('UsersController', () => {
     it('should return the deleted user', async () => {
       const userId = mockUser.id;
 
-      jest.spyOn(usersService, 'deleteUser').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'delete').mockResolvedValue(mockUser);
 
-      const user = await controller.deleteUser(userId, mockRequest);
+      const user = await controller.delete(userId, mockRequest);
 
       expect(user).toBe(mockUser);
     });
