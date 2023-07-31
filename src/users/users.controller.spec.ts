@@ -70,7 +70,7 @@ describe('UsersController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getUsers', () => {
+  describe('getAll', () => {
     it('should return a list of users', async () => {
       jest.spyOn(usersService, 'getAll').mockResolvedValue(mockUsers);
 
@@ -80,7 +80,7 @@ describe('UsersController', () => {
     });
   });
 
-  describe('getUsersById', () => {
+  describe('getById', () => {
     it('should return the user with the provided id', async () => {
       jest.spyOn(usersService, 'getById').mockResolvedValue(mockUser);
 
@@ -90,7 +90,7 @@ describe('UsersController', () => {
     });
   });
 
-  describe('updateUser', () => {
+  describe('update', () => {
     it('should return the updated user', async () => {
       const userId = mockUser.id;
       const userName = 'Updated Name';
@@ -109,7 +109,7 @@ describe('UsersController', () => {
     });
   });
 
-  describe('deleteUser', () => {
+  describe('delete', () => {
     it('should return the deleted user', async () => {
       const userId = mockUser.id;
 
