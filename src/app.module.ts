@@ -23,7 +23,7 @@ import { CategoriesModule } from './categories/categories.module';
           username: config.get<string>('DB_USER'),
           password: config.get<string>('DB_PASSWORD'),
           database: config.get<string>('DB_NAME'),
-          ssl: true,
+          ssl: process.env.NODE_EV === 'production ? true : false',
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           migrations: ['migrations/*.js'],
           synchronize: true,
