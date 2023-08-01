@@ -122,7 +122,7 @@ describe('UsersService', () => {
     });
   });
 
-  describe('updateUser', () => {
+  describe('update', () => {
     it('should update an existing user', async () => {
       const updates = { name: 'Updated Name' };
 
@@ -177,21 +177,20 @@ describe('UsersService', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       repositoryMock.findOne?.mockReturnValue(null);
-      repositoryMock.create?.mockReturnValue(mockUser);
+      repositoryMock.create?.mockReturnValue(mockCreateUser);
       repositoryMock.save?.mockReturnValue({
-        ...mockUser,
+        ...mockCreateUser,
         password: 'Hash123!',
       });
 
       const user = await service.create(mockCreateUser);
 
-      expect(user.id).toBe(mockUser.id);
-      expect(user.email).toBe(mockUser.email);
-      expect(user.name).toBe(mockUser.name);
-      expect(user.password).not.toBe(mockUser.password);
+      expect(user.email).toBe(mockCreateUser.email);
+      expect(user.name).toBe(mockCreateUser.name);
+      expect(user.password).not.toBe(mockCreateUser.password);
       expect(user.password).toBe('Hash123!');
-      expect(user.age).toBe(mockUser.age);
-      expect(user.bio).toBe(mockUser.bio);
+      expect(user.age).toBe(mockCreateUser.age);
+      expect(user.bio).toBe(mockCreateUser.bio);
     });
 
     it('should throw a BadRequestException if a user already exists', async () => {
