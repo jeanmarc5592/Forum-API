@@ -39,7 +39,7 @@ export class SubCategoriesController {
   }
 
   @Post()
-  create(@Body() createSubCategoryDto: CreateSubCategoryDto) {
-    return this.subCategoriesService.create(createSubCategoryDto);
+  create(@Body() body: CreateSubCategoryDto) {
+    return this.subCategoriesService.create(body);
   }
 }
