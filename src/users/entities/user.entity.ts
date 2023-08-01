@@ -16,11 +16,11 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Unique(['name'])
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   age: string;
 
   @Column()
