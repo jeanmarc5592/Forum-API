@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { SubCategoriesService } from './sub-categories.service';
-import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
-import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
+import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
+import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 
 @Controller('sub-categories')
 export class SubCategoriesController {
