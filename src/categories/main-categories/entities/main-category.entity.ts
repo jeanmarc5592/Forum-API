@@ -1,3 +1,4 @@
+import { SubCategory } from 'src/categories/sub-categories/entities/sub-category.entity';
 import {
   Entity,
   Column,
@@ -6,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Unique,
+  OneToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,6 +22,9 @@ export class MainCategory {
 
   @Column()
   description: string;
+
+  @OneToMany(() => SubCategory, (subCategory) => subCategory.mainCategory)
+  subCategories: SubCategory[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
