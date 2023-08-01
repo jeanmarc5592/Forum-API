@@ -38,17 +38,21 @@
             "colId": "60ad627b-38b9-4ca0-8d4e-4aab2987c2a2",
             "containerId": "",
             "name": "Update Main Category",
-            "url": "http://localhost:3000/main-categories/1de95ede-98ac-4137-9f11-497aed51c649",
+            "url": "http://localhost:3000/main-categories/debc6827-044d-4c0b-829b-5d4503333000",
             "method": "PATCH",
             "sortNum": 30000,
             "created": "2023-07-29T09:57:23.305Z",
-            "modified": "2023-07-29T10:58:31.815Z",
+            "modified": "2023-08-01T14:49:38.166Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Fullstack\",\n  \"description\": \"All about Fullstack Development\"\n}",
+                "raw": "{\n  \"description\": \"All stuff that is related to backend development.\"\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYzZlZjViZC04NDEyLTQzNWUtOWQ4Ny00YmQ5NDRjNDI3OWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkwOTAwOTQxLCJleHAiOjE2OTA5Mjk3NDF9.bPMAD9wHnWPX4VNrP3IrDJvSnWI6R8p6axE7puXlbjU"
             },
             "tests": []
         },
@@ -61,17 +65,17 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2023-07-29T09:59:16.017Z",
-            "modified": "2023-07-29T11:43:09.841Z",
+            "modified": "2023-08-01T14:48:31.321Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Backend\",\n  \"description\": \"All stuff that is related to  development.\"\n}",
+                "raw": "{\n  \"name\": \"Frontend\",\n  \"description\": \"All stuff that is related to frontend development.\"\n}",
                 "form": []
             },
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODE3ZTQzNi1iODBhLTQwMGItODQ0YS02Njg5NGU1NWRhNWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkwNjMwNzc5LCJleHAiOjE2OTA2NTk1Nzl9.f-5Z7aR0_RUsto_Bl74gL4IsMWeWKNcQHvM5fmHpm1c"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYzZlZjViZC04NDEyLTQzNWUtOWQ4Ny00YmQ5NDRjNDI3OWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkwOTAwOTQxLCJleHAiOjE2OTA5Mjk3NDF9.bPMAD9wHnWPX4VNrP3IrDJvSnWI6R8p6axE7puXlbjU"
             },
             "tests": []
         },

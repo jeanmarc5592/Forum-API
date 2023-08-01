@@ -19,7 +19,7 @@ export class SubCategoriesController {
 
   @Get()
   getAll(@Query() query: SubCategoriesQueryDTO) {
-    return this.subCategoriesService.getAll();
+    return this.subCategoriesService.getAll(query.mainCategory);
   }
 
   @Get('/:id')

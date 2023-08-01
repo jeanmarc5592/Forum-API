@@ -4,34 +4,57 @@ import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SubCategory } from './entities/sub-category.entity';
 import { Repository } from 'typeorm';
+import { MainCategoriesService } from '../main-categories/main-categories.service';
 
 @Injectable()
 export class SubCategoriesService {
   constructor(
     @InjectRepository(SubCategory)
     private readonly subCategoriesRepository: Repository<SubCategory>,
+    private readonly mainCategoiesService: MainCategoriesService,
   ) {}
 
   async getAll(mainCategoryId?: string) {
-    if (!!mainCategoryId) {
+    if (!mainCategoryId) {
       return this.subCategoriesRepository.find();
     }
+
+    return this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.mainCategory', 'mainCategory')
+      .where('mainCategory.id = :mainCategoryId', { mainCategoryId })
+      .getMany();
   }
 
   async getById(id: string) {
     return await this.findById(id);
   }
 
-  update(id: string, subCategoryDto: UpdateSubCategoryDto) {
-    return `This action updates a #${id} subCategory`;
+  async update(id: string, subCategoryDto: UpdateSubCategoryDto) {
+    const subCategory = await this.findById(id);
+
+    Object.assign(subCategory, subCategoryDto);
+
+    return this.subCategoriesRepository.save(subCategory);
   }
 
-  delete(id: string) {
-    return `This action removes a #${id} subCategory`;
+  async delete(id: string) {
+    const subCategory = await this.findById(id);
+
+    return this.subCategoriesRepository.remove(subCategory);
   }
 
   async create(subCategoryDto: CreateSubCategoryDto) {
-    const newSubCat = this.subCategoriesRepository.create(subCategoryDto);
+    const { mainCategoryId, name, description } = subCategoryDto;
+
+    const mainCategory = await this.mainCategoiesService.getById(
+      mainCategoryId,
+    );
+    const newSubCat = this.subCategoriesRepository.create({
+      name,
+      description,
+      mainCategory,
+    });
 
     return this.subCategoriesRepository.save(newSubCat);
   }

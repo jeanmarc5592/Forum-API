@@ -5,7 +5,6 @@ import {
   BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
-  Unique,
   ManyToOne,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,7 +16,6 @@ export class SubCategory {
   id: string;
 
   @Column()
-  @Unique(['name'])
   name: string;
 
   @Column()

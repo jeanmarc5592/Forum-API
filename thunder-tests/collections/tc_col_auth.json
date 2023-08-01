@@ -14,12 +14,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T15:32:42.824Z",
-            "modified": "2023-07-29T11:42:40.991Z",
+            "modified": "2023-08-01T10:36:01.644Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}",
                 "form": []
             },
             "tests": []
@@ -33,12 +33,12 @@
             "method": "POST",
             "sortNum": 5000,
             "created": "2023-06-28T14:37:46.374Z",
-            "modified": "2023-07-29T11:40:01.004Z",
+            "modified": "2023-08-01T14:16:10.790Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"moderator\",\n  \"age\": \"31\",\n  \"email\": \"moderator@example.com\",\n  \"password\": \"password\"\n}",
+                "raw": "{\n  \"name\": \"admin\",\n  \"age\": \"31\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}",
                 "form": []
             },
             "tests": []
