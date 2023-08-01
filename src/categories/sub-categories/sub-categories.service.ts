@@ -12,8 +12,10 @@ export class SubCategoriesService {
     private readonly subCategoriesRepository: Repository<SubCategory>,
   ) {}
 
-  getAll() {
-    return `This action returns all subCategories`;
+  async getAll(mainCategoryId?: string) {
+    if (!!mainCategoryId) {
+      return this.subCategoriesRepository.find();
+    }
   }
 
   async getById(id: string) {

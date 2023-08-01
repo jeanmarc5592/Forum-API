@@ -6,17 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { SubCategoriesService } from './sub-categories.service';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
+import { SubCategoriesQueryDTO } from '../main-categories/dtos/sub-categories-query.dto';
 
 @Controller('sub-categories')
 export class SubCategoriesController {
   constructor(private readonly subCategoriesService: SubCategoriesService) {}
 
   @Get()
-  getAll() {
+  getAll(@Query() query: SubCategoriesQueryDTO) {
     return this.subCategoriesService.getAll();
   }
 
