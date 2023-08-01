@@ -16,8 +16,8 @@ export class SubCategoriesService {
     return `This action returns all subCategories`;
   }
 
-  getById(id: string) {
-    return `This action returns a #${id} subCategory`;
+  async getById(id: string) {
+    return await this.findById(id);
   }
 
   update(id: string, subCategoryDto: UpdateSubCategoryDto) {
@@ -32,5 +32,15 @@ export class SubCategoriesService {
     const newSubCat = this.subCategoriesRepository.create(subCategoryDto);
 
     return this.subCategoriesRepository.save(newSubCat);
+  }
+
+  private async findById(id: string) {
+    const subCategory = await this.subCategoriesRepository.findOneBy({ id });
+
+    if (!subCategory) {
+      throw new NotFoundException(`Sub Category with ID '${id}' not found`);
+    }
+
+    return subCategory;
   }
 }
