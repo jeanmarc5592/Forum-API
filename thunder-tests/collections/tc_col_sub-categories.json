@@ -14,7 +14,7 @@
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-08-01T10:37:03.208Z",
-            "modified": "2023-08-01T15:27:25.985Z",
+            "modified": "2023-08-02T12:28:03.307Z",
             "headers": [],
             "params": [
                 {
@@ -67,9 +67,13 @@
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-08-01T15:12:29.704Z",
-            "modified": "2023-08-01T15:26:21.365Z",
+            "modified": "2023-08-02T12:29:47.795Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDg0YjZlYS1lOGExLTQ2ODQtYThjOC05OThkMDZjYzc4ZmQiLCJuYW1lIjoibW9kZXJhdG9yIiwiZW1haWwiOiJtb2RlcmF0b3JAZXhhbXBsZS5jb20iLCJyb2xlIjoibW9kZXJhdG9yIiwiaWF0IjoxNjkwOTc5MzU4LCJleHAiOjE2OTEwMDgxNTh9.e7m8D-MuugmtTg2dOmjkQ1j1WhT9anZqI9CB_o0wBUQ"
+            },
             "tests": []
         },
         {
@@ -81,13 +85,17 @@
             "method": "PATCH",
             "sortNum": 50000,
             "created": "2023-08-01T15:23:49.144Z",
-            "modified": "2023-08-01T15:25:01.869Z",
+            "modified": "2023-08-02T12:29:30.720Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"Questions\"\n}",
+                "raw": "{\n  \"name\": \"Helpcenter\"\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDg0YjZlYS1lOGExLTQ2ODQtYThjOC05OThkMDZjYzc4ZmQiLCJuYW1lIjoibW9kZXJhdG9yIiwiZW1haWwiOiJtb2RlcmF0b3JAZXhhbXBsZS5jb20iLCJyb2xlIjoibW9kZXJhdG9yIiwiaWF0IjoxNjkwOTc5MzU4LCJleHAiOjE2OTEwMDgxNTh9.e7m8D-MuugmtTg2dOmjkQ1j1WhT9anZqI9CB_o0wBUQ"
             },
             "tests": []
         }

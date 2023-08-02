@@ -61,6 +61,9 @@ export class AbilityFactory {
 
     // MAIN CATEGORY
     can(Actions.READ, MainCategory);
+
+    // SUB CATEGORY
+    can(Actions.READ, 'SubCategory');
   }
 
   private defineUserAbilities(user: RequestUser) {
@@ -75,5 +78,8 @@ export class AbilityFactory {
 
     // MAIN CATEGORY
     can(Actions.READ, MainCategory);
+
+    // SUB CATEGORY
+    can(Actions.READ, 'SubCategory');
   }
 }
