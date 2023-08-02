@@ -37,6 +37,11 @@ export class MainCategoriesController {
     return this.mainCategoriesService.getById(id);
   }
 
+  @Get('/:id/sub-categories')
+  getSubCategories(@Param('id') id: string) {
+    return this.mainCategoriesService.getSubCategories(id);
+  }
+
   @UseGuards(AccessTokenGuard)
   @Patch('/:id')
   async update(
