@@ -10,13 +10,24 @@
             "colId": "bd84c9ec-7d74-418d-a6b8-cf259606479e",
             "containerId": "",
             "name": "Get Sub Categories",
-            "url": "http://localhost:3000/sub-categories",
+            "url": "http://localhost:3000/sub-categories?page=1&limit=1",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-08-01T10:37:03.208Z",
-            "modified": "2023-08-02T12:42:41.525Z",
+            "modified": "2023-08-02T12:47:28.510Z",
             "headers": [],
-            "params": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
             "tests": []
         },
         {

@@ -14,8 +14,11 @@ export class SubCategoriesService {
     private readonly mainCategoiesService: MainCategoriesService,
   ) {}
 
-  getAll() {
-    return this.subCategoriesRepository.find();
+  getAll(limit: number, page: number) {
+    const skip = (page - 1) * limit;
+    const take = limit;
+
+    return this.subCategoriesRepository.find({ skip, take });
   }
 
   async getById(id: string) {

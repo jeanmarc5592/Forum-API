@@ -10,6 +10,7 @@ import {
   Req,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Query,
 } from '@nestjs/common';
 import { SubCategoriesService } from './sub-categories.service';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
@@ -18,6 +19,7 @@ import { AccessTokenGuard } from '../../auth/guards/access-token.guard';
 import { AbilityService } from '../../ability/ability.service';
 import { RequestUser } from '../../auth/auth.types';
 import { SubCategory } from './entities/sub-category.entity';
+import { SubCategoriesQueryDTO } from '../main-categories/dtos/sub-categories-query.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('sub-categories')
@@ -28,8 +30,10 @@ export class SubCategoriesController {
   ) {}
 
   @Get()
-  getAll() {
-    return this.subCategoriesService.getAll();
+  getAll(@Query() query: SubCategoriesQueryDTO) {
+    const { limit, page } = query;
+
+    return this.subCategoriesService.getAll(limit, page);
   }
 
   @Get('/:id')
