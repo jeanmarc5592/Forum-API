@@ -10,19 +10,13 @@
             "colId": "bd84c9ec-7d74-418d-a6b8-cf259606479e",
             "containerId": "",
             "name": "Get Sub Categories",
-            "url": "http://localhost:3000/sub-categories?mainCategory=aa11d16f-084e-4634-9617-63f25c00c468",
+            "url": "http://localhost:3000/sub-categories",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-08-01T10:37:03.208Z",
-            "modified": "2023-08-02T12:28:03.307Z",
+            "modified": "2023-08-02T12:42:41.525Z",
             "headers": [],
-            "params": [
-                {
-                    "name": "mainCategory",
-                    "value": "aa11d16f-084e-4634-9617-63f25c00c468",
-                    "isPath": false
-                }
-            ],
+            "params": [],
             "tests": []
         },
         {

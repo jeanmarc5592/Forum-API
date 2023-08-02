@@ -14,16 +14,8 @@ export class SubCategoriesService {
     private readonly mainCategoiesService: MainCategoriesService,
   ) {}
 
-  async getAll(mainCategoryId?: string) {
-    if (!mainCategoryId) {
-      return this.subCategoriesRepository.find();
-    }
-
-    return this.subCategoriesRepository
-      .createQueryBuilder('subCategory')
-      .leftJoinAndSelect('subCategory.mainCategory', 'mainCategory')
-      .where('mainCategory.id = :mainCategoryId', { mainCategoryId })
-      .getMany();
+  getAll() {
+    return this.subCategoriesRepository.find();
   }
 
   async getById(id: string) {

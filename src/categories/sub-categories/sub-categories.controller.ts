@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Query,
   UseGuards,
   Req,
   UseInterceptors,
@@ -15,7 +14,6 @@ import {
 import { SubCategoriesService } from './sub-categories.service';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
-import { SubCategoriesQueryDTO } from '../main-categories/dtos/sub-categories-query.dto';
 import { AccessTokenGuard } from '../../auth/guards/access-token.guard';
 import { AbilityService } from '../../ability/ability.service';
 import { RequestUser } from '../../auth/auth.types';
@@ -30,8 +28,8 @@ export class SubCategoriesController {
   ) {}
 
   @Get()
-  getAll(@Query() query: SubCategoriesQueryDTO) {
-    return this.subCategoriesService.getAll(query.mainCategory);
+  getAll() {
+    return this.subCategoriesService.getAll();
   }
 
   @Get('/:id')
