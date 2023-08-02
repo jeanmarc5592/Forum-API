@@ -9,6 +9,8 @@ import {
   Query,
   UseGuards,
   Req,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { SubCategoriesService } from './sub-categories.service';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
@@ -19,6 +21,7 @@ import { AbilityService } from '../../ability/ability.service';
 import { RequestUser } from '../../auth/auth.types';
 import { SubCategory } from './entities/sub-category.entity';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('sub-categories')
 export class SubCategoriesController {
   constructor(

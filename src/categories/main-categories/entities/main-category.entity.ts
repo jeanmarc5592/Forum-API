@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { SubCategory } from 'src/categories/sub-categories/entities/sub-category.entity';
 import {
   Entity,
@@ -27,9 +28,11 @@ export class MainCategory {
   subCategories: SubCategory[];
 
   @CreateDateColumn({ type: 'timestamp' })
+  @Exclude()
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
+  @Exclude()
   updated_at: Date;
 
   @BeforeInsert()

@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { MainCategory } from 'src/categories/main-categories/entities/main-category.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class SubCategory {
@@ -25,9 +26,11 @@ export class SubCategory {
   mainCategory: MainCategory;
 
   @CreateDateColumn({ type: 'timestamp' })
+  @Exclude()
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
+  @Exclude()
   updated_at: Date;
 
   @BeforeInsert()

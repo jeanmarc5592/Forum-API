@@ -8,6 +8,8 @@ import {
   Body,
   UseGuards,
   Req,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { MainCategoriesService } from './main-categories.service';
 import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
@@ -17,6 +19,7 @@ import { AbilityService } from '../../ability/ability.service';
 import { RequestUser } from '../../auth/auth.types';
 import { MainCategory } from './entities/main-category.entity';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('main-categories')
 export class MainCategoriesController {
   constructor(
