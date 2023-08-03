@@ -10,6 +10,9 @@
 - Can delete himself
 - Can delete any other user
 
+- Can create, delete and update main categories
+- Can create, delete and update sub categories
+
 ### MODERATOR
 - Can update himself
 - Can NOT update it's role
@@ -17,12 +20,18 @@
 - Can delete himself
 - Can NOT delete any other user
 
+- Can NOT create, delete and update main categories
+- Can NOT create, delete and update sub categories
+
 ### USER
 - Can update himself
 - Can NOT update it's role
 - Can NOT update any other's profile
 - Can delete himself
 - Can NOT delete any other user
+
+- Can NOT create, delete and update main categories
+- Can NOT create, delete and update sub categories
 
 ----------------------------------------------
 
@@ -47,6 +56,10 @@
   - If credentials are valid, user is signed up
   - If credentials are NOT valid (look at DTO), 400 is thrown
   - If email is already taken, 400 is thrown
+
+- Can read all main categories
+- Can read single main categories
+- Can read sub categories of a specific main category
 
 ### REFRESH TOKEN
 - If refresh token from request is valid, a new token pair is generated
