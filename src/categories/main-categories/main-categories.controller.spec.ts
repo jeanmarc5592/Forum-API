@@ -6,6 +6,7 @@ import { MainCategory } from './entities/main-category.entity';
 import { Roles, RequestUser } from '../../auth/auth.types';
 import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
 import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
+import { SubCategory } from '../sub-categories/entities/sub-category.entity';
 
 const mockMainCats = [
   { id: '1', name: 'Main Cat 1' },
@@ -17,7 +18,16 @@ const mockMainCat: MainCategory = {
   id: '1',
   name: 'Frontend Development',
   description: 'All About Frontend Development',
-  subCategories: [],
+  subCategories: [
+    {
+      id: '1',
+      name: 'React',
+    } as SubCategory,
+    {
+      id: '2',
+      name: 'Vue',
+    } as SubCategory,
+  ],
   created_at: new Date(),
   updated_at: new Date(),
   generateId: jest.fn(),
@@ -45,6 +55,7 @@ describe('MainCategoriesController', () => {
           useValue: {
             getAll: jest.fn(),
             getById: jest.fn(),
+            getWithSubCategories: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
             create: jest.fn(),
@@ -86,6 +97,21 @@ describe('MainCategoriesController', () => {
       const mainCat = await controller.getById(mockMainCat.id);
 
       expect(mainCat).toBe(mockMainCat);
+    });
+  });
+
+  describe('getWithSubCategories', () => {
+    it('should return the sub categories of the main category with the provided id', async () => {
+      const mainCatId = mockMainCat.id;
+      const subCats = mockMainCat.subCategories;
+
+      jest
+        .spyOn(mainCatService, 'getWithSubCategories')
+        .mockResolvedValue(mockMainCat);
+
+      const mainCat = await controller.getWithSubCategories(mainCatId);
+
+      expect(mainCat?.subCategories).toEqual(subCats);
     });
   });
 

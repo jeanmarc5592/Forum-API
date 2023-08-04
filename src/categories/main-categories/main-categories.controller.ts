@@ -38,8 +38,8 @@ export class MainCategoriesController {
   }
 
   @Get('/:id/sub-categories')
-  getSubCategories(@Param('id') id: string) {
-    return this.mainCategoriesService.getSubCategories(id);
+  getWithSubCategories(@Param('id') id: string) {
+    return this.mainCategoriesService.getWithSubCategories(id);
   }
 
   @UseGuards(AccessTokenGuard)

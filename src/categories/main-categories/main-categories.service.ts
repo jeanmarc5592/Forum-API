@@ -24,12 +24,12 @@ export class MainCategoriesService {
     return await this.findById(id);
   }
 
-  getSubCategories(id: string) {
+  getWithSubCategories(id: string) {
     return this.mainCategoriesRepository
       .createQueryBuilder('mainCategory')
       .leftJoinAndSelect('mainCategory.subCategories', 'subCategory')
       .where('mainCategory.id = :id', { id })
-      .getMany();
+      .getOne();
   }
 
   async update(mainCategoryDTO: UpdateMainCategoryDTO, id: string) {
