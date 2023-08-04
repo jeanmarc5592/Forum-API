@@ -7,12 +7,22 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
 import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
+import { SubCategory } from '../sub-categories/entities/sub-category.entity';
 
 const mockMainCat: MainCategory = {
   id: '1',
   name: 'Frontend Development',
   description: 'All About Frontend Development',
-  subCategories: [],
+  subCategories: [
+    {
+      id: '1',
+      name: 'React',
+    } as SubCategory,
+    {
+      id: '2',
+      name: 'Vue',
+    } as SubCategory,
+  ],
   created_at: new Date(),
   updated_at: new Date(),
   generateId: jest.fn(),
@@ -74,6 +84,35 @@ describe('MainCategoriesService', () => {
       repositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.getById('12334')).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('getWithSubCategories', () => {
+    it('should return a single main category with sub categories', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockMainCat),
+      });
+
+      const mainCat = await service.getWithSubCategories(mockMainCat.id);
+
+      expect(mainCat).toEqual(mockMainCat);
+    });
+
+    it('should return an empty list for sub categories', async () => {
+      Object.assign(mockMainCat, { subCategories: [] });
+
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockMainCat),
+      });
+
+      const mainCat = await service.getWithSubCategories(mockMainCat.id);
+
+      expect(mainCat).toEqual(mockMainCat);
+      expect(mainCat?.subCategories).toEqual([]);
     });
   });
 

@@ -14,5 +14,10 @@ export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
     save: jest.fn((entity) => entity),
     create: jest.fn((entity) => entity),
     remove: jest.fn((entity) => entity),
+    createQueryBuilder: jest.fn(() => ({
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getOne: jest.fn(),
+    })),
   }),
 );
