@@ -14,5 +14,6 @@ import { AbilityModule } from 'src/ability/ability.module';
   ],
   controllers: [SubCategoriesController],
   providers: [SubCategoriesService],
+  exports: [SubCategoriesService],
 })
 export class SubCategoriesModule {}

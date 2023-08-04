@@ -8,7 +8,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { MainCategory } from 'src/categories/main-categories/entities/main-category.entity';
+import { MainCategory } from '../../main-categories/entities/main-category.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()

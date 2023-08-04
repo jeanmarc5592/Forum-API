@@ -12,6 +12,7 @@ const mockMainCat: MainCategory = {
   id: '1',
   name: 'Frontend Development',
   description: 'All About Frontend Development',
+  subCategories: [],
   created_at: new Date(),
   updated_at: new Date(),
   generateId: jest.fn(),

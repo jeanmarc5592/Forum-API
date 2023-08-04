@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { SubCategory } from 'src/categories/sub-categories/entities/sub-category.entity';
+import { SubCategory } from '../../sub-categories/entities/sub-category.entity';
 import {
   Entity,
   Column,
