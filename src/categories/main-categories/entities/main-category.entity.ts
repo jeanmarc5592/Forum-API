@@ -24,7 +24,9 @@ export class MainCategory {
   @Column()
   description: string;
 
-  @OneToMany(() => SubCategory, (subCategory) => subCategory.mainCategory)
+  @OneToMany(() => SubCategory, (subCategory) => subCategory.mainCategory, {
+    cascade: ['remove'],
+  })
   subCategories: SubCategory[];
 
   @CreateDateColumn({ type: 'timestamp' })
