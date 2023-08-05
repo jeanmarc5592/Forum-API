@@ -5,44 +5,28 @@ import {
   BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
-  Unique,
+  ManyToOne,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import { MainCategory } from '../../main-categories/entities/main-category.entity';
 import { Exclude } from 'class-transformer';
-import { Roles } from '../../auth/auth.types';
 
 @Entity()
-export class User {
+export class SubCategory {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
-  @Unique(['name'])
+  @Column()
   name: string;
 
-  @Column({ nullable: true })
-  age: string;
-
   @Column()
-  @Unique(['email'])
-  @Exclude()
-  email: string;
+  description: string;
 
-  @Column()
-  @Exclude()
-  password: string;
-
-  @Column({ nullable: true })
-  bio: string;
-
-  @Column({ nullable: true })
-  @Exclude()
-  refreshToken: string;
-
-  @Column({ type: 'enum', enum: Roles, default: Roles.USER })
-  role: Roles;
+  @ManyToOne(() => MainCategory, (mainCategory) => mainCategory.subCategories)
+  mainCategory: MainCategory;
 
   @CreateDateColumn({ type: 'timestamp' })
+  @Exclude()
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })

@@ -18,18 +18,18 @@ export class UsersService {
     private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
-  async getUsers(limit: number, page: number) {
+  async getAll(limit: number, page: number) {
     const skip = (page - 1) * limit;
     const take = limit;
 
     return await this.usersRepository.find({ skip, take });
   }
 
-  async getUserById(id: string) {
+  async getById(id: string) {
     return await this.findUserById(id);
   }
 
-  async getUserByEmail(email: string) {
+  async getByEmail(email: string) {
     const user = await this.usersRepository.findOneBy({ email });
 
     if (!user) {
@@ -39,7 +39,7 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(userDTO: UpdateUserDTO, id: string) {
+  async update(userDTO: UpdateUserDTO, id: string) {
     const user = await this.findUserById(id);
 
     Object.assign(user, userDTO);
@@ -47,13 +47,13 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
-  async deleteUser(id: string) {
+  async delete(id: string) {
     const user = await this.findUserById(id);
 
     return await this.usersRepository.remove(user);
   }
 
-  async createUser(userDTO: CreateUserDTO) {
+  async create(userDTO: CreateUserDTO) {
     const { email, password, name } = userDTO;
 
     const user = await this.usersRepository.findOne({

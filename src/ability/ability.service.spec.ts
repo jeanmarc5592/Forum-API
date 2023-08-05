@@ -80,4 +80,28 @@ describe('AbilityService', () => {
       );
     });
   });
+
+  describe('canCreate', () => {
+    it('should throw ForbiddenException if user not allowed to create', () => {
+      const reqUser: RequestUser = { id: '1', role: Roles.USER };
+      const subjectToCreate = { name: 'John Doe' };
+
+      (abilityFactory.defineAbility(reqUser) as any).can.mockReturnValue(false);
+
+      expect(() => service.canCreate(reqUser, subjectToCreate)).toThrow(
+        ForbiddenException,
+      );
+    });
+
+    it('should not throw ForbiddenException if user allowed to create', () => {
+      const reqUser: RequestUser = { id: '1', role: Roles.USER };
+      const subjectToCreate = { name: 'John Doe' };
+
+      (abilityFactory.defineAbility(reqUser) as any).can.mockReturnValue(true);
+
+      expect(() => service.canCreate(reqUser, subjectToCreate)).not.toThrow(
+        ForbiddenException,
+      );
+    });
+  });
 });

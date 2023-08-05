@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { APP_PIPE } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { AbilityModule } from './ability/ability.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { AbilityModule } from './ability/ability.module';
           username: config.get<string>('DB_USER'),
           password: config.get<string>('DB_PASSWORD'),
           database: config.get<string>('DB_NAME'),
-          ssl: true,
+          ssl: process.env.NODE_EV === 'production ? true : false',
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           migrations: ['migrations/*.js'],
           synchronize: true,
@@ -33,6 +34,7 @@ import { AbilityModule } from './ability/ability.module';
     UsersModule,
     AuthModule,
     AbilityModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [
