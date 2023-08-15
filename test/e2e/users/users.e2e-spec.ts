@@ -1,12 +1,10 @@
 import * as request from 'supertest';
-import { Test } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { DbTestUtils } from '../utils/db.test-utils';
 import { UsersModule } from '../../../src/users/users.module';
-import { repositoryMockFactory } from '../../../src/app.types';
 import { User } from '../../../src/users/entities/user.entity';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { ModuleTestUtils } from '../utils/module.test-utils';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
@@ -14,21 +12,8 @@ describe('UsersController (e2e)', () => {
 
   beforeAll(async () => {
     dataSource = await DbTestUtils.setupDatabase();
-    const module = await Test.createTestingModule({
-      imports: [UsersModule],
-      providers: [
-        {
-          provide: getRepositoryToken(User),
-          useFactory: repositoryMockFactory,
-        },
-      ],
-    })
-      .overrideProvider(getRepositoryToken(User))
-      .useValue(dataSource)
-      .compile();
 
-    app = module.createNestApplication();
-
+    app = await ModuleTestUtils.setupTestModule(dataSource, UsersModule, User);
     await app.init();
   });
 
