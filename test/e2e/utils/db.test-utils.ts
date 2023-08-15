@@ -1,8 +1,5 @@
 import { newDb } from 'pg-mem';
 import { v4 as uuidv4 } from 'uuid';
-// import * as dotenv from 'dotenv';
-
-// dotenv.config({ path: '.env' });
 
 export class DbTestUtils {
   static async setupDatabase() {
