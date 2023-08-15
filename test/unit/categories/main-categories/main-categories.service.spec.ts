@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MainCategoriesService } from './main-categories.service';
-import { MainCategory } from './entities/main-category.entity';
-import { MockType, repositoryMockFactory } from '../../app.types';
+import { MainCategoriesService } from '../../../../src/categories/main-categories/main-categories.service';
+import { MainCategory } from '../../../../src/categories/main-categories/entities/main-category.entity';
+import { MockType, repositoryMockFactory } from '../../../../src/app.types';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
-import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
-import { SubCategory } from '../sub-categories/entities/sub-category.entity';
+import { UpdateMainCategoryDTO } from '../../../../src/categories/main-categories/dtos/update-main-category.dto';
+import { CreateMainCategoryDTO } from '../../../../src/categories/main-categories/dtos/create-main-category.dto';
+import { SubCategory } from '../../../../src/categories/sub-categories/entities/sub-category.entity';
 
 const mockMainCat: MainCategory = {
   id: '1',

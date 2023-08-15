@@ -1,5 +1,5 @@
-import { AbilityFactory } from './ability.factory';
-import { RequestUser, Roles } from '../auth/auth.types';
+import { AbilityFactory } from '../../../src/ability/ability.factory';
+import { RequestUser, Roles } from '../../../src/auth/auth.types';
 
 describe('AbilityFactory', () => {
   let abilityFactory: AbilityFactory;

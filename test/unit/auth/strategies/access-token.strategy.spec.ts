@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Strategy } from 'passport-jwt';
-import { AccessTokenStrategy } from './access-token.strategy';
+import { AccessTokenStrategy } from '../../../../src/auth/strategies/access-token.strategy';
 
 class MockConfigService extends ConfigService {
   get(key: string) {

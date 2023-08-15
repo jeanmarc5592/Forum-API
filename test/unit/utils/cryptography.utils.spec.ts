@@ -1,5 +1,5 @@
 import * as argon2 from 'argon2';
-import { CryptographyUtils } from './cryptography.utils';
+import { CryptographyUtils } from '../../../src/utils/cryptography.utils';
 
 describe('CryptographyUtils', () => {
   let cryptographyUtils: CryptographyUtils;

@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MainCategoriesController } from './main-categories.controller';
-import { MainCategoriesService } from './main-categories.service';
-import { AbilityService } from '../../ability/ability.service';
-import { MainCategory } from './entities/main-category.entity';
-import { Roles, RequestUser } from '../../auth/auth.types';
-import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
-import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
-import { SubCategory } from '../sub-categories/entities/sub-category.entity';
+import { MainCategoriesController } from '../../../../src/categories/main-categories/main-categories.controller';
+import { MainCategoriesService } from '../../../../src/categories/main-categories/main-categories.service';
+import { AbilityService } from '../../../../src/ability/ability.service';
+import { MainCategory } from '../../../../src/categories/main-categories/entities/main-category.entity';
+import { Roles, RequestUser } from '../../../../src/auth/auth.types';
+import { UpdateMainCategoryDTO } from '../../../../src/categories/main-categories/dtos/update-main-category.dto';
+import { CreateMainCategoryDTO } from '../../../../src/categories/main-categories/dtos/create-main-category.dto';
+import { SubCategory } from '../../../../src/categories/sub-categories/entities/sub-category.entity';
 
 const mockMainCats = [
   { id: '1', name: 'Main Cat 1' },

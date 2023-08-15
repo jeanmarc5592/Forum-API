@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
-import { User } from './entities/user.entity';
-import { RequestUser, Roles } from '../auth/auth.types';
-import { AbilityService } from '../ability/ability.service';
+import { UsersController } from '../../../src/users/users.controller';
+import { UsersService } from '../../../src/users/users.service';
+import { User } from '../../../src/users/entities/user.entity';
+import { RequestUser, Roles } from '../../../src/auth/auth.types';
+import { AbilityService } from '../../../src/ability/ability.service';
 
 const mockUsers = [
   { id: '1', name: 'User 1' },
