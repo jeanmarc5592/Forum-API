@@ -2,10 +2,10 @@ import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { DbTestUtils } from './utils/db.test-utils';
-import { UsersModule } from '../src/users/users.module';
-import { repositoryMockFactory } from '../src/app.types';
-import { User } from '../src/users/entities/user.entity';
+import { DbTestUtils } from '../utils/db.test-utils';
+import { UsersModule } from '../../../src/users/users.module';
+import { repositoryMockFactory } from '../../../src/app.types';
+import { User } from '../../../src/users/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('UsersController (e2e)', () => {
