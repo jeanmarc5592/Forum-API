@@ -14,8 +14,8 @@ export default () => ({
       expiration: process.env.JWT_REFRESH_EXPIRATION || '7d',
     },
     access: {
-      secret: process.env.JWT_REFRESH_SECRET || 'kdjkjuhklöjasd72kjd7234jk8238',
-      expiration: process.env.JWT_REFRESH_EXPIRATION || '8h',
+      secret: process.env.JWT_ACCESS_SECRET || 'kdjkjuhklöjasd72kjd7234jk8238',
+      expiration: process.env.JWT_ACCESS_EXPIRATION || '8h',
     },
   },
 });
