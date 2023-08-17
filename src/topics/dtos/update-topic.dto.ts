@@ -1,13 +1,31 @@
-import { IsString, IsUUID, Length } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Length,
+} from 'class-validator';
 
 export class UpdateTopicDTO {
   @IsString()
+  @IsOptional()
+  @IsNotEmpty()
   @Length(3, 50)
-  title: string;
+  title?: string;
 
   @IsString()
-  content: string;
+  @IsOptional()
+  @IsNotEmpty()
+  content?: string;
 
   @IsUUID()
-  subCategoryId: string;
+  @IsOptional()
+  @IsNotEmpty()
+  subCategoryId?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  @IsNotEmpty()
+  closed?: boolean;
 }
