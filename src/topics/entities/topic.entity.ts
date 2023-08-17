@@ -1,34 +1,36 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { MainCategory } from '../../main-categories/entities/main-category.entity';
-import { Exclude } from 'class-transformer';
-import { Topic } from 'src/topics/entities/topic.entity';
+import { SubCategory } from 'src/categories/sub-categories/entities/sub-category.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity()
-export class SubCategory {
+export class Topic {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column()
-  description: string;
+  content: string;
 
-  @ManyToOne(() => MainCategory, (mainCategory) => mainCategory.subCategories)
-  mainCategory: MainCategory;
+  @ManyToOne(() => SubCategory, (subCategory) => subCategory.topics)
+  subCategory: SubCategory;
 
-  @OneToMany(() => Topic, (topic) => topic.subCategory)
-  topics: Topic[];
+  @ManyToOne(() => User, (user) => user.topics)
+  user: User;
+
+  @Column()
+  closed: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
   @Exclude()
