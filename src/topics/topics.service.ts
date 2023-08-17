@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTopicDTO } from './dtos/create-topic.dto';
 import { UpdateTopicDTO } from './dtos/update-topic.dto';
+import { Repository } from 'typeorm';
+import { Topic } from './entities/topic.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TopicsService {
+  constructor(
+    @InjectRepository(Topic)
+    private readonly topicsRepository: Repository<Topic>,
+  ) {}
+
   async getAll() {
     return 'GET ALL';
   }
