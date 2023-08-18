@@ -36,7 +36,9 @@ export class TopicsService {
   }
 
   async delete(id: string) {
-    return 'DELETE ' + id;
+    const topic = await this.findTopicById(id);
+
+    return await this.topicsRepository.remove(topic);
   }
 
   async create(topicDTO: CreateTopicDTO) {
