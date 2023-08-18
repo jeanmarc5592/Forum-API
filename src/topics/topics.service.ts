@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTopicDTO } from './dtos/create-topic.dto';
 import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Repository } from 'typeorm';
@@ -28,7 +28,7 @@ export class TopicsService {
   async getById(id: string) {
     // TODO: Add userId and subcategoryId to response
 
-    return 'GET BY ID ' + id;
+    return await this.findTopicById(id);
   }
 
   async update(topicDTO: UpdateTopicDTO, id: string) {
@@ -55,5 +55,15 @@ export class TopicsService {
     // TODO: Do not return all user and subcategory information
 
     return this.topicsRepository.save(newTopic);
+  }
+
+  private async findTopicById(id: string) {
+    const user = await this.topicsRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new NotFoundException(`Topic with id '${id}' not found.`);
+    }
+
+    return user;
   }
 }
