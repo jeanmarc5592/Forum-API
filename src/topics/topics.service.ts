@@ -18,17 +18,23 @@ export class TopicsService {
 
   async getAll(limit: number, page: number) {
     const skip = (page - 1) * limit;
-    const take = limit;
 
-    // TODO: Add userId and subcategoryId to response
-
-    return this.topicsRepository.find({ skip, take });
+    return await this.topicsRepository
+      .createQueryBuilder('topic')
+      .leftJoinAndSelect('topic.subCategory', 'subCategory')
+      .leftJoinAndSelect('topic.user', 'user')
+      .skip(skip)
+      .limit(limit)
+      .getMany();
   }
 
   async getById(id: string) {
-    // TODO: Add userId and subcategoryId to response
-
-    return await this.findTopicById(id);
+    return this.topicsRepository
+      .createQueryBuilder('topic')
+      .leftJoinAndSelect('topic.subCategory', 'subCategory')
+      .leftJoinAndSelect('topic.user', 'user')
+      .where('topic.id = :id', { id })
+      .getOne();
   }
 
   async update(topicDTO: UpdateTopicDTO, id: string) {
