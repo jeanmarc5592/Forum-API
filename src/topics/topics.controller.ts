@@ -6,18 +6,22 @@ import {
   Body,
   Delete,
   Post,
+  Query,
 } from '@nestjs/common';
 import { TopicsService } from './topics.service';
 import { CreateTopicDTO } from './dtos/create-topic.dto';
 import { UpdateTopicDTO } from './dtos/update-topic.dto';
+import { TopicsQueryDTO } from './dtos/topics-query.dto';
 
 @Controller('topics')
 export class TopicsController {
   constructor(private readonly topicsService: TopicsService) {}
 
   @Get()
-  getAll() {
-    return this.topicsService.getAll();
+  getAll(@Query() query: TopicsQueryDTO) {
+    const { limit, page } = query;
+
+    return this.topicsService.getAll(limit, page);
   }
 
   @Get('/:id')
