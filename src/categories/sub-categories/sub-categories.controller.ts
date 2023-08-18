@@ -41,6 +41,11 @@ export class SubCategoriesController {
     return this.subCategoriesService.getById(id);
   }
 
+  @Get('/:id/topics')
+  getWithTopics(@Param('id') id: string) {
+    return this.subCategoriesService.getWithTopics(id);
+  }
+
   @UseGuards(AccessTokenGuard)
   @Patch(':id')
   update(

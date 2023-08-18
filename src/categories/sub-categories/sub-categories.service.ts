@@ -25,6 +25,14 @@ export class SubCategoriesService {
     return await this.findById(id);
   }
 
+  async getWithTopics(id: string) {
+    return this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.topics', 'topic')
+      .where('subCategory.id = :id', { id })
+      .getOne();
+  }
+
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {
     const subCategory = await this.findById(id);
 
