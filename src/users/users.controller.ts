@@ -38,6 +38,11 @@ export class UsersController {
     return this.usersService.getById(id);
   }
 
+  @Get('/:id/topics')
+  getWithTopics(@Param('id') id: string) {
+    return this.usersService.getWithTopics(id);
+  }
+
   @Patch('/:id')
   async update(
     @Param('id') id: string,

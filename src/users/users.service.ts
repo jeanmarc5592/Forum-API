@@ -39,6 +39,14 @@ export class UsersService {
     return user;
   }
 
+  async getWithTopics(id: string) {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.topics', 'topic')
+      .where('user.id = :id', { id })
+      .getOne();
+  }
+
   async update(userDTO: UpdateUserDTO, id: string) {
     const user = await this.findUserById(id);
 
