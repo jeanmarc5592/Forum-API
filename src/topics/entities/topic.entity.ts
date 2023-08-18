@@ -29,7 +29,7 @@ export class Topic {
   @ManyToOne(() => User, (user) => user.topics)
   user: User;
 
-  @Column()
+  @Column({ default: false })
   closed: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
