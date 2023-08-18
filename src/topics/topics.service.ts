@@ -32,7 +32,11 @@ export class TopicsService {
   }
 
   async update(topicDTO: UpdateTopicDTO, id: string) {
-    return 'UPDATE ' + id;
+    const topic = await this.findTopicById(id);
+
+    Object.assign(topic, topicDTO);
+
+    return await this.topicsRepository.save(topic);
   }
 
   async delete(id: string) {
