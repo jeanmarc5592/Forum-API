@@ -29,12 +29,18 @@ export class TopicsService {
   }
 
   async getById(id: string) {
-    return this.topicsRepository
+    const topic = this.topicsRepository
       .createQueryBuilder('topic')
       .leftJoinAndSelect('topic.subCategory', 'subCategory')
       .leftJoinAndSelect('topic.user', 'user')
       .where('topic.id = :id', { id })
       .getOne();
+
+    if (!topic) {
+      throw new NotFoundException(`Topic with id '${id}' not found.`);
+    }
+
+    return topic;
   }
 
   async update(topicDTO: UpdateTopicDTO, id: string) {
@@ -70,12 +76,12 @@ export class TopicsService {
   }
 
   private async findTopicById(id: string) {
-    const user = await this.topicsRepository.findOneBy({ id });
+    const topic = await this.topicsRepository.findOneBy({ id });
 
-    if (!user) {
+    if (!topic) {
       throw new NotFoundException(`Topic with id '${id}' not found.`);
     }
 
-    return user;
+    return topic;
   }
 }
