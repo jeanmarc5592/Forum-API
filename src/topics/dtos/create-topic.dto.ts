@@ -10,7 +10,4 @@ export class CreateTopicDTO {
 
   @IsUUID()
   subCategoryId: string;
-
-  @IsUUID()
-  userId: string;
 }

@@ -57,8 +57,8 @@ export class TopicsService {
     return await this.topicsRepository.remove(topic);
   }
 
-  async create(topicDTO: CreateTopicDTO) {
-    const { subCategoryId, userId, title, content } = topicDTO;
+  async create(topicDTO: CreateTopicDTO, userId: string) {
+    const { subCategoryId, title, content } = topicDTO;
 
     const subCategory = await this.subCategoriesService.getById(subCategoryId);
     const user = await this.usersService.getById(userId);

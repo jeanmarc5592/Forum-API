@@ -39,13 +39,17 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-08-17T16:58:19.726Z",
-            "modified": "2023-08-17T17:00:15.521Z",
+            "modified": "2023-08-19T08:13:41.120Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"userId\": \"4b1c5762-0e00-4405-ac07-2c1597ab56f6\",\n  \"subCategoryId\": \"a5ec875c-9184-4488-86ee-2af4d8b3ae40\",\n  \"title\": \"Eventlisteners in React?\",\n  \"content\": \"How can I create event listeners in React?\"\n}",
+                "raw": "{\n  \"subCategoryId\": \"a5ec875c-9184-4488-86ee-2af4d8b3ae40\",\n  \"title\": \"CSS Problem 2\",\n  \"content\": \"Can anyone help me?\"\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDg0YjZlYS1lOGExLTQ2ODQtYThjOC05OThkMDZjYzc4ZmQiLCJuYW1lIjoibW9kZXJhdG9yIiwiZW1haWwiOiJtb2RlcmF0b3JAZXhhbXBsZS5jb20iLCJyb2xlIjoibW9kZXJhdG9yIiwiaWF0IjoxNjkyNDMyNzg5LCJleHAiOjE2OTI0NjE1ODl9.M7iIvwzmBEsel-Owh4bXYvJ9U9sAgFSLpa6UYs7FJsU"
             },
             "tests": []
         },
@@ -68,13 +72,17 @@
             "colId": "0f7c3135-aaa8-4728-a73c-5811e9b7abc1",
             "containerId": "",
             "name": "Delete Topic",
-            "url": "http://localhost:3000/api/topics/b0901e66-2f58-43d4-b795-8ec9b7058e70",
+            "url": "http://localhost:3000/api/topics/b1688a9d-068a-40bd-8867-bc633b24fbcf",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-08-18T08:31:30.185Z",
-            "modified": "2023-08-18T08:31:39.891Z",
+            "modified": "2023-08-19T08:18:06.898Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YjFjNTc2Mi0wZTAwLTQ0MDUtYWMwNy0yYzE1OTdhYjU2ZjYiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkyNDMzMDY3LCJleHAiOjE2OTI0NjE4Njd9.cuQC8iV1_N3U4tXlg9n09j8o9q-vh3xQYxzSOhGiNWs"
+            },
             "tests": []
         },
         {
@@ -82,17 +90,21 @@
             "colId": "0f7c3135-aaa8-4728-a73c-5811e9b7abc1",
             "containerId": "",
             "name": "Update Topic",
-            "url": "http://localhost:3000/api/topics/a68bb3e2-133c-420b-ba0b-9703bad67352",
+            "url": "http://localhost:3000/api/topics/5146d195-0c9e-4d78-8aa4-dcd95c6a89b3",
             "method": "PATCH",
             "sortNum": 50000,
             "created": "2023-08-18T08:34:50.208Z",
-            "modified": "2023-08-18T08:35:50.845Z",
+            "modified": "2023-08-19T08:19:58.071Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"[HELP] React Event Listeners Problem\"\n}",
+                "raw": "{\n  \"closed\": true\n}",
                 "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYzZlZjViZC04NDEyLTQzNWUtOWQ4Ny00YmQ5NDRjNDI3OWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkyNDMzMTg4LCJleHAiOjE2OTI0NjE5ODh9.IJmeHO9T10wlF3iEHG5SWpIKZbq2BrJuLPwo21_Y8eY"
             },
             "tests": []
         }
