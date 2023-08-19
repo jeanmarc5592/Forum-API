@@ -114,6 +114,18 @@ describe('MainCategoriesService', () => {
       expect(mainCat).toEqual(mockMainCat);
       expect(mainCat?.subCategories).toEqual([]);
     });
+
+    it('should throw a NotFoundExpection if main category was not found', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      });
+
+      await expect(service.getWithSubCategories('12334')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
   });
 
   describe('update', () => {

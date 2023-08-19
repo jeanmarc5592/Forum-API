@@ -48,6 +48,7 @@ describe('UsersController', () => {
           useValue: {
             getAll: jest.fn(),
             getById: jest.fn(),
+            getWithTopics: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
             create: jest.fn(),
@@ -88,6 +89,18 @@ describe('UsersController', () => {
       const user = await controller.getById(mockUser.id);
 
       expect(user.id).toBe(mockUser.id);
+    });
+  });
+
+  describe('getWithTopics', () => {
+    it('should return the topics of the user with the provided id', async () => {
+      const topics = mockUser.topics;
+
+      jest.spyOn(usersService, 'getWithTopics').mockResolvedValue(mockUser);
+
+      const subCat = await controller.getWithTopics(mockUser.id);
+
+      expect(subCat.topics).toEqual(topics);
     });
   });
 

@@ -6,6 +6,25 @@ import { SubCategory } from './entities/sub-category.entity';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { Roles, RequestUser } from '../../auth/auth.types';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
+import { MainCategory } from '../main-categories/entities/main-category.entity';
+import { Topic } from '../../topics/entities/topic.entity';
+
+const mockSubCat: SubCategory = {
+  id: '1',
+  name: 'React',
+  description: 'All About React',
+  mainCategory: {
+    id: '1',
+    name: 'Frontend Development',
+  } as MainCategory,
+  topics: [
+    { id: '1', title: 'Topic 1' } as Topic,
+    { id: '2', title: 'Topic 2' } as Topic,
+  ],
+  created_at: new Date(),
+  updated_at: new Date(),
+  generateId: jest.fn(),
+};
 
 const mockSubCats = [
   { id: '1', name: 'Sub Cat 1' },
@@ -35,6 +54,7 @@ describe('SubCategoriesController', () => {
           useValue: {
             getAll: jest.fn(),
             getById: jest.fn(),
+            getWithTopics: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
             create: jest.fn(),
@@ -71,11 +91,23 @@ describe('SubCategoriesController', () => {
 
   describe('getById', () => {
     it('should return the sub category with the provided id', async () => {
-      jest.spyOn(subCatService, 'getById').mockResolvedValue(mockSubCats[0]);
+      jest.spyOn(subCatService, 'getById').mockResolvedValue(mockSubCat);
 
-      const subCat = await controller.getById(mockSubCats[0].id);
+      const subCat = await controller.getById(mockSubCat.id);
 
-      expect(subCat).toEqual(mockSubCats[0]);
+      expect(subCat).toEqual(mockSubCat);
+    });
+  });
+
+  describe('getWithTopics', () => {
+    it('should return the topics of the sub category with the provided id', async () => {
+      const topics = mockSubCat.topics;
+
+      jest.spyOn(subCatService, 'getWithTopics').mockResolvedValue(mockSubCat);
+
+      const subCat = await controller.getWithTopics(mockSubCat.id);
+
+      expect(subCat.topics).toEqual(topics);
     });
   });
 
