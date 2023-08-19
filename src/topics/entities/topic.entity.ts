@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -33,11 +32,9 @@ export class Topic {
   closed: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
-  @Exclude()
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  @Exclude()
   updated_at: Date;
 
   @BeforeInsert()
