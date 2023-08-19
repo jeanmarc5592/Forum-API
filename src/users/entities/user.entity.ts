@@ -11,7 +11,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { Exclude } from 'class-transformer';
 import { Roles } from '../../auth/auth.types';
-import { Topic } from 'src/topics/entities/topic.entity';
+import { Topic } from '../../topics/entities/topic.entity';
 
 @Entity()
 export class User {

@@ -18,6 +18,7 @@ const mockSubCat: SubCategory = {
     id: '1',
     name: 'Frontend Development',
   } as MainCategory,
+  topics: [],
   created_at: new Date(),
   updated_at: new Date(),
   generateId: jest.fn(),
@@ -75,7 +76,12 @@ describe('SubCategoriesService', () => {
 
   describe('getAll', () => {
     it('should return a list of sub categories', async () => {
-      repositoryMock.find?.mockReturnValue([mockSubCat]);
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([mockSubCat]),
+      });
 
       const subCats = await service.getAll(10, 1);
 
@@ -83,7 +89,12 @@ describe('SubCategoriesService', () => {
     });
 
     it('should return an empty list', async () => {
-      repositoryMock.find?.mockReturnValue([]);
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([]),
+      });
 
       const subCats = await service.getAll(10, 1);
 
@@ -93,7 +104,13 @@ describe('SubCategoriesService', () => {
 
   describe('getById', () => {
     it('should return a sub category', async () => {
-      repositoryMock.findOneBy?.mockReturnValue(mockSubCat);
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockSubCat),
+      });
 
       const subCat = await service.getById(mockSubCat.id);
 

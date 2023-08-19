@@ -11,7 +11,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { MainCategory } from '../../main-categories/entities/main-category.entity';
 import { Exclude } from 'class-transformer';
-import { Topic } from 'src/topics/entities/topic.entity';
+import { Topic } from '../../../topics/entities/topic.entity';
 
 @Entity()
 export class SubCategory {

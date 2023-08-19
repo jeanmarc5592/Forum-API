@@ -9,8 +9,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { SubCategory } from 'src/categories/sub-categories/entities/sub-category.entity';
-import { User } from 'src/users/entities/user.entity';
+import { SubCategory } from '../../categories/sub-categories/entities/sub-category.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Topic {

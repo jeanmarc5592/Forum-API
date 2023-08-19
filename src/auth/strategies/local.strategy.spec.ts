@@ -15,6 +15,7 @@ const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
+  topics: [],
   role: Roles.USER,
   generateId: jest.fn(),
 };

@@ -39,17 +39,17 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-08-17T16:58:19.726Z",
-            "modified": "2023-08-19T08:13:41.120Z",
+            "modified": "2023-08-19T09:15:36.859Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"subCategoryId\": \"a5ec875c-9184-4488-86ee-2af4d8b3ae40\",\n  \"title\": \"CSS Problem 2\",\n  \"content\": \"Can anyone help me?\"\n}",
+                "raw": "{\n  \"subCategoryId\": \"a5ec875c-9184-4488-86ee-2af4d8b3ae40\",\n  \"title\": \"Javascript Issue 2\",\n  \"content\": \"Can anyone help me?\"\n}",
                 "form": []
             },
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDg0YjZlYS1lOGExLTQ2ODQtYThjOC05OThkMDZjYzc4ZmQiLCJuYW1lIjoibW9kZXJhdG9yIiwiZW1haWwiOiJtb2RlcmF0b3JAZXhhbXBsZS5jb20iLCJyb2xlIjoibW9kZXJhdG9yIiwiaWF0IjoxNjkyNDMyNzg5LCJleHAiOjE2OTI0NjE1ODl9.M7iIvwzmBEsel-Owh4bXYvJ9U9sAgFSLpa6UYs7FJsU"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YjFjNTc2Mi0wZTAwLTQ0MDUtYWMwNy0yYzE1OTdhYjU2ZjYiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkyNDM2NTIzLCJleHAiOjE2OTI0NjUzMjN9._-HXzUSvWq5S-o6X_yYBNwlOoTafl2QwO23z-TYWkB8"
             },
             "tests": []
         },
@@ -58,11 +58,11 @@
             "colId": "0f7c3135-aaa8-4728-a73c-5811e9b7abc1",
             "containerId": "",
             "name": "Get Topic By Id",
-            "url": "http://localhost:3000/api/topics/a68bb3e2-133c-420b-ba0b-9703bad67352",
+            "url": "http://localhost:3000/api/topics/d89173d5-b768-41d9-9762-ee1aec6f199c",
             "method": "GET",
             "sortNum": 15000,
             "created": "2023-08-18T08:29:01.411Z",
-            "modified": "2023-08-18T08:55:02.701Z",
+            "modified": "2023-08-19T09:02:00.831Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -72,16 +72,16 @@
             "colId": "0f7c3135-aaa8-4728-a73c-5811e9b7abc1",
             "containerId": "",
             "name": "Delete Topic",
-            "url": "http://localhost:3000/api/topics/b1688a9d-068a-40bd-8867-bc633b24fbcf",
+            "url": "http://localhost:3000/api/topics/aeea57a9-b5ce-445c-9a5d-3e860dbf6b77",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-08-18T08:31:30.185Z",
-            "modified": "2023-08-19T08:18:06.898Z",
+            "modified": "2023-08-19T09:17:00.723Z",
             "headers": [],
             "params": [],
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YjFjNTc2Mi0wZTAwLTQ0MDUtYWMwNy0yYzE1OTdhYjU2ZjYiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkyNDMzMDY3LCJleHAiOjE2OTI0NjE4Njd9.cuQC8iV1_N3U4tXlg9n09j8o9q-vh3xQYxzSOhGiNWs"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YjFjNTc2Mi0wZTAwLTQ0MDUtYWMwNy0yYzE1OTdhYjU2ZjYiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkyNDM2NTIzLCJleHAiOjE2OTI0NjUzMjN9._-HXzUSvWq5S-o6X_yYBNwlOoTafl2QwO23z-TYWkB8"
             },
             "tests": []
         },
@@ -90,21 +90,21 @@
             "colId": "0f7c3135-aaa8-4728-a73c-5811e9b7abc1",
             "containerId": "",
             "name": "Update Topic",
-            "url": "http://localhost:3000/api/topics/5146d195-0c9e-4d78-8aa4-dcd95c6a89b3",
+            "url": "http://localhost:3000/api/topics/7d683efa-c1c0-4597-b68d-6dc74c131b61",
             "method": "PATCH",
             "sortNum": 50000,
             "created": "2023-08-18T08:34:50.208Z",
-            "modified": "2023-08-19T08:19:58.071Z",
+            "modified": "2023-08-19T09:17:47.220Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"closed\": true\n}",
+                "raw": "{\n  \"closed\": \"\"\n}",
                 "form": []
             },
             "auth": {
                 "type": "bearer",
-                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYzZlZjViZC04NDEyLTQzNWUtOWQ4Ny00YmQ5NDRjNDI3OWQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkyNDMzMTg4LCJleHAiOjE2OTI0NjE5ODh9.IJmeHO9T10wlF3iEHG5SWpIKZbq2BrJuLPwo21_Y8eY"
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YjFjNTc2Mi0wZTAwLTQ0MDUtYWMwNy0yYzE1OTdhYjU2ZjYiLCJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjkyNDM2NTIzLCJleHAiOjE2OTI0NjUzMjN9._-HXzUSvWq5S-o6X_yYBNwlOoTafl2QwO23z-TYWkB8"
             },
             "tests": []
         }

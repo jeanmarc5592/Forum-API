@@ -4,8 +4,8 @@ import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Repository } from 'typeorm';
 import { Topic } from './entities/topic.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SubCategoriesService } from 'src/categories/sub-categories/sub-categories.service';
-import { UsersService } from 'src/users/users.service';
+import { SubCategoriesService } from '../categories/sub-categories/sub-categories.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class TopicsService {
