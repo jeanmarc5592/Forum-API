@@ -6,6 +6,7 @@ import { TopicsUtils } from '../topics.utils';
 import { SubCategory } from '../../categories/sub-categories/entities/sub-category.entity';
 import { User } from '../../users/entities/user.entity';
 import { Topic } from '../entities/topic.entity';
+import { TransformedTopic } from '../topics.types';
 
 const mockTopic = {
   id: '1',
@@ -27,7 +28,7 @@ const transformedTopic = {
   closed: mockTopic.closed,
   created_at: mockTopic.created_at,
   updated_at: mockTopic.updated_at,
-};
+} as TransformedTopic;
 
 describe('TopicCollectionInterceptor', () => {
   let interceptor: TopicInterceptor;
