@@ -7,26 +7,18 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Topic } from '../entities/topic.entity';
+import { TopicsUtils } from '../topics.utils';
 
 @Injectable()
 export class TopicInterceptor implements NestInterceptor {
+  constructor(private readonly topicsUtils: TopicsUtils) {}
+
   intercept(
     _context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> {
-    return next.handle().pipe(
-      map((topic: Topic) => {
-        return {
-          id: topic.id,
-          title: topic.title,
-          content: topic.content,
-          userId: topic.user.id,
-          subCategoryId: topic.subCategory.id,
-          closed: topic.closed,
-          created_at: topic.created_at,
-          updated_at: topic.updated_at,
-        };
-      }),
-    );
+    return next
+      .handle()
+      .pipe(map((topic: Topic) => this.topicsUtils.transformTopic(topic)));
   }
 }

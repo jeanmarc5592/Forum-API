@@ -2,13 +2,50 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ExecutionContext, CallHandler } from '@nestjs/common';
 import { TopicInterceptor } from './topic.interceptor';
 import { of } from 'rxjs';
+import { TopicsUtils } from '../topics.utils';
+import { SubCategory } from '../../categories/sub-categories/entities/sub-category.entity';
+import { User } from '../../users/entities/user.entity';
+import { Topic } from '../entities/topic.entity';
+
+const mockTopic = {
+  id: '1',
+  title: 'Topic 1',
+  content: 'Content 1',
+  user: { id: '101' } as User,
+  subCategory: { id: '201' } as SubCategory,
+  closed: false,
+  created_at: new Date(),
+  updated_at: new Date(),
+} as Topic;
+
+const transformedTopic = {
+  id: mockTopic.id,
+  title: mockTopic.title,
+  content: mockTopic.content,
+  userId: mockTopic.user.id,
+  subCategoryId: mockTopic.subCategory.id,
+  closed: mockTopic.closed,
+  created_at: mockTopic.created_at,
+  updated_at: mockTopic.updated_at,
+};
 
 describe('TopicCollectionInterceptor', () => {
   let interceptor: TopicInterceptor;
+  let topicsUtils: TopicsUtils;
 
   beforeEach(async () => {
+    topicsUtils = {
+      transformTopic: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TopicInterceptor],
+      providers: [
+        TopicInterceptor,
+        {
+          provide: TopicsUtils,
+          useValue: topicsUtils,
+        },
+      ],
     }).compile();
 
     interceptor = module.get<TopicInterceptor>(TopicInterceptor);
@@ -21,16 +58,7 @@ describe('TopicCollectionInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    const mockTopic = {
-      id: 1,
-      title: 'Topic 1',
-      content: 'Content 1',
-      user: { id: 101 },
-      subCategory: { id: 201 },
-      closed: false,
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
+    jest.spyOn(topicsUtils, 'transformTopic').mockReturnValue(transformedTopic);
 
     const mockCallHandler = {
       handle: () => of(mockTopic),
@@ -47,12 +75,12 @@ describe('TopicCollectionInterceptor', () => {
       expect(result).toHaveProperty('closed');
       expect(result).toHaveProperty('created_at');
       expect(result).toHaveProperty('updated_at');
-      expect(result.id).toBe(mockTopic.id);
-      expect(result.title).toBe(mockTopic.title);
-      expect(result.content).toBe(mockTopic.content);
-      expect(result.userId).toBe(mockTopic.user.id);
-      expect(result.subCategoryId).toBe(mockTopic.subCategory.id);
-      expect(result.closed).toBe(mockTopic.closed);
+      expect(result.id).toBe(transformedTopic.id);
+      expect(result.title).toBe(transformedTopic.title);
+      expect(result.content).toBe(transformedTopic.content);
+      expect(result.userId).toBe(transformedTopic.userId);
+      expect(result.subCategoryId).toBe(transformedTopic.subCategoryId);
+      expect(result.closed).toBe(transformedTopic.closed);
       done();
     });
   });

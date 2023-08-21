@@ -6,6 +6,7 @@ import { Topic } from './entities/topic.entity';
 import { SubCategoriesModule } from 'src/categories/sub-categories/sub-categories.module';
 import { UsersModule } from 'src/users/users.module';
 import { AbilityModule } from 'src/ability/ability.module';
+import { TopicsUtils } from './topics.utils';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { AbilityModule } from 'src/ability/ability.module';
     AbilityModule,
   ],
   controllers: [TopicsController],
-  providers: [TopicsService],
+  providers: [TopicsService, TopicsUtils],
 })
 export class TopicsModule {}

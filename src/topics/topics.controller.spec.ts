@@ -6,6 +6,7 @@ import { Topic } from './entities/topic.entity';
 import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Roles, RequestUser } from '../auth/auth.types';
 import { CreateTopicDTO } from './dtos/create-topic.dto';
+import { TopicsUtils } from './topics.utils';
 
 const mockTopics = [
   { id: '1', title: 'Topic 1' },
@@ -53,6 +54,12 @@ describe('TopicsController', () => {
             canUpdate: jest.fn(),
             canDelete: jest.fn(),
             canCreate: jest.fn(),
+          },
+        },
+        {
+          provide: TopicsUtils,
+          useValue: {
+            transformTopic: jest.fn(),
           },
         },
       ],
