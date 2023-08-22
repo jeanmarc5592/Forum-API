@@ -24,12 +24,18 @@ export class MainCategoriesService {
     return await this.findById(id);
   }
 
-  getWithSubCategories(id: string) {
-    return this.mainCategoriesRepository
+  async getWithSubCategories(id: string) {
+    const mainCategory = await this.mainCategoriesRepository
       .createQueryBuilder('mainCategory')
       .leftJoinAndSelect('mainCategory.subCategories', 'subCategory')
       .where('mainCategory.id = :id', { id })
       .getOne();
+
+    if (!mainCategory) {
+      throw new NotFoundException(`Main Category with id '${id}' not found.`);
+    }
+
+    return mainCategory;
   }
 
   async update(mainCategoryDTO: UpdateMainCategoryDTO, id: string) {

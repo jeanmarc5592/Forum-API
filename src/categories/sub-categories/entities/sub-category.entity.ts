@@ -6,10 +6,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { MainCategory } from '../../main-categories/entities/main-category.entity';
 import { Exclude } from 'class-transformer';
+import { Topic } from '../../../topics/entities/topic.entity';
 
 @Entity()
 export class SubCategory {
@@ -24,6 +26,9 @@ export class SubCategory {
 
   @ManyToOne(() => MainCategory, (mainCategory) => mainCategory.subCategories)
   mainCategory: MainCategory;
+
+  @OneToMany(() => Topic, (topic) => topic.subCategory)
+  topics: Topic[];
 
   @CreateDateColumn({ type: 'timestamp' })
   @Exclude()

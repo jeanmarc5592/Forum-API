@@ -8,6 +8,7 @@ import { CryptographyUtils } from '../utils/cryptography.utils';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { Roles } from '../auth/auth.types';
 import { MockType, repositoryMockFactory } from '../app.types';
+import { Topic } from '../topics/entities/topic.entity';
 
 const mockUser: User = {
   id: '1',
@@ -19,6 +20,10 @@ const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
+  topics: [
+    { id: '1', title: 'Topic 1' } as Topic,
+    { id: '2', title: 'Topic 2' } as Topic,
+  ],
   role: Roles.USER,
   generateId: jest.fn(),
 };
@@ -117,6 +122,46 @@ describe('UsersService', () => {
       repositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.getByEmail('3234123423')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  });
+
+  describe('getWithTopics', () => {
+    it('should return a single user with topics', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      });
+
+      const subCat = await service.getWithTopics(mockUser.id);
+
+      expect(subCat.topics).toHaveLength(mockUser.topics.length);
+    });
+
+    it('should return an empty list for topics', async () => {
+      Object.assign(mockUser, { topics: [] });
+
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      });
+
+      const subCat = await service.getWithTopics(mockUser.id);
+
+      expect(subCat.topics).toEqual([]);
+    });
+
+    it('should throw a NotFoundExpception if user was not found', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      });
+
+      await expect(service.getWithTopics('12334')).rejects.toThrow(
         NotFoundException,
       );
     });

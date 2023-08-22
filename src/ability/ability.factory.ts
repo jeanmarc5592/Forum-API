@@ -8,6 +8,8 @@ import { User } from '../users/entities/user.entity';
 import { RequestUser, Roles } from '../auth/auth.types';
 import { Subjects, Actions, BuilderType } from './ability.types';
 import { MainCategory } from '../categories/main-categories/entities/main-category.entity';
+import { SubCategory } from '../categories/sub-categories/entities/sub-category.entity';
+import { Topic } from '../topics/entities/topic.entity';
 
 @Injectable()
 export class AbilityFactory {
@@ -43,6 +45,8 @@ export class AbilityFactory {
     'name',
   ];
 
+  private ALLOWED_TOPIC_UPDATE_FIELDS = ['title', 'content'];
+
   private defineAdminAbilities() {
     const { can } = this.builder;
 
@@ -63,7 +67,20 @@ export class AbilityFactory {
     can(Actions.READ, MainCategory);
 
     // SUB CATEGORY
-    can(Actions.READ, 'SubCategory');
+    can(Actions.READ, SubCategory);
+
+    // TOPIC
+    // TODO: Allow to manage Topic if topic.subCategoryId is inside moderator's assigned subCategories list
+    can(Actions.READ, Topic);
+    can(Actions.CREATE, Topic);
+    can(Actions.UPDATE, Topic, this.ALLOWED_TOPIC_UPDATE_FIELDS, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'user.id': user.id,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    can(Actions.DELETE, Topic, { 'user.id': user.id });
   }
 
   private defineUserAbilities(user: RequestUser) {
@@ -80,6 +97,18 @@ export class AbilityFactory {
     can(Actions.READ, MainCategory);
 
     // SUB CATEGORY
-    can(Actions.READ, 'SubCategory');
+    can(Actions.READ, SubCategory);
+
+    // TOPIC
+    can(Actions.READ, Topic);
+    can(Actions.CREATE, Topic);
+    can(Actions.UPDATE, Topic, this.ALLOWED_TOPIC_UPDATE_FIELDS, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'user.id': user.id,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    can(Actions.DELETE, Topic, { 'user.id': user.id });
   }
 }

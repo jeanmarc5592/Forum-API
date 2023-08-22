@@ -39,6 +39,20 @@ export class UsersService {
     return user;
   }
 
+  async getWithTopics(id: string) {
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.topics', 'topic')
+      .where('user.id = :id', { id })
+      .getOne();
+
+    if (!user) {
+      throw new NotFoundException(`User with id '${id}' not found.`);
+    }
+
+    return user;
+  }
+
   async update(userDTO: UpdateUserDTO, id: string) {
     const user = await this.findUserById(id);
 

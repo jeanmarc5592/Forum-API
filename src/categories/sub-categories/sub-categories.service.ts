@@ -16,13 +16,42 @@ export class SubCategoriesService {
 
   getAll(limit: number, page: number) {
     const skip = (page - 1) * limit;
-    const take = limit;
 
-    return this.subCategoriesRepository.find({ skip, take });
+    return this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.mainCategory', 'mainCategory')
+      .skip(skip)
+      .limit(limit)
+      .getMany();
   }
 
   async getById(id: string) {
-    return await this.findById(id);
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.mainCategory', 'mainCategory')
+      .where('subCategory.id = :id', { id })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(`Sub Category with ID '${id}' not found`);
+    }
+
+    return subCategory;
+  }
+
+  async getWithTopics(id: string) {
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.mainCategory', 'mainCategory')
+      .leftJoinAndSelect('subCategory.topics', 'topic')
+      .where('subCategory.id = :id', { id })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(`Sub Category with ID '${id}' not found`);
+    }
+
+    return subCategory;
   }
 
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {

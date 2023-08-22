@@ -102,14 +102,13 @@ describe('MainCategoriesController', () => {
 
   describe('getWithSubCategories', () => {
     it('should return the sub categories of the main category with the provided id', async () => {
-      const mainCatId = mockMainCat.id;
       const subCats = mockMainCat.subCategories;
 
       jest
         .spyOn(mainCatService, 'getWithSubCategories')
         .mockResolvedValue(mockMainCat);
 
-      const mainCat = await controller.getWithSubCategories(mainCatId);
+      const mainCat = await controller.getWithSubCategories(mockMainCat.id);
 
       expect(mainCat?.subCategories).toEqual(subCats);
     });

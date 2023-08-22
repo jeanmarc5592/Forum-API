@@ -9,6 +9,7 @@ import { MainCategory } from '../main-categories/entities/main-category.entity';
 import { NotFoundException } from '@nestjs/common';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
+import { Topic } from '../../topics/entities/topic.entity';
 
 const mockSubCat: SubCategory = {
   id: '1',
@@ -18,6 +19,10 @@ const mockSubCat: SubCategory = {
     id: '1',
     name: 'Frontend Development',
   } as MainCategory,
+  topics: [
+    { id: '1', title: 'Topic 1' } as Topic,
+    { id: '2', title: 'Topic 2' } as Topic,
+  ],
   created_at: new Date(),
   updated_at: new Date(),
   generateId: jest.fn(),
@@ -75,7 +80,12 @@ describe('SubCategoriesService', () => {
 
   describe('getAll', () => {
     it('should return a list of sub categories', async () => {
-      repositoryMock.find?.mockReturnValue([mockSubCat]);
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([mockSubCat]),
+      });
 
       const subCats = await service.getAll(10, 1);
 
@@ -83,7 +93,12 @@ describe('SubCategoriesService', () => {
     });
 
     it('should return an empty list', async () => {
-      repositoryMock.find?.mockReturnValue([]);
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([]),
+      });
 
       const subCats = await service.getAll(10, 1);
 
@@ -93,7 +108,13 @@ describe('SubCategoriesService', () => {
 
   describe('getById', () => {
     it('should return a sub category', async () => {
-      repositoryMock.findOneBy?.mockReturnValue(mockSubCat);
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockSubCat),
+      });
 
       const subCat = await service.getById(mockSubCat.id);
 
@@ -106,6 +127,46 @@ describe('SubCategoriesService', () => {
       repositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.getById('12334')).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('getWithTopics', () => {
+    it('should return a single sub category with topics', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockSubCat),
+      });
+
+      const subCat = await service.getWithTopics(mockSubCat.id);
+
+      expect(subCat.topics).toHaveLength(mockSubCat.topics.length);
+    });
+
+    it('should return an empty list for topics', async () => {
+      Object.assign(mockSubCat, { topics: [] });
+
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockSubCat),
+      });
+
+      const subCat = await service.getWithTopics(mockSubCat.id);
+
+      expect(subCat.topics).toEqual([]);
+    });
+
+    it('should throw a NotFoundExpception if sub category was not found', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      });
+
+      await expect(service.getWithTopics('12334')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 

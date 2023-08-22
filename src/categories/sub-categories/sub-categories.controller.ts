@@ -20,6 +20,9 @@ import { AbilityService } from '../../ability/ability.service';
 import { RequestUser } from '../../auth/auth.types';
 import { SubCategory } from './entities/sub-category.entity';
 import { SubCategoriesQueryDTO } from '../main-categories/dtos/sub-categories-query.dto';
+import { SubCategoryCollectionInterceptor } from './interceptors/sub-category-collection.interceptor';
+import { SubCategoryInterceptor } from './interceptors/sub-category.interceptor';
+import { SubCategoryTopicsInterceptor } from './interceptors/sub-category-topics.interceptor';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('sub-categories')
@@ -29,6 +32,7 @@ export class SubCategoriesController {
     private readonly abilityService: AbilityService,
   ) {}
 
+  @UseInterceptors(SubCategoryCollectionInterceptor)
   @Get()
   getAll(@Query() query: SubCategoriesQueryDTO) {
     const { limit, page } = query;
@@ -36,9 +40,16 @@ export class SubCategoriesController {
     return this.subCategoriesService.getAll(limit, page);
   }
 
+  @UseInterceptors(SubCategoryInterceptor)
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.subCategoriesService.getById(id);
+  }
+
+  @UseInterceptors(SubCategoryTopicsInterceptor)
+  @Get('/:id/topics')
+  getWithTopics(@Param('id') id: string) {
+    return this.subCategoriesService.getWithTopics(id);
   }
 
   @UseGuards(AccessTokenGuard)
