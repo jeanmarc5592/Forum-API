@@ -8,6 +8,7 @@ import { Roles, RequestUser } from '../../auth/auth.types';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { MainCategory } from '../main-categories/entities/main-category.entity';
 import { Topic } from '../../topics/entities/topic.entity';
+import { SubCategoriesUtils } from './sub-categories.utils';
 
 const mockSubCat: SubCategory = {
   id: '1',
@@ -66,6 +67,12 @@ describe('SubCategoriesController', () => {
             canUpdate: jest.fn(),
             canDelete: jest.fn(),
             canCreate: jest.fn(),
+          },
+        },
+        {
+          provide: SubCategoriesUtils,
+          useValue: {
+            transform: jest.fn(),
           },
         },
       ],
