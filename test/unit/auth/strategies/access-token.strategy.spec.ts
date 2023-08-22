@@ -4,7 +4,7 @@ import { AccessTokenStrategy } from '../../../../src/auth/strategies/access-toke
 
 class MockConfigService extends ConfigService {
   get(key: string) {
-    if (key === 'JWT_ACCESS_SECRET') {
+    if (key === 'jwt.access.secret') {
       return 'secret';
     }
     return undefined;

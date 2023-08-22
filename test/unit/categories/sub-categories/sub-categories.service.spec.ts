@@ -7,9 +7,9 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { MainCategoriesService } from '../../../../src/categories/main-categories/main-categories.service';
 import { MainCategory } from '../../../../src/categories/main-categories/entities/main-category.entity';
 import { NotFoundException } from '@nestjs/common';
-import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
-import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
-import { Topic } from '../../topics/entities/topic.entity';
+import { UpdateSubCategoryDto } from '../../../../src/categories/sub-categories/dtos/update-sub-category.dto';
+import { CreateSubCategoryDto } from '../../../../src/categories/sub-categories/dtos/create-sub-category.dto';
+import { Topic } from '../../../../src/topics/entities/topic.entity';
 
 const mockSubCat: SubCategory = {
   id: '1',

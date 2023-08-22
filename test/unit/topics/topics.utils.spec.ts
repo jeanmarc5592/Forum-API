@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TopicsUtils } from './topics.utils';
-import { SubCategory } from '../categories/sub-categories/entities/sub-category.entity';
-import { User } from '../users/entities/user.entity';
-import { Topic } from './entities/topic.entity';
-import { TransformedTopic } from './topics.types';
+import { TopicsUtils } from '../../../src/topics/topics.utils';
+import { SubCategory } from '../../../src/categories/sub-categories/entities/sub-category.entity';
+import { User } from '../../../src/users/entities/user.entity';
+import { Topic } from '../../../src/topics/entities/topic.entity';
+import { TransformedTopic } from '../../../src/topics/topics.types';
 
 const mockTopic = {
   id: '1',

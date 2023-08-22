@@ -90,7 +90,8 @@
       ".*\\.types\\.ts",
       ".*\\.dto\\.ts",
       ".*\\.entity\\.ts",
-      "main.ts"
+      "main.ts",
+      "configuration.ts"
     ],
     "testEnvironment": "node"
   }

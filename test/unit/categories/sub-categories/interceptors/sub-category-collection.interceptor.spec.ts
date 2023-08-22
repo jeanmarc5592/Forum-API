@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SubCategoriesUtils } from '../sub-categories.utils';
-import { SubCategoryCollectionInterceptor } from './sub-category-collection.interceptor';
-import { MainCategory } from '../../main-categories/entities/main-category.entity';
-import { Topic } from '../../../topics/entities/topic.entity';
-import { SubCategory } from '../entities/sub-category.entity';
-import { TransformedSubCategory } from '../sub-categories.types';
+import { SubCategoriesUtils } from '../../../../../src/categories/sub-categories/sub-categories.utils';
+import { SubCategoryCollectionInterceptor } from '../../../../../src/categories/sub-categories/interceptors/sub-category-collection.interceptor';
+import { MainCategory } from '../../../../../src/categories/main-categories/entities/main-category.entity';
+import { Topic } from '../../../../../src/topics/entities/topic.entity';
+import { SubCategory } from '../../../../../src/categories/sub-categories/entities/sub-category.entity';
+import { TransformedSubCategory } from '../../../../../src/categories/sub-categories/sub-categories.types';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { of } from 'rxjs';
 

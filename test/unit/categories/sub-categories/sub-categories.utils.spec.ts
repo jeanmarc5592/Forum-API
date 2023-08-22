@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Topic } from '../../topics/entities/topic.entity';
-import { MainCategory } from '../main-categories/entities/main-category.entity';
-import { SubCategory } from './entities/sub-category.entity';
-import { TransformedSubCategory } from './sub-categories.types';
-import { SubCategoriesUtils } from './sub-categories.utils';
+import { Topic } from '../../../../src/topics/entities/topic.entity';
+import { MainCategory } from '../../../../src/categories/main-categories/entities/main-category.entity';
+import { SubCategory } from '../../../../src/categories/sub-categories/entities/sub-category.entity';
+import { TransformedSubCategory } from '../../../../src/categories/sub-categories/sub-categories.types';
+import { SubCategoriesUtils } from '../../../../src/categories/sub-categories/sub-categories.utils';
 
 const mockSubCat: SubCategory = {
   id: '1',

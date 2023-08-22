@@ -6,7 +6,7 @@ import { JwtPayload } from '../../../../src/auth/auth.types';
 
 class MockConfigService extends ConfigService {
   get(key: string) {
-    if (key === 'JWT_REFRESH_SECRET') {
+    if (key === 'jwt.refresh.secret') {
       return 'secret';
     }
     return undefined;
