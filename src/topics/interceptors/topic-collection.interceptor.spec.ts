@@ -54,6 +54,10 @@ describe('TopicCollectionInterceptor', () => {
     );
   });
 
+  it('should be defined', () => {
+    expect(interceptor).toBeDefined();
+  });
+
   it('should transform topics in the response', (done) => {
     const context = {
       switchToHttp: () => ({
@@ -69,21 +73,21 @@ describe('TopicCollectionInterceptor', () => {
 
     const result = interceptor.intercept(context, mockCallHandler);
 
-    result.subscribe((result) => {
-      expect(result[0]).toHaveProperty('id');
-      expect(result[0]).toHaveProperty('title');
-      expect(result[0]).toHaveProperty('content');
-      expect(result[0]).toHaveProperty('userId');
-      expect(result[0]).toHaveProperty('subCategoryId');
-      expect(result[0]).toHaveProperty('closed');
-      expect(result[0]).toHaveProperty('created_at');
-      expect(result[0]).toHaveProperty('updated_at');
-      expect(result[0].id).toBe(transformedTopic.id);
-      expect(result[0].title).toBe(transformedTopic.title);
-      expect(result[0].content).toBe(transformedTopic.content);
-      expect(result[0].userId).toBe(transformedTopic.userId);
-      expect(result[0].subCategoryId).toBe(transformedTopic.subCategoryId);
-      expect(result[0].closed).toBe(transformedTopic.closed);
+    result.subscribe((topics) => {
+      expect(topics[0]).toHaveProperty('id');
+      expect(topics[0]).toHaveProperty('title');
+      expect(topics[0]).toHaveProperty('content');
+      expect(topics[0]).toHaveProperty('userId');
+      expect(topics[0]).toHaveProperty('subCategoryId');
+      expect(topics[0]).toHaveProperty('closed');
+      expect(topics[0]).toHaveProperty('created_at');
+      expect(topics[0]).toHaveProperty('updated_at');
+      expect(topics[0].id).toBe(transformedTopic.id);
+      expect(topics[0].title).toBe(transformedTopic.title);
+      expect(topics[0].content).toBe(transformedTopic.content);
+      expect(topics[0].userId).toBe(transformedTopic.userId);
+      expect(topics[0].subCategoryId).toBe(transformedTopic.subCategoryId);
+      expect(topics[0].closed).toBe(transformedTopic.closed);
       done();
     });
   });
