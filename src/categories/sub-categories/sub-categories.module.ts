@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SubCategory } from './entities/sub-category.entity';
 import { MainCategoriesModule } from '../main-categories/main-categories.module';
 import { AbilityModule } from 'src/ability/ability.module';
+import { SubCategoriesUtils } from './sub-categories.utils';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { AbilityModule } from 'src/ability/ability.module';
     AbilityModule,
   ],
   controllers: [SubCategoriesController],
-  providers: [SubCategoriesService],
+  providers: [SubCategoriesService, SubCategoriesUtils],
   exports: [SubCategoriesService],
 })
 export class SubCategoriesModule {}
