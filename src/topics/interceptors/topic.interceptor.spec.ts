@@ -30,7 +30,7 @@ const transformedTopic = {
   updated_at: mockTopic.updated_at,
 } as TransformedTopic;
 
-describe('TopicCollectionInterceptor', () => {
+describe('TopicInterceptor', () => {
   let interceptor: TopicInterceptor;
   let topicsUtils: TopicsUtils;
 
@@ -52,6 +52,10 @@ describe('TopicCollectionInterceptor', () => {
     interceptor = module.get<TopicInterceptor>(TopicInterceptor);
   });
 
+  it('should be defined', () => {
+    expect(interceptor).toBeDefined();
+  });
+
   it('should transform the topic in the response', (done) => {
     const context = {
       switchToHttp: () => ({
@@ -65,23 +69,23 @@ describe('TopicCollectionInterceptor', () => {
       handle: () => of(mockTopic),
     } as CallHandler<any>;
 
-    const transformedTopics = interceptor.intercept(context, mockCallHandler);
+    const result = interceptor.intercept(context, mockCallHandler);
 
-    transformedTopics.subscribe((result) => {
-      expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('title');
-      expect(result).toHaveProperty('content');
-      expect(result).toHaveProperty('userId');
-      expect(result).toHaveProperty('subCategoryId');
-      expect(result).toHaveProperty('closed');
-      expect(result).toHaveProperty('created_at');
-      expect(result).toHaveProperty('updated_at');
-      expect(result.id).toBe(transformedTopic.id);
-      expect(result.title).toBe(transformedTopic.title);
-      expect(result.content).toBe(transformedTopic.content);
-      expect(result.userId).toBe(transformedTopic.userId);
-      expect(result.subCategoryId).toBe(transformedTopic.subCategoryId);
-      expect(result.closed).toBe(transformedTopic.closed);
+    result.subscribe((topic) => {
+      expect(topic).toHaveProperty('id');
+      expect(topic).toHaveProperty('title');
+      expect(topic).toHaveProperty('content');
+      expect(topic).toHaveProperty('userId');
+      expect(topic).toHaveProperty('subCategoryId');
+      expect(topic).toHaveProperty('closed');
+      expect(topic).toHaveProperty('created_at');
+      expect(topic).toHaveProperty('updated_at');
+      expect(topic.id).toBe(transformedTopic.id);
+      expect(topic.title).toBe(transformedTopic.title);
+      expect(topic.content).toBe(transformedTopic.content);
+      expect(topic.userId).toBe(transformedTopic.userId);
+      expect(topic.subCategoryId).toBe(transformedTopic.subCategoryId);
+      expect(topic.closed).toBe(transformedTopic.closed);
       done();
     });
   });
