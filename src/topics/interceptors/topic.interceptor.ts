@@ -19,6 +19,6 @@ export class TopicInterceptor implements NestInterceptor {
   ): Observable<any> {
     return next
       .handle()
-      .pipe(map((topic: Topic) => this.topicsUtils.transformTopic(topic)));
+      .pipe(map((topic: Topic) => this.topicsUtils.transform(topic)));
   }
 }

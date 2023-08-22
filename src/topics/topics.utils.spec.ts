@@ -43,7 +43,7 @@ describe('TopicsUtils', () => {
   });
 
   it('should transform the provided topic correctly', () => {
-    const result = topicsUtils.transformTopic(mockTopic);
+    const result = topicsUtils.transform(mockTopic);
 
     expect(result).toHaveProperty('id');
     expect(result).toHaveProperty('title');

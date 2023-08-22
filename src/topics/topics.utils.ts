@@ -4,7 +4,7 @@ import { TransformedTopic } from './topics.types';
 
 @Injectable()
 export class TopicsUtils {
-  transformTopic(topic: Topic): TransformedTopic {
+  transform(topic: Topic): TransformedTopic {
     return {
       id: topic.id,
       title: topic.title,

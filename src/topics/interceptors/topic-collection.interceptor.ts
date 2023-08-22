@@ -21,7 +21,7 @@ export class TopicCollectionInterceptor implements NestInterceptor {
       .handle()
       .pipe(
         map((topics: Topic[]) =>
-          topics.map((topic) => this.topicsUtils.transformTopic(topic)),
+          topics.map((topic) => this.topicsUtils.transform(topic)),
         ),
       );
   }
