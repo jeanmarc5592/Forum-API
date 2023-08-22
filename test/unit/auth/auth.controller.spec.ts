@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from '../../../src/auth/auth.controller';
-import { AuthService } from '../../../src/auth/auth.service';
-import { CreateUserDTO } from '../../../src/users/dtos/create-user.dto';
-import { User } from '../../../src/users/entities/user.entity';
-import { Roles } from '../../../src/auth/auth.types';
+import { AuthController } from '@auth/auth.controller';
+import { AuthService } from '@auth/auth.service';
+import { CreateUserDTO } from '@users/dtos/create-user.dto';
+import { User } from '@users/entities/user.entity';
+import { Roles } from '@auth/auth.types';
 
 const mockUser: User = {
   id: '1',

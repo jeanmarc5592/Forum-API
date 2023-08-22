@@ -10,12 +10,21 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@ability/*": ["src/ability/*"],
+      "@auth/*": ["src/auth/*"],
+      "@categories/*": ["src/categories/*"],
+      "@topics/*": ["src/topics/*"],
+      "@users/*": ["src/users/*"],
+      "@utils/*": ["src/utils/*"],
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   }
 }

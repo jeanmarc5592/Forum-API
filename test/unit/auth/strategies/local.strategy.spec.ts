@@ -1,9 +1,9 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { Strategy } from 'passport-local';
-import { AuthService } from '../../../../src/auth/auth.service';
-import { LocalStrategy } from '../../../../src/auth/strategies/local.strategy';
-import { User } from 'src/users/entities/user.entity';
-import { Roles } from '../../../../src/auth/auth.types';
+import { AuthService } from '@auth/auth.service';
+import { LocalStrategy } from '@auth/strategies/local.strategy';
+import { User } from '@users/entities/user.entity';
+import { Roles } from '@auth/auth.types';
 
 const mockUser: User = {
   id: '1',

@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { AuthService } from '../../../src/auth/auth.service';
-import { UsersService } from '../../../src/users/users.service';
-import { CryptographyUtils } from '../../../src/utils/cryptography.utils';
-import { User } from '../../../src/users/entities/user.entity';
-import { CreateUserDTO } from '../../../src/users/dtos/create-user.dto';
+import { AuthService } from '@auth/auth.service';
+import { UsersService } from '@users/users.service';
+import { CryptographyUtils } from '@utils/cryptography.utils';
+import { User } from '@users/entities/user.entity';
+import { CreateUserDTO } from '@users/dtos/create-user.dto';
 import { UnauthorizedException } from '@nestjs/common';
-import { Roles } from '../../../src/auth/auth.types';
+import { Roles } from '@auth/auth.types';
 
 const mockUser: User = {
   id: '1',

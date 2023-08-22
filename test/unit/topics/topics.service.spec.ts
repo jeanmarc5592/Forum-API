@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TopicsService } from '../../../src/topics/topics.service';
-import { MockType, repositoryMockFactory } from '../../../src/app.types';
+import { TopicsService } from '@topics/topics.service';
+import { MockType, repositoryMockFactory } from '@/app.types';
 import { Repository } from 'typeorm';
-import { Topic } from '../../../src/topics/entities/topic.entity';
+import { Topic } from '@topics/entities/topic.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { SubCategoriesService } from '../../../src/categories/sub-categories/sub-categories.service';
-import { UsersService } from '../../../src/users/users.service';
+import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
+import { UsersService } from '@users/users.service';
 import { NotFoundException } from '@nestjs/common';
-import { UpdateTopicDTO } from '../../../src/topics/dtos/update-topic.dto';
-import { CreateTopicDTO } from '../../../src/topics/dtos/create-topic.dto';
+import { UpdateTopicDTO } from '@topics/dtos/update-topic.dto';
+import { CreateTopicDTO } from '@topics/dtos/create-topic.dto';
 
 const mockTopics = [
   { id: '1', title: 'Topic 1' },
