@@ -1,10 +1,10 @@
 import * as request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { DbTestUtils } from '../utils/db.test-utils';
-import { UsersModule } from '../../../src/users/users.module';
-import { User } from '../../../src/users/entities/user.entity';
-import { ModuleTestUtils } from '../utils/module.test-utils';
+import { DbTestUtils } from '../test-utils/db.test-utils';
+import { ModuleTestUtils } from '../test-utils/module.test-utils';
+import { UsersModule } from '@users/users.module';
+import { User } from '@users/entities/user.entity';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
