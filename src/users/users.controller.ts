@@ -14,9 +14,9 @@ import {
 import { UsersService } from './users.service';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
-import { AccessTokenGuard } from '../auth/guards/access-token.guard';
-import { RequestUser } from '../auth/auth.types';
-import { AbilityService } from '../ability/ability.service';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+import { RequestUser } from '@auth/auth.types';
+import { AbilityService } from '@ability/ability.service';
 @UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')

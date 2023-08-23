@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/e2e/jest-e2e.json"
   },
   "dependencies": {
     "@casl/ability": "^6.5.0",
@@ -36,6 +36,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.11.2",
+    "pg-mem": "^2.6.13",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.16",
@@ -74,21 +75,33 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "test/unit/**/*.(t|j)s",
+      "src/**/*.(t|j)s"
     ],
+    "roots": ["<rootDir>/src", "<rootDir>/test"],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^@ability/(.*)$": "<rootDir>/src/ability/$1",
+      "^@auth/(.*)$": "<rootDir>/src/auth/$1",
+      "^@categories/(.*)$": "<rootDir>/src/categories/$1",
+      "^@topics/(.*)$": "<rootDir>/src/topics/$1",
+      "^@users/(.*)$": "<rootDir>/src/users/$1",
+      "^@utils/(.*)$": "<rootDir>/src/utils/$1"
+    },
     "coverageDirectory": "../coverage",
     "coveragePathIgnorePatterns": [
       ".*\\.module\\.ts",
       ".*\\.types\\.ts",
       ".*\\.dto\\.ts",
       ".*\\.entity\\.ts",
-      "main.ts"
+      "main.ts",
+      "configuration.ts"
     ],
     "testEnvironment": "node"
   }

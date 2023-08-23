@@ -1,0 +1,19 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "../../",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "roots": ["<rootDir>/test/e2e", "<rootDir>/src"],
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@ability/(.*)$": "<rootDir>/src/ability/$1",
+    "^@auth/(.*)$": "<rootDir>/src/auth/$1",
+    "^@categories/(.*)$": "<rootDir>/src/categories/$1",
+    "^@topics/(.*)$": "<rootDir>/src/topics/$1",
+    "^@users/(.*)$": "<rootDir>/src/users/$1",
+    "^@utils/(.*)$": "<rootDir>/src/utils/$1"
+  }
+}

@@ -18,9 +18,9 @@ import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { TopicsQueryDTO } from './dtos/topics-query.dto';
 import { TopicInterceptor } from './interceptors/topic.interceptor';
 import { TopicCollectionInterceptor } from './interceptors/topic-collection.interceptor';
-import { AccessTokenGuard } from '../auth/guards/access-token.guard';
-import { AbilityService } from '../ability/ability.service';
-import { RequestUser } from '../auth/auth.types';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+import { AbilityService } from '@ability/ability.service';
+import { RequestUser } from '@auth/auth.types';
 import { Topic } from './entities/topic.entity';
 
 @UseInterceptors(ClassSerializerInterceptor)

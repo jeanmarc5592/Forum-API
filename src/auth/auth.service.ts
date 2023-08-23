@@ -1,12 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from '../users/users.service';
+import { User } from '@users/entities/user.entity';
+import { UsersService } from '@users/users.service';
 import { LoginDTO } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload, RequestUser } from './auth.types';
 import { ConfigService } from '@nestjs/config';
-import { CreateUserDTO } from '../users/dtos/create-user.dto';
-import { CryptographyUtils } from '../utils/cryptography.utils';
+import { CreateUserDTO } from '@users/dtos/create-user.dto';
+import { CryptographyUtils } from '@utils/cryptography.utils';
 
 @Injectable()
 export class AuthService {
@@ -95,13 +95,13 @@ export class AuthService {
     };
 
     const accessToken = this.jwtService.sign(accessTokenPayload, {
-      secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION'),
+      secret: this.configService.get<string>('jwt.access.secret'),
+      expiresIn: this.configService.get<string>('jwt.access.expiration'),
     });
 
     const refreshToken = this.jwtService.sign(refreshTokenPayload, {
-      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION'),
+      secret: this.configService.get<string>('jwt.refresh.secret'),
+      expiresIn: this.configService.get<string>('jwt.refresh.expiration'),
     });
 
     return { accessToken, refreshToken };

@@ -2,7 +2,7 @@ version: '3.9'
 services:
   postgres:
     image: postgres:latest
-    container_name: my_postgres_db
+    container_name: forum_api_local_pg
     restart: unless-stopped
     environment:
       POSTGRES_DB: postgres

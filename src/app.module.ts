@@ -7,23 +7,24 @@ import { AuthModule } from './auth/auth.module';
 import { AbilityModule } from './ability/ability.module';
 import { CategoriesModule } from './categories/categories.module';
 import { TopicsModule } from './topics/topics.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
-          type: config.get<any>('DB_TYPE'),
-          host: config.get<string>('DB_HOST'),
-          port: config.get<string>('DB_PORT'),
-          username: config.get<string>('DB_USER'),
-          password: config.get<string>('DB_PASSWORD'),
-          database: config.get<string>('DB_NAME'),
+          type: config.get<any>('database.type'),
+          host: config.get<string>('database.host'),
+          port: config.get<string>('database.port'),
+          username: config.get<string>('database.user'),
+          password: config.get<string>('database.password'),
+          database: config.get<string>('database.name'),
           ssl: process.env.NODE_EV === 'production ? true : false',
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           migrations: ['migrations/*.js'],
