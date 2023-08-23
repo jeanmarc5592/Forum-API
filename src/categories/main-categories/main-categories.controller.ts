@@ -14,9 +14,9 @@ import {
 import { MainCategoriesService } from './main-categories.service';
 import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
 import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
-import { AccessTokenGuard } from '../../auth/guards/access-token.guard';
-import { AbilityService } from '../../ability/ability.service';
-import { RequestUser } from '../../auth/auth.types';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+import { AbilityService } from '@ability/ability.service';
+import { RequestUser } from '@auth/auth.types';
 import { MainCategory } from './entities/main-category.entity';
 
 @UseInterceptors(ClassSerializerInterceptor)

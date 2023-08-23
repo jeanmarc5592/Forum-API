@@ -1,4 +1,4 @@
-import { Topic } from 'src/topics/entities/topic.entity';
+import { Topic } from '@topics/entities/topic.entity';
 
 export interface TransformedSubCategory {
   id: string;
