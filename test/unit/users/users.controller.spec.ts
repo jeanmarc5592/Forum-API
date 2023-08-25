@@ -4,6 +4,7 @@ import { UsersService } from '@users/users.service';
 import { User } from '@users/entities/user.entity';
 import { RequestUser, Roles } from '@auth/auth.types';
 import { AbilityService } from '@ability/ability.service';
+import { UsersUtils } from '@users/users.utils';
 
 const mockUsers = [
   { id: '1', name: 'User 1' },
@@ -48,7 +49,7 @@ describe('UsersController', () => {
           useValue: {
             getAll: jest.fn(),
             getById: jest.fn(),
-            getWithTopics: jest.fn(),
+            getTopics: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
             create: jest.fn(),
@@ -59,6 +60,12 @@ describe('UsersController', () => {
           useValue: {
             canUpdate: jest.fn(),
             canDelete: jest.fn(),
+          },
+        },
+        {
+          provide: UsersUtils,
+          useValue: {
+            transformWithTopics: jest.fn(),
           },
         },
       ],
@@ -92,13 +99,13 @@ describe('UsersController', () => {
     });
   });
 
-  describe('getWithTopics', () => {
+  describe('getTopics', () => {
     it('should return the topics of the user with the provided id', async () => {
       const topics = mockUser.topics;
 
-      jest.spyOn(usersService, 'getWithTopics').mockResolvedValue(mockUser);
+      jest.spyOn(usersService, 'getTopics').mockResolvedValue(mockUser);
 
-      const subCat = await controller.getWithTopics(mockUser.id);
+      const subCat = await controller.getTopics(mockUser.id);
 
       expect(subCat.topics).toEqual(topics);
     });

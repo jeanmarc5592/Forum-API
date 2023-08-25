@@ -17,6 +17,7 @@ import { UsersQueryDTO } from './dtos/users-query.dto';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
 import { RequestUser } from '@auth/auth.types';
 import { AbilityService } from '@ability/ability.service';
+import { UserTopicsInterceptor } from './interceptors/user-topics.interceptor';
 @UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
@@ -38,9 +39,10 @@ export class UsersController {
     return this.usersService.getById(id);
   }
 
+  @UseInterceptors(UserTopicsInterceptor)
   @Get('/:id/topics')
-  getWithTopics(@Param('id') id: string) {
-    return this.usersService.getWithTopics(id);
+  getTopics(@Param('id') id: string) {
+    return this.usersService.getTopics(id);
   }
 
   @Patch('/:id')

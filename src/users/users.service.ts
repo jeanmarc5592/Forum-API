@@ -39,7 +39,7 @@ export class UsersService {
     return user;
   }
 
-  async getWithTopics(id: string) {
+  async getTopics(id: string) {
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.topics', 'topic')

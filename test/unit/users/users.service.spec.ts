@@ -127,7 +127,7 @@ describe('UsersService', () => {
     });
   });
 
-  describe('getWithTopics', () => {
+  describe('getTopics', () => {
     it('should return a single user with topics', async () => {
       repositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
@@ -135,7 +135,7 @@ describe('UsersService', () => {
         getOne: jest.fn().mockResolvedValue(mockUser),
       });
 
-      const subCat = await service.getWithTopics(mockUser.id);
+      const subCat = await service.getTopics(mockUser.id);
 
       expect(subCat.topics).toHaveLength(mockUser.topics.length);
     });
@@ -149,7 +149,7 @@ describe('UsersService', () => {
         getOne: jest.fn().mockResolvedValue(mockUser),
       });
 
-      const subCat = await service.getWithTopics(mockUser.id);
+      const subCat = await service.getTopics(mockUser.id);
 
       expect(subCat.topics).toEqual([]);
     });
@@ -161,7 +161,7 @@ describe('UsersService', () => {
         getOne: jest.fn().mockResolvedValue(null),
       });
 
-      await expect(service.getWithTopics('12334')).rejects.toThrow(
+      await expect(service.getTopics('12334')).rejects.toThrow(
         NotFoundException,
       );
     });
