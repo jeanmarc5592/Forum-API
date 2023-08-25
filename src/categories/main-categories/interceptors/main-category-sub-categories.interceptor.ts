@@ -22,7 +22,7 @@ export class MainCategorySubCategoriesInterceptor implements NestInterceptor {
       .handle()
       .pipe(
         map((mainCategory) =>
-          this.mainCategoryUtils.transformWithSubCategories(mainCategory),
+          this.mainCategoryUtils.getSubCategories(mainCategory),
         ),
       );
   }

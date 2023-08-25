@@ -4,7 +4,7 @@ import { MainCategory } from './entities/main-category.entity';
 
 @Injectable()
 export class MainCategoriesUtils {
-  transformWithSubCategories(mainCategory: MainCategory): SubCategory[] {
+  getSubCategories(mainCategory: MainCategory): SubCategory[] {
     return mainCategory.subCategories;
   }
 }

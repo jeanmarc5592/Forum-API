@@ -31,7 +31,7 @@ describe('UserTopicsInterceptor', () => {
 
   beforeEach(async () => {
     mainCatUtils = {
-      transformWithTopics: jest.fn(),
+      getTopics: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -58,9 +58,7 @@ describe('UserTopicsInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    jest
-      .spyOn(mainCatUtils, 'transformWithTopics')
-      .mockReturnValue(mockUser.topics);
+    jest.spyOn(mainCatUtils, 'getTopics').mockReturnValue(mockUser.topics);
 
     const mockCallHandler = {
       handle: () => of(mockUser),

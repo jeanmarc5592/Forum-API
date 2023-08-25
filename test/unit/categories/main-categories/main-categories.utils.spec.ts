@@ -38,7 +38,7 @@ describe('SubCategoriesUtils', () => {
   });
 
   it('should extract the sub categories of the given main category', () => {
-    const result = mainCatUtils.transformWithSubCategories(mockMainCat);
+    const result = mainCatUtils.getSubCategories(mockMainCat);
 
     expect(result).toEqual(mockMainCat.subCategories);
   });

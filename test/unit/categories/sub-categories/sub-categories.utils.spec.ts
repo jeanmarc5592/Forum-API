@@ -61,7 +61,7 @@ describe('SubCategoriesUtils', () => {
   });
 
   it('should extract the topics of the provided sub category', () => {
-    const result = subCatUtils.transformWithTopics(mockSubCat);
+    const result = subCatUtils.getTopics(mockSubCat);
 
     expect(result).toEqual(mockSubCat.topics);
   });

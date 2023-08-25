@@ -31,7 +31,7 @@ describe('SubCategoryTopicsInterceptor', () => {
   beforeEach(async () => {
     subCatUtils = {
       transform: jest.fn(),
-      transformWithTopics: jest.fn(),
+      getTopics: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -60,9 +60,7 @@ describe('SubCategoryTopicsInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    jest
-      .spyOn(subCatUtils, 'transformWithTopics')
-      .mockReturnValue(mockSubCat.topics);
+    jest.spyOn(subCatUtils, 'getTopics').mockReturnValue(mockSubCat.topics);
 
     const mockCallHandler = {
       handle: () => of(mockSubCat),

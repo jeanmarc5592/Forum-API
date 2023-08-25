@@ -38,7 +38,7 @@ describe('UsersUtils', () => {
   });
 
   it('should extract the sub categories of the given main category', () => {
-    const result = usersUtils.transformWithTopics(mockUser);
+    const result = usersUtils.getTopics(mockUser);
 
     expect(result).toEqual(mockUser.topics);
   });

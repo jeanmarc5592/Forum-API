@@ -4,7 +4,7 @@ import { Topic } from '@topics/entities/topic.entity';
 
 @Injectable()
 export class UsersUtils {
-  transformWithTopics(user: User): Topic[] {
+  getTopics(user: User): Topic[] {
     return user.topics;
   }
 }

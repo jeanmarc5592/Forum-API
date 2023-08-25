@@ -20,10 +20,6 @@ export class SubCategoryTopicsInterceptor implements NestInterceptor {
   ): Observable<Topic[]> {
     return next
       .handle()
-      .pipe(
-        map((subCategory) =>
-          this.subCategoryUtils.transformWithTopics(subCategory),
-        ),
-      );
+      .pipe(map((subCategory) => this.subCategoryUtils.getTopics(subCategory)));
   }
 }

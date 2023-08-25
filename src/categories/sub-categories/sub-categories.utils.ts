@@ -14,7 +14,7 @@ export class SubCategoriesUtils {
     };
   }
 
-  transformWithTopics(subCategory: SubCategory): Topic[] {
+  getTopics(subCategory: SubCategory): Topic[] {
     return subCategory.topics;
   }
 }

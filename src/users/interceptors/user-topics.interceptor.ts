@@ -18,8 +18,6 @@ export class UserTopicsInterceptor implements NestInterceptor {
     _context: ExecutionContext,
     next: CallHandler<User>,
   ): Observable<Topic[]> {
-    return next
-      .handle()
-      .pipe(map((user) => this.userUtils.transformWithTopics(user)));
+    return next.handle().pipe(map((user) => this.userUtils.getTopics(user)));
   }
 }

@@ -39,7 +39,7 @@ describe('SubCategoryInterceptor', () => {
   beforeEach(async () => {
     subCatUtils = {
       transform: jest.fn(),
-      transformWithTopics: jest.fn(),
+      getTopics: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
