@@ -65,7 +65,7 @@ describe('UsersController', () => {
         {
           provide: UsersUtils,
           useValue: {
-            transformWithTopics: jest.fn(),
+            getTopics: jest.fn(),
           },
         },
       ],

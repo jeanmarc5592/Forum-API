@@ -70,7 +70,12 @@ describe('MainCategoriesController', () => {
             canCreate: jest.fn(),
           },
         },
-        MainCategoriesUtils,
+        {
+          provide: MainCategoriesUtils,
+          useValue: {
+            getSubCategories: jest.fn(),
+          },
+        },
       ],
     }).compile();
 

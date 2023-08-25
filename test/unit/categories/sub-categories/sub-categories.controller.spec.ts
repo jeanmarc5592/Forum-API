@@ -73,6 +73,7 @@ describe('SubCategoriesController', () => {
           provide: SubCategoriesUtils,
           useValue: {
             transform: jest.fn(),
+            getTopics: jest.fn(),
           },
         },
       ],
