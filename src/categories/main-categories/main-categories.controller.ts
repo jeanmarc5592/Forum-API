@@ -18,6 +18,7 @@ import { AccessTokenGuard } from '@auth/guards/access-token.guard';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { MainCategory } from './entities/main-category.entity';
+import { MainCategorySubCategoriesInterceptor } from './interceptors/main-category-sub-categories.interceptor';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('main-categories')
@@ -37,9 +38,10 @@ export class MainCategoriesController {
     return this.mainCategoriesService.getById(id);
   }
 
+  @UseInterceptors(MainCategorySubCategoriesInterceptor)
   @Get('/:id/sub-categories')
-  getWithSubCategories(@Param('id') id: string) {
-    return this.mainCategoriesService.getWithSubCategories(id);
+  getSubCategories(@Param('id') id: string) {
+    return this.mainCategoriesService.getSubCategories(id);
   }
 
   @UseGuards(AccessTokenGuard)

@@ -24,7 +24,7 @@ export class MainCategoriesService {
     return await this.findById(id);
   }
 
-  async getWithSubCategories(id: string) {
+  async getSubCategories(id: string) {
     const mainCategory = await this.mainCategoriesRepository
       .createQueryBuilder('mainCategory')
       .leftJoinAndSelect('mainCategory.subCategories', 'subCategory')
