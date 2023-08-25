@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SubCategory } from '../entities/sub-category.entity';
 import { SubCategoriesUtils } from '../sub-categories.utils';
+import { Topic } from '@topics/entities/topic.entity';
 
 @Injectable()
 export class SubCategoryTopicsInterceptor implements NestInterceptor {
@@ -15,12 +16,12 @@ export class SubCategoryTopicsInterceptor implements NestInterceptor {
 
   intercept(
     _context: ExecutionContext,
-    next: CallHandler<any>,
-  ): Observable<any> {
+    next: CallHandler<SubCategory>,
+  ): Observable<Topic[]> {
     return next
       .handle()
       .pipe(
-        map((subCategory: SubCategory) =>
+        map((subCategory) =>
           this.subCategoryUtils.transformWithTopics(subCategory),
         ),
       );
