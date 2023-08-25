@@ -33,7 +33,7 @@ const transformedSubCat = {
   topics: mockSubCat.topics,
 } as TransformedSubCategory;
 
-describe('SubCategoryInterceptor', () => {
+describe('SubCategoryTopicsInterceptor', () => {
   let interceptor: SubCategoryTopicsInterceptor;
   let subCatUtils: SubCategoriesUtils;
 
