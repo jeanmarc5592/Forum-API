@@ -55,7 +55,7 @@ describe('SubCategoriesController', () => {
           useValue: {
             getAll: jest.fn(),
             getById: jest.fn(),
-            getWithTopics: jest.fn(),
+            getTopics: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
             create: jest.fn(),
@@ -106,13 +106,13 @@ describe('SubCategoriesController', () => {
     });
   });
 
-  describe('getWithTopics', () => {
+  describe('getTopics', () => {
     it('should return the topics of the sub category with the provided id', async () => {
       const topics = mockSubCat.topics;
 
-      jest.spyOn(subCatService, 'getWithTopics').mockResolvedValue(mockSubCat);
+      jest.spyOn(subCatService, 'getTopics').mockResolvedValue(mockSubCat);
 
-      const subCat = await controller.getWithTopics(mockSubCat.id);
+      const subCat = await controller.getTopics(mockSubCat.id);
 
       expect(subCat.topics).toEqual(topics);
     });

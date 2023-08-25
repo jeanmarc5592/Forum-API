@@ -130,7 +130,7 @@ describe('SubCategoriesService', () => {
     });
   });
 
-  describe('getWithTopics', () => {
+  describe('getTopics', () => {
     it('should return a single sub category with topics', async () => {
       repositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
@@ -138,7 +138,7 @@ describe('SubCategoriesService', () => {
         getOne: jest.fn().mockResolvedValue(mockSubCat),
       });
 
-      const subCat = await service.getWithTopics(mockSubCat.id);
+      const subCat = await service.getTopics(mockSubCat.id);
 
       expect(subCat.topics).toHaveLength(mockSubCat.topics.length);
     });
@@ -152,7 +152,7 @@ describe('SubCategoriesService', () => {
         getOne: jest.fn().mockResolvedValue(mockSubCat),
       });
 
-      const subCat = await service.getWithTopics(mockSubCat.id);
+      const subCat = await service.getTopics(mockSubCat.id);
 
       expect(subCat.topics).toEqual([]);
     });
@@ -164,7 +164,7 @@ describe('SubCategoriesService', () => {
         getOne: jest.fn().mockResolvedValue(null),
       });
 
-      await expect(service.getWithTopics('12334')).rejects.toThrow(
+      await expect(service.getTopics('12334')).rejects.toThrow(
         NotFoundException,
       );
     });

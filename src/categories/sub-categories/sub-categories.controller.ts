@@ -48,8 +48,8 @@ export class SubCategoriesController {
 
   @UseInterceptors(SubCategoryTopicsInterceptor)
   @Get('/:id/topics')
-  getWithTopics(@Param('id') id: string) {
-    return this.subCategoriesService.getWithTopics(id);
+  getTopics(@Param('id') id: string) {
+    return this.subCategoriesService.getTopics(id);
   }
 
   @UseGuards(AccessTokenGuard)

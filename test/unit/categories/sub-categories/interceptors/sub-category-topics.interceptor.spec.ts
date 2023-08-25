@@ -4,7 +4,6 @@ import { SubCategoryTopicsInterceptor } from '@categories/sub-categories/interce
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { Topic } from '@topics/entities/topic.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { TransformedSubCategory } from '@categories/sub-categories/sub-categories.types';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { of } from 'rxjs';
 
@@ -24,14 +23,6 @@ const mockSubCat: SubCategory = {
   updated_at: new Date(),
   generateId: jest.fn(),
 };
-
-const transformedSubCat = {
-  id: mockSubCat.id,
-  name: mockSubCat.name,
-  description: mockSubCat.description,
-  mainCategoryId: mockSubCat.mainCategory.id,
-  topics: mockSubCat.topics,
-} as TransformedSubCategory;
 
 describe('SubCategoryTopicsInterceptor', () => {
   let interceptor: SubCategoryTopicsInterceptor;
@@ -62,7 +53,7 @@ describe('SubCategoryTopicsInterceptor', () => {
     expect(interceptor).toBeDefined();
   });
 
-  it('should transform the sub category in the response with topics', (done) => {
+  it('should return the topics of the provided sub category', (done) => {
     const context = {
       switchToHttp: () => ({
         getRequest: () => ({}),
@@ -71,7 +62,7 @@ describe('SubCategoryTopicsInterceptor', () => {
 
     jest
       .spyOn(subCatUtils, 'transformWithTopics')
-      .mockReturnValue(transformedSubCat);
+      .mockReturnValue(mockSubCat.topics);
 
     const mockCallHandler = {
       handle: () => of(mockSubCat),
@@ -79,17 +70,8 @@ describe('SubCategoryTopicsInterceptor', () => {
 
     const result = interceptor.intercept(context, mockCallHandler);
 
-    result.subscribe((subCat) => {
-      expect(subCat).toHaveProperty('id');
-      expect(subCat).toHaveProperty('name');
-      expect(subCat).toHaveProperty('description');
-      expect(subCat).toHaveProperty('mainCategoryId');
-      expect(subCat).toHaveProperty('topics');
-      expect(subCat.id).toBe(transformedSubCat.id);
-      expect(subCat.name).toBe(transformedSubCat.name);
-      expect(subCat.description).toBe(transformedSubCat.description);
-      expect(subCat.mainCategoryId).toBe(transformedSubCat.mainCategoryId);
-      expect(subCat.topics).toBe(transformedSubCat.topics);
+    result.subscribe((topics) => {
+      expect(topics).toEqual(mockSubCat.topics);
       done();
     });
   });

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SubCategory } from './entities/sub-category.entity';
 import { TransformedSubCategory } from './sub-categories.types';
+import { Topic } from '@topics/entities/topic.entity';
 
 @Injectable()
 export class SubCategoriesUtils {
@@ -13,13 +14,7 @@ export class SubCategoriesUtils {
     };
   }
 
-  transformWithTopics(subCategory: SubCategory): TransformedSubCategory {
-    return {
-      id: subCategory.id,
-      name: subCategory.name,
-      description: subCategory.description,
-      mainCategoryId: subCategory.mainCategory.id,
-      topics: subCategory.topics,
-    };
+  transformWithTopics(subCategory: SubCategory): Topic[] {
+    return subCategory.topics;
   }
 }

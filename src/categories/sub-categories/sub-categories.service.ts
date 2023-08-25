@@ -39,7 +39,7 @@ export class SubCategoriesService {
     return subCategory;
   }
 
-  async getWithTopics(id: string) {
+  async getTopics(id: string) {
     const subCategory = await this.subCategoriesRepository
       .createQueryBuilder('subCategory')
       .leftJoinAndSelect('subCategory.mainCategory', 'mainCategory')

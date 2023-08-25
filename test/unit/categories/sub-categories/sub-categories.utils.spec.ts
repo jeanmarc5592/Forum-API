@@ -60,18 +60,9 @@ describe('SubCategoriesUtils', () => {
     expect(result).not.toHaveProperty('topics');
   });
 
-  it('should transform the provided sub category correclty and include topics', () => {
+  it('should extract the topics of the provided sub category', () => {
     const result = subCatUtils.transformWithTopics(mockSubCat);
 
-    expect(result).toHaveProperty('id');
-    expect(result).toHaveProperty('name');
-    expect(result).toHaveProperty('description');
-    expect(result).toHaveProperty('mainCategoryId');
-    expect(result).toHaveProperty('topics');
-    expect(result.id).toBe(transformedSubCat.id);
-    expect(result.name).toBe(transformedSubCat.name);
-    expect(result.description).toBe(transformedSubCat.description);
-    expect(result.mainCategoryId).toBe(transformedSubCat.mainCategoryId);
-    expect(result.topics).toBe(transformedSubCat.topics);
+    expect(result).toEqual(mockSubCat.topics);
   });
 });
