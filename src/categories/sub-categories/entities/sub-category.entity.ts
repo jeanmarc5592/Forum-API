@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -9,9 +10,10 @@ import {
   OneToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { MainCategory } from '../../main-categories/entities/main-category.entity';
-import { Exclude } from 'class-transformer';
+
 import { Topic } from '@topics/entities/topic.entity';
+
+import { MainCategory } from '../../main-categories/entities/main-category.entity';
 
 @Entity()
 export class SubCategory {

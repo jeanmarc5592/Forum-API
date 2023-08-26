@@ -4,12 +4,14 @@ import {
   createMongoAbility,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { User } from '@users/entities/user.entity';
+
 import { RequestUser, Roles } from '@auth/auth.types';
-import { Subjects, Actions, BuilderType } from './ability.types';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { Topic } from '@topics/entities/topic.entity';
+import { User } from '@users/entities/user.entity';
+
+import { Subjects, Actions, BuilderType } from './ability.types';
 
 @Injectable()
 export class AbilityFactory {

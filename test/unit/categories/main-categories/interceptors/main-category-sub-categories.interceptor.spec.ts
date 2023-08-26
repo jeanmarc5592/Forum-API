@@ -1,10 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
+
+import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { MainCategorySubCategoriesInterceptor } from '@categories/main-categories/interceptors/main-category-sub-categories.interceptor';
 import { MainCategoriesUtils } from '@categories/main-categories/main-categories.utils';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 
 const mockMainCat: MainCategory = {
   id: '1',

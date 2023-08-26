@@ -11,13 +11,15 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+
+import { AbilityService } from '@ability/ability.service';
+import { RequestUser } from '@auth/auth.types';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
-import { AccessTokenGuard } from '@auth/guards/access-token.guard';
-import { RequestUser } from '@auth/auth.types';
-import { AbilityService } from '@ability/ability.service';
 import { UserTopicsInterceptor } from './interceptors/user-topics.interceptor';
+import { UsersService } from './users.service';
 @UseGuards(AccessTokenGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')

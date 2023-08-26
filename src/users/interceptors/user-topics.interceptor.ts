@@ -6,9 +6,11 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { Topic } from '@topics/entities/topic.entity';
+
 import { User } from '../entities/user.entity';
 import { UsersUtils } from '../users.utils';
-import { Topic } from '@topics/entities/topic.entity';
 
 @Injectable()
 export class UserTopicsInterceptor implements NestInterceptor {

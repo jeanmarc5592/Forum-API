@@ -1,6 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { CallHandler, ExecutionContext } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
+
 import { Roles } from '@auth/auth.types';
 import { Topic } from '@topics/entities/topic.entity';
 import { User } from '@users/entities/user.entity';

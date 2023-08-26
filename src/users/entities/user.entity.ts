@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -9,7 +10,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { Exclude } from 'class-transformer';
+
 import { Roles } from '@auth/auth.types';
 import { Topic } from '@topics/entities/topic.entity';
 

@@ -11,14 +11,16 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { MainCategoriesService } from './main-categories.service';
-import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
-import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
-import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
+import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
+import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
 import { MainCategory } from './entities/main-category.entity';
 import { MainCategorySubCategoriesInterceptor } from './interceptors/main-category-sub-categories.interceptor';
+import { MainCategoriesService } from './main-categories.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('main-categories')

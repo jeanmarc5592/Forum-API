@@ -1,14 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
-import { MockType, repositoryMockFactory } from '@/app.types';
-import { Repository } from 'typeorm';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { NotFoundException } from '@nestjs/common';
-import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub-category.dto';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { MockType, repositoryMockFactory } from '@/app.types';
+import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
+import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
 import { CreateSubCategoryDto } from '@categories/sub-categories/dtos/create-sub-category.dto';
+import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub-category.dto';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
+import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
 import { Topic } from '@topics/entities/topic.entity';
 
 const mockSubCat: SubCategory = {

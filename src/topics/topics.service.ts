@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTopicDTO } from './dtos/create-topic.dto';
-import { UpdateTopicDTO } from './dtos/update-topic.dto';
-import { Repository } from 'typeorm';
-import { Topic } from './entities/topic.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
 import { UsersService } from '@users/users.service';
+
+import { CreateTopicDTO } from './dtos/create-topic.dto';
+import { UpdateTopicDTO } from './dtos/update-topic.dto';
+import { Topic } from './entities/topic.entity';
 
 @Injectable()
 export class TopicsService {
