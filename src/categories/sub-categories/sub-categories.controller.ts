@@ -12,17 +12,19 @@ import {
   ClassSerializerInterceptor,
   Query,
 } from '@nestjs/common';
-import { SubCategoriesService } from './sub-categories.service';
-import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
-import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
-import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
+import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
+import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { SubCategory } from './entities/sub-category.entity';
-import { SubCategoriesQueryDTO } from '../main-categories/dtos/sub-categories-query.dto';
 import { SubCategoryCollectionInterceptor } from './interceptors/sub-category-collection.interceptor';
-import { SubCategoryInterceptor } from './interceptors/sub-category.interceptor';
 import { SubCategoryTopicsInterceptor } from './interceptors/sub-category-topics.interceptor';
+import { SubCategoryInterceptor } from './interceptors/sub-category.interceptor';
+import { SubCategoriesService } from './sub-categories.service';
+import { SubCategoriesQueryDTO } from '../main-categories/dtos/sub-categories-query.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('sub-categories')

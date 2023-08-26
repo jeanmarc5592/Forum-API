@@ -1,4 +1,5 @@
 import * as argon2 from 'argon2';
+
 import { CryptographyUtils } from '@utils/cryptography.utils';
 
 describe('CryptographyUtils', () => {

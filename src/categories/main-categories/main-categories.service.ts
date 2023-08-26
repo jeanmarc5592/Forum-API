@@ -4,10 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MainCategory } from './entities/main-category.entity';
 import { Repository } from 'typeorm';
-import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
+
 import { CreateMainCategoryDTO } from './dtos/create-main-category.dto';
+import { UpdateMainCategoryDTO } from './dtos/update-main-category.dto';
+import { MainCategory } from './entities/main-category.entity';
 
 @Injectable()
 export class MainCategoriesService {

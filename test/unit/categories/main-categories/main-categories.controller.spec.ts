@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { AbilityService } from '@ability/ability.service';
+import { Roles, RequestUser } from '@auth/auth.types';
+import { CreateMainCategoryDTO } from '@categories/main-categories/dtos/create-main-category.dto';
+import { UpdateMainCategoryDTO } from '@categories/main-categories/dtos/update-main-category.dto';
+import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { MainCategoriesController } from '@categories/main-categories/main-categories.controller';
 import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
-import { AbilityService } from '@ability/ability.service';
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
-import { Roles, RequestUser } from '@auth/auth.types';
-import { UpdateMainCategoryDTO } from '@categories/main-categories/dtos/update-main-category.dto';
-import { CreateMainCategoryDTO } from '@categories/main-categories/dtos/create-main-category.dto';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { MainCategoriesUtils } from '@categories/main-categories/main-categories.utils';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 
 const mockMainCats = [
   { id: '1', name: 'Main Cat 1' },

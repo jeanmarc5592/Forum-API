@@ -1,12 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { ExecutionContext, CallHandler } from '@nestjs/common';
-import { TopicInterceptor } from '@topics/interceptors/topic.interceptor';
+import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
-import { TopicsUtils } from '@topics/topics.utils';
+
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { User } from '@users/entities/user.entity';
 import { Topic } from '@topics/entities/topic.entity';
+import { TopicInterceptor } from '@topics/interceptors/topic.interceptor';
 import { TransformedTopic } from '@topics/topics.types';
+import { TopicsUtils } from '@topics/topics.utils';
+import { User } from '@users/entities/user.entity';
 
 const mockTopic = {
   id: '1',

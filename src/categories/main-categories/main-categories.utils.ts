@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { SubCategory } from '../sub-categories/entities/sub-category.entity';
+
 import { MainCategory } from './entities/main-category.entity';
+import { SubCategory } from '../sub-categories/entities/sub-category.entity';
 
 @Injectable()
 export class MainCategoriesUtils {

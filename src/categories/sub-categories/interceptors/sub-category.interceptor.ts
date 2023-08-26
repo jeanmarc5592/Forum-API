@@ -6,9 +6,10 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { SubCategory } from '../entities/sub-category.entity';
-import { SubCategoriesUtils } from '../sub-categories.utils';
 import { TransformedSubCategory } from '../sub-categories.types';
+import { SubCategoriesUtils } from '../sub-categories.utils';
 
 @Injectable()
 export class SubCategoryInterceptor implements NestInterceptor {

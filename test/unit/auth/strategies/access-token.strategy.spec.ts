@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Strategy } from 'passport-jwt';
+
 import { AccessTokenStrategy } from '@auth/strategies/access-token.strategy';
 
 class MockConfigService extends ConfigService {
@@ -7,6 +8,7 @@ class MockConfigService extends ConfigService {
     if (key === 'jwt.access.secret') {
       return 'secret';
     }
+
     return undefined;
   }
 }

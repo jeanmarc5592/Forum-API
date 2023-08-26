@@ -1,14 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { AbilityService } from '@ability/ability.service';
+import { Roles, RequestUser } from '@auth/auth.types';
+import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
+import { CreateSubCategoryDto } from '@categories/sub-categories/dtos/create-sub-category.dto';
+import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub-category.dto';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoriesController } from '@categories/sub-categories/sub-categories.controller';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
-import { AbilityService } from '@ability/ability.service';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub-category.dto';
-import { Roles, RequestUser } from '@auth/auth.types';
-import { CreateSubCategoryDto } from '@categories/sub-categories/dtos/create-sub-category.dto';
-import { Topic } from '@topics/entities/topic.entity';
 import { SubCategoriesUtils } from '@categories/sub-categories/sub-categories.utils';
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
+import { Topic } from '@topics/entities/topic.entity';
 
 const mockSubCat: SubCategory = {
   id: '1',

@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { SubCategory } from './entities/sub-category.entity';
-import { Repository } from 'typeorm';
 import { MainCategoriesService } from '../main-categories/main-categories.service';
 
 @Injectable()

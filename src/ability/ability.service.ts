@@ -1,6 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { AbilityFactory } from './ability.factory';
+
 import { RequestUser } from '@auth/auth.types';
+
+import { AbilityFactory } from './ability.factory';
 import { Actions } from './ability.types';
 
 @Injectable()

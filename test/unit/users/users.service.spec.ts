@@ -1,14 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from '@users/users.service';
-import { Repository } from 'typeorm';
-import { User } from '@users/entities/user.entity';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { CryptographyUtils } from '@utils/cryptography.utils';
-import { CreateUserDTO } from '@users/dtos/create-user.dto';
-import { Roles } from '@auth/auth.types';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { MockType, repositoryMockFactory } from '@/app.types';
+import { Roles } from '@auth/auth.types';
 import { Topic } from '@topics/entities/topic.entity';
+import { CreateUserDTO } from '@users/dtos/create-user.dto';
+import { User } from '@users/entities/user.entity';
+import { UsersService } from '@users/users.service';
+import { CryptographyUtils } from '@utils/cryptography.utils';
 
 const mockUser: User = {
   id: '1',

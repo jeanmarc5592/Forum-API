@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { Topic } from '../entities/topic.entity';
 import { TopicsUtils } from '../topics.utils';
 

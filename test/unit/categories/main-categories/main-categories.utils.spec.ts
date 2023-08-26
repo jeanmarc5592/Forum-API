@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { MainCategoriesUtils } from '@categories/main-categories/main-categories.utils';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 
 const mockMainCat: MainCategory = {
   id: '1',

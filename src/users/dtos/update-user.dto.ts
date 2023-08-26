@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
+
 import { Roles } from '../../auth/auth.types';
 
 export class UpdateUserDTO {

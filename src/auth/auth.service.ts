@@ -1,12 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+
+import { CreateUserDTO } from '@users/dtos/create-user.dto';
 import { User } from '@users/entities/user.entity';
 import { UsersService } from '@users/users.service';
-import { LoginDTO } from './dtos/login.dto';
-import { JwtService } from '@nestjs/jwt';
-import { JwtPayload, RequestUser } from './auth.types';
-import { ConfigService } from '@nestjs/config';
-import { CreateUserDTO } from '@users/dtos/create-user.dto';
 import { CryptographyUtils } from '@utils/cryptography.utils';
+
+import { JwtPayload, RequestUser } from './auth.types';
+import { LoginDTO } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -61,6 +63,7 @@ export class AuthService {
 
   async signout(user: User) {
     await this.usersService.update({ refreshToken: null }, user.id);
+
     return 'OK';
   }
 
@@ -79,6 +82,7 @@ export class AuthService {
 
   private async updateRefreshToken(userId: string, rawRefreshToken: string) {
     const refreshToken = await this.cryptographyUtils.hash(rawRefreshToken);
+
     return await this.usersService.update({ refreshToken }, userId);
   }
 

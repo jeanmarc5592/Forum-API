@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+
+import { AbilityModule } from '@ability/ability.module';
 import { AccessTokenStrategy } from '@auth/strategies/access-token.strategy';
 import { CryptographyUtils } from '@utils/cryptography.utils';
-import { AbilityModule } from '@ability/ability.module';
-import { ConfigModule } from '@nestjs/config';
+
+import { User } from './entities/user.entity';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
 import { UsersUtils } from './users.utils';
 
 @Module({

@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { AbilityModule } from '@ability/ability.module';
+
 import { MainCategory } from './entities/main-category.entity';
 import { MainCategoriesController } from './main-categories.controller';
 import { MainCategoriesService } from './main-categories.service';
-import { AbilityModule } from '@ability/ability.module';
 import { MainCategoriesUtils } from './main-categories.utils';
 
 @Module({

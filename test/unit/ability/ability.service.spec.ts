@@ -1,8 +1,9 @@
+import { ForbiddenException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { AbilityFactory } from '@ability/ability.factory';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser, Roles } from '@auth/auth.types';
-import { ForbiddenException } from '@nestjs/common';
 
 describe('AbilityService', () => {
   let service: AbilityService;

@@ -1,8 +1,9 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { repositoryMockFactory } from '../../../src/app.types';
 import { DataSource } from 'typeorm';
+
+import { repositoryMockFactory } from '../../../src/app.types';
 
 export class ModuleTestUtils {
   static async setupTestModule(

@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TopicsUtils } from '@topics/topics.utils';
+
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { User } from '@users/entities/user.entity';
 import { Topic } from '@topics/entities/topic.entity';
 import { TransformedTopic } from '@topics/topics.types';
+import { TopicsUtils } from '@topics/topics.utils';
+import { User } from '@users/entities/user.entity';
 
 const mockTopic = {
   id: '1',

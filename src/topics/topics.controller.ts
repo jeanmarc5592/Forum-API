@@ -12,16 +12,18 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { TopicsService } from './topics.service';
-import { CreateTopicDTO } from './dtos/create-topic.dto';
-import { UpdateTopicDTO } from './dtos/update-topic.dto';
-import { TopicsQueryDTO } from './dtos/topics-query.dto';
-import { TopicInterceptor } from './interceptors/topic.interceptor';
-import { TopicCollectionInterceptor } from './interceptors/topic-collection.interceptor';
-import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
+import { AccessTokenGuard } from '@auth/guards/access-token.guard';
+
+import { CreateTopicDTO } from './dtos/create-topic.dto';
+import { TopicsQueryDTO } from './dtos/topics-query.dto';
+import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Topic } from './entities/topic.entity';
+import { TopicCollectionInterceptor } from './interceptors/topic-collection.interceptor';
+import { TopicInterceptor } from './interceptors/topic.interceptor';
+import { TopicsService } from './topics.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('topics')

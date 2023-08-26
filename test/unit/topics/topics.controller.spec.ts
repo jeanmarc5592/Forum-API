@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TopicsController } from '@topics/topics.controller';
-import { TopicsService } from '@topics/topics.service';
+
 import { AbilityService } from '@ability/ability.service';
-import { Topic } from '@topics/entities/topic.entity';
-import { UpdateTopicDTO } from '@topics/dtos/update-topic.dto';
 import { Roles, RequestUser } from '@auth/auth.types';
 import { CreateTopicDTO } from '@topics/dtos/create-topic.dto';
+import { UpdateTopicDTO } from '@topics/dtos/update-topic.dto';
+import { Topic } from '@topics/entities/topic.entity';
+import { TopicsController } from '@topics/topics.controller';
+import { TopicsService } from '@topics/topics.service';
 import { TopicsUtils } from '@topics/topics.utils';
 
 const mockTopics = [

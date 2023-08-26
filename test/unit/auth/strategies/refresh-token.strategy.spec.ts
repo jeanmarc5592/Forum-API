@@ -1,14 +1,16 @@
 import { ConfigService } from '@nestjs/config';
-import { Strategy } from 'passport-jwt';
-import { RefreshTokenStrategy } from '@auth/strategies/refresh-token.strategy';
 import { Request } from 'express';
+import { Strategy } from 'passport-jwt';
+
 import { JwtPayload } from '@auth/auth.types';
+import { RefreshTokenStrategy } from '@auth/strategies/refresh-token.strategy';
 
 class MockConfigService extends ConfigService {
   get(key: string) {
     if (key === 'jwt.refresh.secret') {
       return 'secret';
     }
+
     return undefined;
   }
 }

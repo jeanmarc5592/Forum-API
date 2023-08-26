@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
+
+import { Topic } from '@topics/entities/topic.entity';
+
 import { SubCategory } from './entities/sub-category.entity';
 import { TransformedSubCategory } from './sub-categories.types';
-import { Topic } from '@topics/entities/topic.entity';
 
 @Injectable()
 export class SubCategoriesUtils {

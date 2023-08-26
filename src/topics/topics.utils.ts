@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { Topic } from './entities/topic.entity';
 import { TransformedTopic } from './topics.types';
 

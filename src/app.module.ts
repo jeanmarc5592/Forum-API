@@ -1,13 +1,14 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
 import { APP_PIPE } from '@nestjs/core';
-import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AbilityModule } from './ability/ability.module';
+import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
-import { TopicsModule } from './topics/topics.module';
 import configuration from './config/configuration';
+import { TopicsModule } from './topics/topics.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
