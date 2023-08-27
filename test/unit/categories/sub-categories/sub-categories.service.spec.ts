@@ -3,50 +3,21 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MockType, repositoryMockFactory } from '@/app.types';
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
+import { MockType } from '@/app.types';
 import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
 import { CreateSubCategoryDto } from '@categories/sub-categories/dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub-category.dto';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
-import { Topic } from '@topics/entities/topic.entity';
 
-const mockSubCat: SubCategory = {
-  id: '1',
-  name: 'React',
-  description: 'All About React',
-  mainCategory: {
-    id: '1',
-    name: 'Frontend Development',
-  } as MainCategory,
-  topics: [
-    { id: '1', title: 'Topic 1' } as Topic,
-    { id: '2', title: 'Topic 2' } as Topic,
-  ],
-  created_at: new Date(),
-  updated_at: new Date(),
-  generateId: jest.fn(),
-};
-
-const mockMainCat: MainCategory = {
-  id: '1',
-  name: 'Frontend Development',
-  description: 'All About Frontend Development',
-  subCategories: [
-    {
-      id: '1',
-      name: 'React',
-    } as SubCategory,
-    {
-      id: '2',
-      name: 'Vue',
-    } as SubCategory,
-  ],
-  created_at: new Date(),
-  updated_at: new Date(),
-  generateId: jest.fn(),
-};
+import {
+  MockSubCategoriesRepository,
+  mockSubCat,
+} from './fixtures/sub-categories.fixtures';
+import {
+  MockMainCategoriesService,
+  mockMainCat,
+} from '../main-categories/fixtures/main-categories.fixtures';
 
 describe('SubCategoriesService', () => {
   let service: SubCategoriesService;
@@ -57,16 +28,8 @@ describe('SubCategoriesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SubCategoriesService,
-        {
-          provide: getRepositoryToken(SubCategory),
-          useFactory: repositoryMockFactory,
-        },
-        {
-          provide: MainCategoriesService,
-          useValue: {
-            getById: jest.fn(),
-          },
-        },
+        MockSubCategoriesRepository,
+        MockMainCategoriesService,
       ],
     }).compile();
 

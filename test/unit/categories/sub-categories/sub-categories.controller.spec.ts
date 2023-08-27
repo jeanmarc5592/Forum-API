@@ -1,47 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AbilityService } from '@ability/ability.service';
-import { Roles, RequestUser } from '@auth/auth.types';
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { CreateSubCategoryDto } from '@categories/sub-categories/dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub-category.dto';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoriesController } from '@categories/sub-categories/sub-categories.controller';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
-import { SubCategoriesUtils } from '@categories/sub-categories/sub-categories.utils';
-import { Topic } from '@topics/entities/topic.entity';
 
-const mockSubCat: SubCategory = {
-  id: '1',
-  name: 'React',
-  description: 'All About React',
-  mainCategory: {
-    id: '1',
-    name: 'Frontend Development',
-  } as MainCategory,
-  topics: [
-    { id: '1', title: 'Topic 1' } as Topic,
-    { id: '2', title: 'Topic 2' } as Topic,
-  ],
-  created_at: new Date(),
-  updated_at: new Date(),
-  generateId: jest.fn(),
-};
-
-const mockSubCats = [
-  { id: '1', name: 'Sub Cat 1' },
-  { id: '2', name: 'Sub Cat 2' },
-  { id: '3', name: 'Sub Cat 3' },
-] as SubCategory[];
-
-const mockRequest = {
-  user: {
-    id: '123',
-    name: 'Request User',
-    email: 'requser@email.com',
-    role: Roles.USER,
-  } as RequestUser,
-};
+import {
+  MockSubCategoriesService,
+  mockSubCat,
+  mockSubCats,
+} from './fixtures/sub-categories.fixtures';
+import { MockSubCategoriesUtils } from './fixtures/sub-categories.utils.fixtures';
+import { MockAbilityService } from '../../ability/fixtures/ability.fixtures';
+import { mockRequestWithUser } from '../../auth/fixtures/auth.fixtures';
 
 describe('SubCategoriesController', () => {
   let controller: SubCategoriesController;
@@ -51,32 +23,9 @@ describe('SubCategoriesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SubCategoriesController],
       providers: [
-        {
-          provide: SubCategoriesService,
-          useValue: {
-            getAll: jest.fn(),
-            getById: jest.fn(),
-            getTopics: jest.fn(),
-            update: jest.fn(),
-            delete: jest.fn(),
-            create: jest.fn(),
-          },
-        },
-        {
-          provide: AbilityService,
-          useValue: {
-            canUpdate: jest.fn(),
-            canDelete: jest.fn(),
-            canCreate: jest.fn(),
-          },
-        },
-        {
-          provide: SubCategoriesUtils,
-          useValue: {
-            transform: jest.fn(),
-            getTopics: jest.fn(),
-          },
-        },
+        MockSubCategoriesService,
+        MockAbilityService,
+        MockSubCategoriesUtils,
       ],
     }).compile();
 
@@ -134,7 +83,7 @@ describe('SubCategoriesController', () => {
         {
           name: 'Updated Sub Cat',
         },
-        mockRequest,
+        mockRequestWithUser,
       );
 
       expect(subCat.id).toEqual(subCatId);
@@ -148,7 +97,7 @@ describe('SubCategoriesController', () => {
 
       jest.spyOn(subCatService, 'delete').mockResolvedValue(mockSubCats[0]);
 
-      const subCat = await controller.delete(subCatId, mockRequest);
+      const subCat = await controller.delete(subCatId, mockRequestWithUser);
 
       expect(subCat.id).toEqual(subCatId);
     });
@@ -171,7 +120,7 @@ describe('SubCategoriesController', () => {
 
       jest.spyOn(subCatService, 'create').mockResolvedValue(newSubCat);
 
-      const subCat = await controller.create(subCatBody, mockRequest);
+      const subCat = await controller.create(subCatBody, mockRequestWithUser);
 
       expect(subCat).toEqual(newSubCat);
     });

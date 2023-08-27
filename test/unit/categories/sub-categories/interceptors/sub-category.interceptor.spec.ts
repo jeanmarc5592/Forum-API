@@ -2,29 +2,11 @@ import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
-import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoryInterceptor } from '@categories/sub-categories/interceptors/sub-category.interceptor';
 import { TransformedSubCategory } from '@categories/sub-categories/sub-categories.types';
 import { SubCategoriesUtils } from '@categories/sub-categories/sub-categories.utils';
-import { Topic } from '@topics/entities/topic.entity';
 
-const mockSubCat: SubCategory = {
-  id: '1',
-  name: 'React',
-  description: 'All About React',
-  mainCategory: {
-    id: '1',
-    name: 'Frontend Development',
-  } as MainCategory,
-  topics: [
-    { id: '1', title: 'Topic 1' } as Topic,
-    { id: '2', title: 'Topic 2' } as Topic,
-  ],
-  created_at: new Date(),
-  updated_at: new Date(),
-  generateId: jest.fn(),
-};
+import { mockSubCat } from '../fixtures/sub-categories.fixtures';
 
 const transformedSubCat = {
   id: mockSubCat.id,
