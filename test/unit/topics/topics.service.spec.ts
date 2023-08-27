@@ -3,26 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MockType, repositoryMockFactory } from '@/app.types';
-import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
+import { MockType } from '@/app.types';
 import { CreateTopicDTO } from '@topics/dtos/create-topic.dto';
 import { UpdateTopicDTO } from '@topics/dtos/update-topic.dto';
 import { Topic } from '@topics/entities/topic.entity';
 import { TopicsService } from '@topics/topics.service';
-import { UsersService } from '@users/users.service';
 
-const mockTopics = [
-  { id: '1', title: 'Topic 1' },
-  { id: '2', title: 'Topic 2' },
-  { id: '3', title: 'Topic 3' },
-] as Topic[];
-
-const mockTopic = {
-  id: '1',
-  title: 'Topic',
-  content: 'Topic Content',
-  closed: false,
-} as Topic;
+import {
+  mockTopics,
+  mockTopic,
+  MockTopicsRepository,
+} from './fixtures/topics.fixtures';
+import { MockSubCategoriesService } from '../categories/sub-categories/fixtures/sub-categories.fixtures';
+import { MockUsersService } from '../users/fixtures/users.fixtures';
 
 describe('TopicsService', () => {
   let service: TopicsService;
@@ -32,22 +25,9 @@ describe('TopicsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TopicsService,
-        {
-          provide: getRepositoryToken(Topic),
-          useFactory: repositoryMockFactory,
-        },
-        {
-          provide: UsersService,
-          useValue: {
-            getById: jest.fn(),
-          },
-        },
-        {
-          provide: SubCategoriesService,
-          useValue: {
-            getById: jest.fn(),
-          },
-        },
+        MockTopicsRepository,
+        MockUsersService,
+        MockSubCategoriesService,
       ],
     }).compile();
 

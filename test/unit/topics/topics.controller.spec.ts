@@ -1,35 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AbilityService } from '@ability/ability.service';
-import { Roles, RequestUser } from '@auth/auth.types';
 import { CreateTopicDTO } from '@topics/dtos/create-topic.dto';
 import { UpdateTopicDTO } from '@topics/dtos/update-topic.dto';
 import { Topic } from '@topics/entities/topic.entity';
 import { TopicsController } from '@topics/topics.controller';
 import { TopicsService } from '@topics/topics.service';
-import { TopicsUtils } from '@topics/topics.utils';
 
-const mockTopics = [
-  { id: '1', title: 'Topic 1' },
-  { id: '2', title: 'Topic 2' },
-  { id: '3', title: 'Topic 3' },
-] as Topic[];
-
-const mockTopic = {
-  id: '1',
-  title: 'Topic',
-  content: 'Topic Content',
-  closed: false,
-} as Topic;
-
-const mockRequest = {
-  user: {
-    id: '123',
-    name: 'Request User',
-    email: 'requser@email.com',
-    role: Roles.USER,
-  } as RequestUser,
-};
+import {
+  mockTopics,
+  mockTopic,
+  MockTopicsService,
+} from './fixtures/topics.fixtures';
+import { MockTopicsUtils } from './fixtures/topics.utils.fixtures';
+import { MockAbilityService } from '../ability/fixtures/ability.fixtures';
+import { mockRequestWithUser } from '../auth/fixtures/auth.fixtures';
 
 describe('TopicsController', () => {
   let controller: TopicsController;
@@ -38,32 +22,7 @@ describe('TopicsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TopicsController],
-      providers: [
-        {
-          provide: TopicsService,
-          useValue: {
-            getAll: jest.fn(),
-            getById: jest.fn(),
-            update: jest.fn(),
-            delete: jest.fn(),
-            create: jest.fn(),
-          },
-        },
-        {
-          provide: AbilityService,
-          useValue: {
-            canUpdate: jest.fn(),
-            canDelete: jest.fn(),
-            canCreate: jest.fn(),
-          },
-        },
-        {
-          provide: TopicsUtils,
-          useValue: {
-            transformTopic: jest.fn(),
-          },
-        },
-      ],
+      providers: [MockTopicsService, MockAbilityService, MockTopicsUtils],
     }).compile();
 
     controller = module.get<TopicsController>(TopicsController);
@@ -103,7 +62,11 @@ describe('TopicsController', () => {
       Object.assign(mockTopic, updates);
       jest.spyOn(topicsService, 'update').mockResolvedValue(mockTopic);
 
-      const topic = await controller.update(topicId, updates, mockRequest);
+      const topic = await controller.update(
+        topicId,
+        updates,
+        mockRequestWithUser,
+      );
 
       expect(topic.id).toBe(topicId);
       expect(topic.title).toBe(topicTitle);
@@ -114,7 +77,7 @@ describe('TopicsController', () => {
     it('should return the deleted topic', async () => {
       jest.spyOn(topicsService, 'delete').mockResolvedValue(mockTopic);
 
-      const topic = await controller.delete(mockTopic.id, mockRequest);
+      const topic = await controller.delete(mockTopic.id, mockRequestWithUser);
 
       expect(topic).toEqual(mockTopic);
     });
@@ -138,7 +101,7 @@ describe('TopicsController', () => {
 
       jest.spyOn(topicsService, 'create').mockResolvedValue(newTopic);
 
-      const topic = await controller.create(topicBody, mockRequest);
+      const topic = await controller.create(topicBody, mockRequestWithUser);
 
       expect(topic).toEqual(newTopic);
     });
