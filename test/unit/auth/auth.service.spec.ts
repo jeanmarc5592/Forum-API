@@ -4,33 +4,16 @@ import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthService } from '@auth/auth.service';
-import { Roles } from '@auth/auth.types';
-import { CreateUserDTO } from '@users/dtos/create-user.dto';
-import { User } from '@users/entities/user.entity';
 import { UsersService } from '@users/users.service';
 import { CryptographyUtils } from '@utils/cryptography.utils';
 
-const mockUser: User = {
-  id: '1',
-  name: 'Test User',
-  email: 'test@example.com',
-  password: 'My Password',
-  age: '18',
-  bio: 'User bio',
-  created_at: new Date(),
-  updated_at: new Date(),
-  refreshToken: 'Token',
-  topics: [],
-  role: Roles.USER,
-  generateId: jest.fn(),
-};
-
-const mockCreateUser: CreateUserDTO = {
-  name: 'User 1',
-  email: 'test@example.com',
-  password: 'password',
-  age: '30',
-};
+import { MockJwtService } from './fixtures/auth.fixtures';
+import {
+  mockUser,
+  mockCreateUser,
+  MockUsersService,
+} from '../users/fixtures/users.fixtures';
+import { MockCryptographyUtils } from '../utils/fixtures/cryptography.utils.fixtures';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -43,28 +26,9 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         ConfigService,
-        {
-          provide: UsersService,
-          useValue: {
-            create: jest.fn(),
-            update: jest.fn(),
-            getByEmail: jest.fn(),
-            getById: jest.fn(),
-          },
-        },
-        {
-          provide: JwtService,
-          useValue: {
-            sign: jest.fn(),
-          },
-        },
-        {
-          provide: CryptographyUtils,
-          useValue: {
-            hash: jest.fn(),
-            verify: jest.fn(),
-          },
-        },
+        MockUsersService,
+        MockJwtService,
+        MockCryptographyUtils,
       ],
     }).compile();
 

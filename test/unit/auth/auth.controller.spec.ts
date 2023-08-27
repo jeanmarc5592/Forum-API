@@ -2,36 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthController } from '@auth/auth.controller';
 import { AuthService } from '@auth/auth.service';
-import { Roles } from '@auth/auth.types';
-import { CreateUserDTO } from '@users/dtos/create-user.dto';
-import { User } from '@users/entities/user.entity';
 
-const mockUser: User = {
-  id: '1',
-  name: 'Test User',
-  email: 'test@example.com',
-  password: 'My Password',
-  age: '18',
-  bio: 'User bio',
-  created_at: new Date(),
-  updated_at: new Date(),
-  refreshToken: 'Token',
-  topics: [],
-  role: Roles.USER,
-  generateId: jest.fn(),
-};
-
-const mockCreateUser: CreateUserDTO = {
-  name: 'User 1',
-  email: 'test@example.com',
-  password: 'password',
-  age: '30',
-};
-
-const mockTokens = {
-  accessToken: 'access-token',
-  refreshToken: 'refresh-token',
-};
+import { MockAuthService, mockTokens } from './fixtures/auth.fixtures';
+import { mockUser, mockCreateUser } from '../users/fixtures/users.fixtures';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -40,17 +13,7 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [
-        {
-          provide: AuthService,
-          useValue: {
-            signin: jest.fn(),
-            signup: jest.fn(),
-            refresh: jest.fn(),
-            signout: jest.fn(),
-          },
-        },
-      ],
+      providers: [MockAuthService],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
