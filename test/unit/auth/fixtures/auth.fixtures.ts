@@ -2,6 +2,7 @@ import { Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { AuthService } from '@auth/auth.service';
+import { Roles, RequestUser } from '@auth/auth.types';
 
 export const MockAuthService: Provider = {
   provide: AuthService,
@@ -23,4 +24,13 @@ export const MockJwtService: Provider = {
   useValue: {
     sign: jest.fn(),
   },
+};
+
+export const mockRequestWithUser = {
+  user: {
+    id: '123',
+    name: 'Request User',
+    email: 'requser@email.com',
+    role: Roles.USER,
+  } as RequestUser,
 };

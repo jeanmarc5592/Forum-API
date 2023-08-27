@@ -3,31 +3,16 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MockType, repositoryMockFactory } from '@/app.types';
+import { MockType } from '@/app.types';
 import { CreateMainCategoryDTO } from '@categories/main-categories/dtos/create-main-category.dto';
 import { UpdateMainCategoryDTO } from '@categories/main-categories/dtos/update-main-category.dto';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 
-const mockMainCat: MainCategory = {
-  id: '1',
-  name: 'Frontend Development',
-  description: 'All About Frontend Development',
-  subCategories: [
-    {
-      id: '1',
-      name: 'React',
-    } as SubCategory,
-    {
-      id: '2',
-      name: 'Vue',
-    } as SubCategory,
-  ],
-  created_at: new Date(),
-  updated_at: new Date(),
-  generateId: jest.fn(),
-};
+import {
+  MockMainCategoryRepository,
+  mockMainCat,
+} from './fixtures/main-categories.fixtures';
 
 describe('MainCategoriesService', () => {
   let service: MainCategoriesService;
@@ -35,13 +20,7 @@ describe('MainCategoriesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        MainCategoriesService,
-        {
-          provide: getRepositoryToken(MainCategory),
-          useFactory: repositoryMockFactory,
-        },
-      ],
+      providers: [MainCategoriesService, MockMainCategoryRepository],
     }).compile();
 
     service = module.get<MainCategoriesService>(MainCategoriesService);

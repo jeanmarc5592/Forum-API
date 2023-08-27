@@ -1,48 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AbilityService } from '@ability/ability.service';
-import { Roles, RequestUser } from '@auth/auth.types';
 import { CreateMainCategoryDTO } from '@categories/main-categories/dtos/create-main-category.dto';
 import { UpdateMainCategoryDTO } from '@categories/main-categories/dtos/update-main-category.dto';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { MainCategoriesController } from '@categories/main-categories/main-categories.controller';
 import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
-import { MainCategoriesUtils } from '@categories/main-categories/main-categories.utils';
-import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 
-const mockMainCats = [
-  { id: '1', name: 'Main Cat 1' },
-  { id: '2', name: 'Main Cat 2' },
-  { id: '3', name: 'Main Cat 3' },
-] as MainCategory[];
-
-const mockMainCat: MainCategory = {
-  id: '1',
-  name: 'Frontend Development',
-  description: 'All About Frontend Development',
-  subCategories: [
-    {
-      id: '1',
-      name: 'React',
-    } as SubCategory,
-    {
-      id: '2',
-      name: 'Vue',
-    } as SubCategory,
-  ],
-  created_at: new Date(),
-  updated_at: new Date(),
-  generateId: jest.fn(),
-};
-
-const mockRequest = {
-  user: {
-    id: '123',
-    name: 'Request User',
-    email: 'requser@email.com',
-    role: Roles.USER,
-  } as RequestUser,
-};
+import {
+  mockMainCats,
+  mockMainCat,
+  MockMainCategoriesService,
+} from './fixtures/main-categories.fixtures';
+import { MockMainCategoriesUtils } from './fixtures/main-categories.utils.fixtures';
+import { MockAbilityService } from '../../ability/fixtures/ability.fixtures';
+import { mockRequestWithUser } from '../../auth/fixtures/auth.fixtures';
 
 describe('MainCategoriesController', () => {
   let controller: MainCategoriesController;
@@ -52,31 +23,9 @@ describe('MainCategoriesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MainCategoriesController],
       providers: [
-        {
-          provide: MainCategoriesService,
-          useValue: {
-            getAll: jest.fn(),
-            getById: jest.fn(),
-            getSubCategories: jest.fn(),
-            update: jest.fn(),
-            delete: jest.fn(),
-            create: jest.fn(),
-          },
-        },
-        {
-          provide: AbilityService,
-          useValue: {
-            canUpdate: jest.fn(),
-            canDelete: jest.fn(),
-            canCreate: jest.fn(),
-          },
-        },
-        {
-          provide: MainCategoriesUtils,
-          useValue: {
-            getSubCategories: jest.fn(),
-          },
-        },
+        MockMainCategoriesService,
+        MockAbilityService,
+        MockMainCategoriesUtils,
       ],
     }).compile();
 
@@ -131,7 +80,11 @@ describe('MainCategoriesController', () => {
       Object.assign(mockMainCat, updates);
       jest.spyOn(mainCatService, 'update').mockResolvedValue(mockMainCat);
 
-      const mainCat = await controller.update(mainCatId, updates, mockRequest);
+      const mainCat = await controller.update(
+        mainCatId,
+        updates,
+        mockRequestWithUser,
+      );
 
       expect(mainCat.id).toBe(mainCatId);
       expect(mainCat.name).toBe(mainCatName);
@@ -144,7 +97,7 @@ describe('MainCategoriesController', () => {
 
       jest.spyOn(mainCatService, 'delete').mockResolvedValue(mockMainCat);
 
-      const mainCat = await controller.delete(mainCatId, mockRequest);
+      const mainCat = await controller.delete(mainCatId, mockRequestWithUser);
 
       expect(mainCat).toBe(mockMainCat);
     });
@@ -166,7 +119,7 @@ describe('MainCategoriesController', () => {
 
       jest.spyOn(mainCatService, 'create').mockResolvedValue(newMainCat);
 
-      const mainCat = await controller.create(mainCatBody, mockRequest);
+      const mainCat = await controller.create(mainCatBody, mockRequestWithUser);
 
       expect(mainCat).toEqual(newMainCat);
     });
