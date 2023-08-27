@@ -5,6 +5,7 @@ import { repositoryMockFactory } from '@/app.types';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
+import { TransformedSubCategory } from '@categories/sub-categories/sub-categories.types';
 import { Topic } from '@topics/entities/topic.entity';
 
 export const MockSubCategoriesService: Provider = {
@@ -46,3 +47,10 @@ export const mockSubCats = [
   { id: '2', name: 'Sub Cat 2' },
   { id: '3', name: 'Sub Cat 3' },
 ] as SubCategory[];
+
+export const mockTransformedSubCat = {
+  id: mockSubCat.id,
+  name: mockSubCat.name,
+  description: mockSubCat.description,
+  mainCategoryId: mockSubCat.mainCategory.id,
+} as TransformedSubCategory;

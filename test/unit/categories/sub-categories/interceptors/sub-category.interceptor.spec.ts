@@ -3,17 +3,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
 import { SubCategoryInterceptor } from '@categories/sub-categories/interceptors/sub-category.interceptor';
-import { TransformedSubCategory } from '@categories/sub-categories/sub-categories.types';
 import { SubCategoriesUtils } from '@categories/sub-categories/sub-categories.utils';
 
-import { mockSubCat } from '../fixtures/sub-categories.fixtures';
-
-const transformedSubCat = {
-  id: mockSubCat.id,
-  name: mockSubCat.name,
-  description: mockSubCat.description,
-  mainCategoryId: mockSubCat.mainCategory.id,
-} as TransformedSubCategory;
+import {
+  mockSubCat,
+  mockTransformedSubCat,
+} from '../fixtures/sub-categories.fixtures';
 
 describe('SubCategoryInterceptor', () => {
   let interceptor: SubCategoryInterceptor;
@@ -49,7 +44,7 @@ describe('SubCategoryInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    jest.spyOn(subCatUtils, 'transform').mockReturnValue(transformedSubCat);
+    jest.spyOn(subCatUtils, 'transform').mockReturnValue(mockTransformedSubCat);
 
     const mockCallHandler = {
       handle: () => of(mockSubCat),
@@ -62,10 +57,10 @@ describe('SubCategoryInterceptor', () => {
       expect(subCat).toHaveProperty('name');
       expect(subCat).toHaveProperty('description');
       expect(subCat).toHaveProperty('mainCategoryId');
-      expect(subCat.id).toBe(transformedSubCat.id);
-      expect(subCat.name).toBe(transformedSubCat.name);
-      expect(subCat.description).toBe(transformedSubCat.description);
-      expect(subCat.mainCategoryId).toBe(transformedSubCat.mainCategoryId);
+      expect(subCat.id).toBe(mockTransformedSubCat.id);
+      expect(subCat.name).toBe(mockTransformedSubCat.name);
+      expect(subCat.description).toBe(mockTransformedSubCat.description);
+      expect(subCat.mainCategoryId).toBe(mockTransformedSubCat.mainCategoryId);
       expect(subCat).not.toHaveProperty('topics');
       done();
     });

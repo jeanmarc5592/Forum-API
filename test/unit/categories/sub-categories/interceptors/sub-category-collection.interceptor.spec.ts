@@ -3,17 +3,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
 import { SubCategoryCollectionInterceptor } from '@categories/sub-categories/interceptors/sub-category-collection.interceptor';
-import { TransformedSubCategory } from '@categories/sub-categories/sub-categories.types';
 import { SubCategoriesUtils } from '@categories/sub-categories/sub-categories.utils';
 
-import { mockSubCat } from '../fixtures/sub-categories.fixtures';
-
-const transformedSubCat = {
-  id: mockSubCat.id,
-  name: mockSubCat.name,
-  description: mockSubCat.description,
-  mainCategoryId: mockSubCat.mainCategory.id,
-} as TransformedSubCategory;
+import {
+  mockSubCat,
+  mockTransformedSubCat,
+} from '../fixtures/sub-categories.fixtures';
 
 describe('SubCategoryCollectionInterceptor', () => {
   let interceptor: SubCategoryCollectionInterceptor;
@@ -51,7 +46,7 @@ describe('SubCategoryCollectionInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    jest.spyOn(subCatUtils, 'transform').mockReturnValue(transformedSubCat);
+    jest.spyOn(subCatUtils, 'transform').mockReturnValue(mockTransformedSubCat);
 
     const mockCallHandler = {
       handle: () => of([mockSubCat]),
@@ -64,10 +59,12 @@ describe('SubCategoryCollectionInterceptor', () => {
       expect(subCats[0]).toHaveProperty('name');
       expect(subCats[0]).toHaveProperty('description');
       expect(subCats[0]).toHaveProperty('mainCategoryId');
-      expect(subCats[0].id).toBe(transformedSubCat.id);
-      expect(subCats[0].name).toBe(transformedSubCat.name);
-      expect(subCats[0].description).toBe(transformedSubCat.description);
-      expect(subCats[0].mainCategoryId).toBe(transformedSubCat.mainCategoryId);
+      expect(subCats[0].id).toBe(mockTransformedSubCat.id);
+      expect(subCats[0].name).toBe(mockTransformedSubCat.name);
+      expect(subCats[0].description).toBe(mockTransformedSubCat.description);
+      expect(subCats[0].mainCategoryId).toBe(
+        mockTransformedSubCat.mainCategoryId,
+      );
       expect(subCats[0]).not.toHaveProperty('topics');
       done();
     });
