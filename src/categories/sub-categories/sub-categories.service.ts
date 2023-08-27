@@ -55,6 +55,20 @@ export class SubCategoriesService {
     return subCategory;
   }
 
+  async getModerators(id: string) {
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.moderators', 'moderator')
+      .where('subCategory.id = :id', { id })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(`Sub Category with ID '${id}' not found`);
+    }
+
+    return subCategory.moderators;
+  }
+
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {
     const subCategory = await this.findById(id);
 

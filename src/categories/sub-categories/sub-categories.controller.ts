@@ -54,6 +54,11 @@ export class SubCategoriesController {
     return this.subCategoriesService.getTopics(id);
   }
 
+  @Get('/:id/moderators')
+  getModerators(@Param('id') id: string) {
+    return this.subCategoriesService.getModerators(id);
+  }
+
   @UseGuards(AccessTokenGuard)
   @Patch(':id')
   update(

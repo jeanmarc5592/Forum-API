@@ -8,6 +8,7 @@ import { TransformedSubCategory } from './sub-categories.types';
 @Injectable()
 export class SubCategoriesUtils {
   transform(subCategory: SubCategory): TransformedSubCategory {
+    console.log(subCategory);
     return {
       id: subCategory.id,
       name: subCategory.name,
