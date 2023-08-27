@@ -1,32 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AbilityService } from '@ability/ability.service';
 import { RequestUser, Roles } from '@auth/auth.types';
-import { User } from '@users/entities/user.entity';
 import { UsersController } from '@users/users.controller';
 import { UsersService } from '@users/users.service';
-import { UsersUtils } from '@users/users.utils';
 
-const mockUsers = [
-  { id: '1', name: 'User 1' },
-  { id: '2', name: 'User 2' },
-  { id: '3', name: 'User 3' },
-] as User[];
-
-const mockUser: User = {
-  id: '1',
-  name: 'Test User',
-  email: 'test@example.com',
-  password: 'My Password',
-  age: '18',
-  bio: 'User bio',
-  created_at: new Date(),
-  updated_at: new Date(),
-  refreshToken: 'Token',
-  topics: [],
-  role: Roles.USER,
-  generateId: jest.fn(),
-};
+import {
+  mockUsers,
+  mockUser,
+  MockUsersService,
+} from './fixtures/users.fixtures';
+import { MockUsersUtils } from './fixtures/users.utils.fixtures';
+import { MockAbilityService } from '../ability/fixtures/ability.fixtures';
 
 const mockRequest = {
   user: {
@@ -44,32 +28,7 @@ describe('UsersController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [
-        {
-          provide: UsersService,
-          useValue: {
-            getAll: jest.fn(),
-            getById: jest.fn(),
-            getTopics: jest.fn(),
-            update: jest.fn(),
-            delete: jest.fn(),
-            create: jest.fn(),
-          },
-        },
-        {
-          provide: AbilityService,
-          useValue: {
-            canUpdate: jest.fn(),
-            canDelete: jest.fn(),
-          },
-        },
-        {
-          provide: UsersUtils,
-          useValue: {
-            getTopics: jest.fn(),
-          },
-        },
-      ],
+      providers: [MockUsersService, MockAbilityService, MockUsersUtils],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);

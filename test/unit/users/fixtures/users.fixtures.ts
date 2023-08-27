@@ -1,5 +1,8 @@
 import { Provider } from '@nestjs/common';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { repositoryMockFactory } from '@/app.types';
+import { Topic } from '@/topics/entities/topic.entity';
 import { Roles } from '@auth/auth.types';
 import { CreateUserDTO } from '@users/dtos/create-user.dto';
 import { User } from '@users/entities/user.entity';
@@ -15,10 +18,24 @@ export const mockUser: User = {
   created_at: new Date(),
   updated_at: new Date(),
   refreshToken: 'Token',
-  topics: [],
+  topics: [
+    { id: '1', title: 'Topic 1' } as Topic,
+    { id: '2', title: 'Topic 2' } as Topic,
+  ],
   role: Roles.USER,
   generateId: jest.fn(),
 };
+
+export const MockUsersRepository = {
+  provide: getRepositoryToken(User),
+  useFactory: repositoryMockFactory,
+};
+
+export const mockUsers = [
+  { id: '1', name: 'User 1' },
+  { id: '2', name: 'User 2' },
+  { id: '3', name: 'User 3' },
+] as User[];
 
 export const mockCreateUser: CreateUserDTO = {
   name: 'User 1',
@@ -30,9 +47,12 @@ export const mockCreateUser: CreateUserDTO = {
 export const MockUsersService: Provider = {
   provide: UsersService,
   useValue: {
-    create: jest.fn(),
-    update: jest.fn(),
+    getAll: jest.fn(),
     getByEmail: jest.fn(),
     getById: jest.fn(),
+    getTopics: jest.fn(),
+    delete: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
   },
 };
