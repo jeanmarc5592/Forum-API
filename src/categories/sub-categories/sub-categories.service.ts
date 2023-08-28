@@ -132,7 +132,15 @@ export class SubCategoriesService {
       );
     }
 
-    // TODO: Check if user is actually in the moderators array
+    const isModerator = !!subCategory.moderators.find(
+      (moderator) => moderator.id == userId,
+    );
+
+    if (!isModerator) {
+      throw new BadRequestException(
+        `User with the ID '${userId}' is not a moderator for this sub category.`,
+      );
+    }
 
     Object.assign(subCategory, {
       moderators: subCategory.moderators.filter(
