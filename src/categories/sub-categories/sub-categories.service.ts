@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { UsersService } from '@/users/users.service';
+
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { SubCategory } from './entities/sub-category.entity';
@@ -13,6 +15,7 @@ export class SubCategoriesService {
     @InjectRepository(SubCategory)
     private readonly subCategoriesRepository: Repository<SubCategory>,
     private readonly mainCategoiesService: MainCategoriesService,
+    private readonly usersService: UsersService,
   ) {}
 
   getAll(limit: number, page: number) {
@@ -66,7 +69,35 @@ export class SubCategoriesService {
       throw new NotFoundException(`Sub Category with ID '${id}' not found`);
     }
 
+    // TODO: Add Interceptor for this
     return subCategory.moderators;
+  }
+
+  async addModerator(subCatId: string, userId: string) {
+    const user = await this.usersService.getById(userId);
+
+    // TODO: Check if user has NOT the role of "user" (utils?)
+
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.moderators', 'moderator')
+      .where('subCategory.id = :id', { id: subCatId })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(
+        `Sub Category with ID '${subCatId}' not found`,
+      );
+    }
+
+    // TODO: Check if user is already a moderator for this sub category (utils?)
+    Object.assign(subCategory, {
+      moderators: [...subCategory.moderators, user],
+    });
+
+    const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
+
+    return updatedSubCat.moderators;
   }
 
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {

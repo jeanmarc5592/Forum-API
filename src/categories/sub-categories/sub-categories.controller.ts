@@ -17,6 +17,7 @@ import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
 
+import { AddModeratorsDTO } from './dtos/add-moderators.dto';
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { SubCategory } from './entities/sub-category.entity';
@@ -57,6 +58,11 @@ export class SubCategoriesController {
   @Get('/:id/moderators')
   getModerators(@Param('id') id: string) {
     return this.subCategoriesService.getModerators(id);
+  }
+
+  @Post('/:id/moderators')
+  addModerator(@Param('id') id: string, @Body() body: AddModeratorsDTO) {
+    return this.subCategoriesService.addModerator(id, body.userId);
   }
 
   @UseGuards(AccessTokenGuard)

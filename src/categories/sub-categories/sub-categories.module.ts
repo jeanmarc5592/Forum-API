@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { UsersModule } from '@/users/users.module';
 import { AbilityModule } from '@ability/ability.module';
 
 import { SubCategory } from './entities/sub-category.entity';
@@ -14,6 +15,7 @@ import { MainCategoriesModule } from '../main-categories/main-categories.module'
     TypeOrmModule.forFeature([SubCategory]),
     MainCategoriesModule,
     AbilityModule,
+    UsersModule,
   ],
   controllers: [SubCategoriesController],
   providers: [SubCategoriesService, SubCategoriesUtils],
