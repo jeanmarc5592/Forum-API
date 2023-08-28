@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UsersService } from '@/users/users.service';
+import { Roles } from '@auth/auth.types';
+import { UsersService } from '@users/users.service';
 
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
@@ -76,7 +81,11 @@ export class SubCategoriesService {
   async addModerator(subCatId: string, userId: string) {
     const user = await this.usersService.getById(userId);
 
-    // TODO: Check if user has NOT the role of "user" (utils?)
+    if (user.role !== Roles.MODERATOR) {
+      throw new BadRequestException(
+        `User has to have the "moderator" role in order to be added. Role "${user.role}" given.`,
+      );
+    }
 
     const subCategory = await this.subCategoriesRepository
       .createQueryBuilder('subCategory')
