@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { User } from '@/users/entities/user.entity';
 import { Topic } from '@topics/entities/topic.entity';
 
 import { SubCategory } from './entities/sub-category.entity';
@@ -18,5 +19,9 @@ export class SubCategoriesUtils {
 
   getTopics(subCategory: SubCategory): Topic[] {
     return subCategory.topics;
+  }
+
+  getModerators(subCategory: SubCategory): User[] {
+    return subCategory.moderators;
   }
 }

@@ -22,6 +22,7 @@ import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
 import { SubCategory } from './entities/sub-category.entity';
 import { SubCategoryCollectionInterceptor } from './interceptors/sub-category-collection.interceptor';
+import { SubCategoryModeratorsInterceptor } from './interceptors/sub-category-moderators.interceptor';
 import { SubCategoryTopicsInterceptor } from './interceptors/sub-category-topics.interceptor';
 import { SubCategoryInterceptor } from './interceptors/sub-category.interceptor';
 import { SubCategoriesService } from './sub-categories.service';
@@ -55,16 +56,19 @@ export class SubCategoriesController {
     return this.subCategoriesService.getTopics(id);
   }
 
+  @UseInterceptors(SubCategoryModeratorsInterceptor)
   @Get('/:id/moderators')
   getModerators(@Param('id') id: string) {
     return this.subCategoriesService.getModerators(id);
   }
 
+  @UseInterceptors(SubCategoryModeratorsInterceptor)
   @Post('/:id/moderators')
   addModerator(@Param('id') id: string, @Body() body: AddModeratorsDTO) {
     return this.subCategoriesService.addModerator(id, body.userId);
   }
 
+  @UseInterceptors(SubCategoryModeratorsInterceptor)
   @Delete('/:id/moderators/:userId')
   deleteModerator(@Param('id') id: string, @Param('userId') userId: string) {
     return this.subCategoriesService.deleteModerator(id, userId);

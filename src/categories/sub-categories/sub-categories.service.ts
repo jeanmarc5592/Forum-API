@@ -74,8 +74,7 @@ export class SubCategoriesService {
       throw new NotFoundException(`Sub Category with ID '${id}' not found`);
     }
 
-    // TODO: Add Interceptor for this
-    return subCategory.moderators;
+    return subCategory;
   }
 
   async addModerator(subCatId: string, userId: string) {
@@ -115,8 +114,7 @@ export class SubCategoriesService {
 
     const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
 
-    // TODO: Add Interceptor for this
-    return updatedSubCat.moderators;
+    return updatedSubCat;
   }
 
   async deleteModerator(subCatId: string, userId: string) {
@@ -150,8 +148,7 @@ export class SubCategoriesService {
 
     const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
 
-    // TODO: Add Interceptor for this
-    return updatedSubCat.moderators;
+    return updatedSubCat;
   }
 
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {
