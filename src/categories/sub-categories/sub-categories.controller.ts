@@ -65,6 +65,11 @@ export class SubCategoriesController {
     return this.subCategoriesService.addModerator(id, body.userId);
   }
 
+  @Delete('/:id/moderators/:userId')
+  deleteModerator(@Param('id') id: string, @Param('userId') userId: string) {
+    return this.subCategoriesService.deleteModerator(id, userId);
+  }
+
   @UseGuards(AccessTokenGuard)
   @Patch(':id')
   update(

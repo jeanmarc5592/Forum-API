@@ -97,6 +97,34 @@ export class SubCategoriesService {
 
     const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
 
+    // TODO: Add Interceptor for this
+    return updatedSubCat.moderators;
+  }
+
+  async deleteModerator(subCatId: string, userId: string) {
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.moderators', 'moderator')
+      .where('subCategory.id = :id', { id: subCatId })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(
+        `Sub Category with ID '${subCatId}' not found`,
+      );
+    }
+
+    // TODO: Check if user is actually in the moderators array
+
+    Object.assign(subCategory, {
+      moderators: subCategory.moderators.filter(
+        (moderator) => moderator.id !== userId,
+      ),
+    });
+
+    const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
+
+    // TODO: Add Interceptor for this
     return updatedSubCat.moderators;
   }
 
