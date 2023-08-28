@@ -83,7 +83,7 @@ export class SubCategoriesService {
 
     if (user.role !== Roles.MODERATOR) {
       throw new BadRequestException(
-        `User has to have the "moderator" role in order to be added. Role "${user.role}" given.`,
+        `User has to have the '${Roles.MODERATOR}' role in order to be added. Role '${user.role}' given.`,
       );
     }
 
@@ -99,7 +99,16 @@ export class SubCategoriesService {
       );
     }
 
-    // TODO: Check if user is already a moderator for this sub category (utils?)
+    const isAlreadyModerator = !!subCategory.moderators.find(
+      (moderator) => moderator.id == userId,
+    );
+
+    if (isAlreadyModerator) {
+      throw new BadRequestException(
+        `User with the ID '${userId}' is already a moderator in this sub category.`,
+      );
+    }
+
     Object.assign(subCategory, {
       moderators: [...subCategory.moderators, user],
     });
