@@ -112,9 +112,7 @@ export class SubCategoriesService {
       moderators: [...subCategory.moderators, user],
     });
 
-    const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
-
-    return updatedSubCat;
+    return this.subCategoriesRepository.save(subCategory);
   }
 
   async deleteModerator(subCatId: string, userId: string) {
@@ -146,9 +144,7 @@ export class SubCategoriesService {
       ),
     });
 
-    const updatedSubCat = await this.subCategoriesRepository.save(subCategory);
-
-    return updatedSubCat;
+    return this.subCategoriesRepository.save(subCategory);
   }
 
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {
