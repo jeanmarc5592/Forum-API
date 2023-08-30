@@ -31,7 +31,7 @@ export class TopicsService {
   }
 
   async getById(id: string) {
-    const topic = this.topicsRepository
+    const topic = await this.topicsRepository
       .createQueryBuilder('topic')
       .leftJoinAndSelect('topic.subCategory', 'subCategory')
       .leftJoinAndSelect('topic.user', 'user')
