@@ -3,10 +3,10 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { RequestUser } from '@auth/auth.types';
 
 import { AbilityFactory } from './ability.factory';
-import { Actions } from './ability.types';
+import { AbilityServiceInterface, Actions } from './ability.types';
 
 @Injectable()
-export class AbilityService {
+export class AbilityService implements AbilityServiceInterface {
   constructor(private readonly abilityFactory: AbilityFactory) {}
 
   canUpdate(reqUser: RequestUser, reqBody: object, subjectToEdit: any) {

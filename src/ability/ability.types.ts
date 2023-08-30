@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   AbilityBuilder,
   AbilityTuple,
@@ -6,6 +7,7 @@ import {
   MongoQuery,
 } from '@casl/ability';
 
+import { RequestUser } from '@/auth/auth.types';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { Topic } from '@topics/entities/topic.entity';
@@ -30,3 +32,11 @@ export type AppAbility = MongoAbility<[Actions, Subjects]>;
 export type BuilderType = AbilityBuilder<
   MongoAbility<AbilityTuple, MongoQuery>
 >;
+
+export interface AbilityServiceInterface {
+  canRead?: (reqUser: RequestUser, subjectToRead: any) => void;
+  canUpdate?: (reqUser: RequestUser, reqBody: object, subjectToUpdate: any) => void;
+  canDelete?: (reqUser: RequestUser, subjectToDelete: any) => void;
+  canCreate?: (reqUser: RequestUser, subjectToCreate: any) => void;
+  canManage?: (reqUser: RequestUser, subjectToManage: any) => void;
+}
