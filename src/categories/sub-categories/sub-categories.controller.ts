@@ -62,15 +62,35 @@ export class SubCategoriesController {
     return this.subCategoriesService.getModerators(id);
   }
 
+  @UseGuards(AccessTokenGuard)
   @UseInterceptors(SubCategoryModeratorsInterceptor)
   @Post('/:id/moderators')
-  addModerator(@Param('id') id: string, @Body() body: AddModeratorsDTO) {
+  addModerator(
+    @Param('id') id: string,
+    @Body() body: AddModeratorsDTO,
+    @Req() req: { user: RequestUser },
+  ) {
+    const categoryToUpdate = this.subCategoriesService.getById(id);
+    this.abilityService.canUpdate(req.user, body, categoryToUpdate);
+
     return this.subCategoriesService.addModerator(id, body.userId);
   }
 
+  @UseGuards(AccessTokenGuard)
   @UseInterceptors(SubCategoryModeratorsInterceptor)
   @Delete('/:id/moderators/:userId')
-  deleteModerator(@Param('id') id: string, @Param('userId') userId: string) {
+  deleteModerator(
+    @Param('id') id: string,
+    @Param('userId') userId: string,
+    @Req() req: { user: RequestUser },
+  ) {
+    const categoryToUpdate = this.subCategoriesService.getById(id);
+    this.abilityService.canUpdate(
+      req.user,
+      { moderators: [] },
+      categoryToUpdate,
+    );
+
     return this.subCategoriesService.deleteModerator(id, userId);
   }
 
