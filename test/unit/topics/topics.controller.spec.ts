@@ -10,6 +10,7 @@ import {
   mockTopics,
   mockTopic,
   MockTopicsService,
+  MockTopicsAbilityService,
 } from './fixtures/topics.fixtures';
 import { MockTopicsUtils } from './fixtures/topics.utils.fixtures';
 import { MockAbilityService } from '../ability/fixtures/ability.fixtures';
@@ -22,7 +23,12 @@ describe('TopicsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TopicsController],
-      providers: [MockTopicsService, MockAbilityService, MockTopicsUtils],
+      providers: [
+        MockTopicsService,
+        MockAbilityService,
+        MockTopicsUtils,
+        MockTopicsAbilityService,
+      ],
     }).compile();
 
     controller = module.get<TopicsController>(TopicsController);

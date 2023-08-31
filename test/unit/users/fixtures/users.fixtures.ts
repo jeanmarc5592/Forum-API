@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { repositoryMockFactory } from '@/app.types';
 import { Topic } from '@/topics/entities/topic.entity';
 import { Roles } from '@auth/auth.types';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { CreateUserDTO } from '@users/dtos/create-user.dto';
 import { User } from '@users/entities/user.entity';
 import { UsersService } from '@users/users.service';
@@ -21,6 +22,10 @@ export const mockUser: User = {
   topics: [
     { id: '1', title: 'Topic 1' } as Topic,
     { id: '2', title: 'Topic 2' } as Topic,
+  ],
+  subCategories: [
+    { id: '1', name: 'Sub Category 1' } as SubCategory,
+    { id: '2', name: 'Sub Category 2' } as SubCategory,
   ],
   role: Roles.USER,
   generateId: jest.fn(),

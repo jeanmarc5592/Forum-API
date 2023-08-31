@@ -18,6 +18,7 @@ describe('SubCategoryInterceptor', () => {
     subCatUtils = {
       transform: jest.fn(),
       getTopics: jest.fn(),
+      getModerators: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

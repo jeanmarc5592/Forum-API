@@ -14,6 +14,7 @@ import {
   MockSubCategoriesRepository,
   mockSubCat,
 } from './fixtures/sub-categories.fixtures';
+import { MockUsersService } from '../../users/fixtures/users.fixtures';
 import {
   MockMainCategoriesService,
   mockMainCat,
@@ -30,6 +31,7 @@ describe('SubCategoriesService', () => {
         SubCategoriesService,
         MockSubCategoriesRepository,
         MockMainCategoriesService,
+        MockUsersService,
       ],
     }).compile();
 
