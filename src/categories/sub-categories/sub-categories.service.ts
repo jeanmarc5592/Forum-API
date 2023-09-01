@@ -74,7 +74,7 @@ export class SubCategoriesService {
       throw new NotFoundException(`Sub Category with ID '${id}' not found`);
     }
 
-    return subCategory;
+    return subCategory.moderators;
   }
 
   async addModerator(subCatId: string, userId: string) {

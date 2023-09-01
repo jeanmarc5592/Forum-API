@@ -21,12 +21,10 @@ export class TopicsAbilityService implements AbilityServiceInterface {
       );
     }
 
-    const subCategory = await this.subCategoriesService.getModerators(
+    const moderators = await this.subCategoriesService.getModerators(
       subjectToManage.subCategory.id,
     );
-    const isValidModerator = !!subCategory.moderators.find(
-      (mod) => mod.id === reqUser.id,
-    );
+    const isValidModerator = !!moderators.find((mod) => mod.id === reqUser.id);
 
     if (!isValidModerator) {
       throw new ForbiddenException(

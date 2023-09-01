@@ -56,7 +56,6 @@ export class SubCategoriesController {
     return this.subCategoriesService.getTopics(id);
   }
 
-  @UseInterceptors(SubCategoryModeratorsInterceptor)
   @Get('/:id/moderators')
   getModerators(@Param('id') id: string) {
     return this.subCategoriesService.getModerators(id);

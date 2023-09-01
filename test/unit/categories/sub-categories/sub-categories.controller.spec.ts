@@ -72,13 +72,13 @@ describe('SubCategoriesController', () => {
 
   describe('getModerators', () => {
     it('should return the moderators of the sub category with the provided id', async () => {
-      const moderators = mockSubCat.moderators;
+      jest
+        .spyOn(subCatService, 'getModerators')
+        .mockResolvedValue(mockSubCat.moderators);
 
-      jest.spyOn(subCatService, 'getModerators').mockResolvedValue(mockSubCat);
+      const moderators = await controller.getModerators(mockSubCat.id);
 
-      const subCat = await controller.getModerators(mockSubCat.id);
-
-      expect(subCat.moderators).toBe(moderators);
+      expect(moderators).toBe(mockSubCat.moderators);
     });
   });
 
