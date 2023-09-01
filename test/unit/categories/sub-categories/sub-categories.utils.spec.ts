@@ -48,4 +48,10 @@ describe('SubCategoriesUtils', () => {
 
     expect(result).toEqual(mockSubCat.topics);
   });
+
+  it('should extract the moderators of the provided sub category', () => {
+    const result = subCatUtils.getModerators(mockSubCat);
+
+    expect(result).toEqual(mockSubCat.moderators);
+  });
 });
