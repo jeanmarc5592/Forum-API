@@ -10,19 +10,19 @@ import { Topic } from './entities/topic.entity';
 export class TopicsAbilityService implements AbilityServiceInterface {
   constructor(private readonly subCategoriesService: SubCategoriesService) {}
 
-  async canManage(reqUser: RequestUser, subjectToManage: Topic) {
+  async canManage(reqUser: RequestUser, topicToManage: Topic) {
     if (reqUser.role === Roles.ADMIN) {
       return;
     }
 
     if (reqUser.role !== Roles.MODERATOR) {
       throw new ForbiddenException(
-        `User must have '${Roles.MODERATOR}' to manage other users' topics within this sub category.`,
+        `User must have '${Roles.MODERATOR}' role to manage other users' topics within this sub category.`,
       );
     }
 
     const moderators = await this.subCategoriesService.getModerators(
-      subjectToManage.subCategory.id,
+      topicToManage.subCategory.id,
     );
     const isValidModerator = !!moderators.find((mod) => mod.id === reqUser.id);
 
