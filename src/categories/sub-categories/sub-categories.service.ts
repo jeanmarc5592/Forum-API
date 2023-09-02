@@ -1,6 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import { Roles } from '@auth/auth.types';
+import { UsersService } from '@users/users.service';
 
 import { CreateSubCategoryDto } from './dtos/create-sub-category.dto';
 import { UpdateSubCategoryDto } from './dtos/update-sub-category.dto';
@@ -13,6 +20,7 @@ export class SubCategoriesService {
     @InjectRepository(SubCategory)
     private readonly subCategoriesRepository: Repository<SubCategory>,
     private readonly mainCategoiesService: MainCategoriesService,
+    private readonly usersService: UsersService,
   ) {}
 
   getAll(limit: number, page: number) {
@@ -53,6 +61,90 @@ export class SubCategoriesService {
     }
 
     return subCategory;
+  }
+
+  async getModerators(id: string) {
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.moderators', 'moderator')
+      .where('subCategory.id = :id', { id })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(`Sub Category with ID '${id}' not found`);
+    }
+
+    return subCategory.moderators;
+  }
+
+  async addModerator(subCatId: string, userId: string) {
+    const user = await this.usersService.getById(userId);
+
+    if (user.role !== Roles.MODERATOR) {
+      throw new BadRequestException(
+        `User has to have the '${Roles.MODERATOR}' role in order to be added. Role '${user.role}' given.`,
+      );
+    }
+
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.moderators', 'moderator')
+      .where('subCategory.id = :id', { id: subCatId })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(
+        `Sub Category with ID '${subCatId}' not found`,
+      );
+    }
+
+    const isAlreadyModerator = !!subCategory.moderators.find(
+      (moderator) => moderator.id == userId,
+    );
+
+    if (isAlreadyModerator) {
+      throw new BadRequestException(
+        `User with the ID '${userId}' is already a moderator in this sub category.`,
+      );
+    }
+
+    Object.assign(subCategory, {
+      moderators: [...subCategory.moderators, user],
+    });
+
+    return this.subCategoriesRepository.save(subCategory);
+  }
+
+  async deleteModerator(subCatId: string, userId: string) {
+    const subCategory = await this.subCategoriesRepository
+      .createQueryBuilder('subCategory')
+      .leftJoinAndSelect('subCategory.moderators', 'moderator')
+      .where('subCategory.id = :id', { id: subCatId })
+      .getOne();
+
+    if (!subCategory) {
+      throw new NotFoundException(
+        `Sub Category with ID '${subCatId}' not found`,
+      );
+    }
+
+    const isModerator = !!subCategory.moderators.find(
+      (moderator) => moderator.id == userId,
+    );
+
+    if (!isModerator) {
+      throw new BadRequestException(
+        `User with the ID '${userId}' is not a moderator for this sub category.`,
+      );
+    }
+
+    Object.assign(subCategory, {
+      moderators: subCategory.moderators.filter(
+        (moderator) => moderator.id !== userId,
+      ),
+    });
+
+    return this.subCategoriesRepository.save(subCategory);
   }
 
   async update(id: string, subCategoryDto: UpdateSubCategoryDto) {

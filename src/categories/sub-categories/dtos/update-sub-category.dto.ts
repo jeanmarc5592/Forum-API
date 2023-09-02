@@ -1,5 +1,18 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { IsString, IsNotEmpty, IsUUID, IsOptional } from 'class-validator';
 
-import { CreateSubCategoryDto } from './create-sub-category.dto';
+export class UpdateSubCategoryDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  name?: string;
 
-export class UpdateSubCategoryDto extends PartialType(CreateSubCategoryDto) {}
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  description?: string;
+
+  @IsUUID(4)
+  @IsNotEmpty()
+  @IsOptional()
+  mainCategoryId?: string;
+}

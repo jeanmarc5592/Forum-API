@@ -72,7 +72,6 @@ export class AbilityFactory {
     can(Actions.READ, SubCategory);
 
     // TOPIC
-    // TODO: Allow to manage Topic if topic.subCategoryId is inside moderator's assigned subCategories list
     can(Actions.READ, Topic);
     can(Actions.CREATE, Topic);
     can(Actions.UPDATE, Topic, this.ALLOWED_TOPIC_UPDATE_FIELDS, {

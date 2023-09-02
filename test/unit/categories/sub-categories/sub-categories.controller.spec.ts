@@ -5,6 +5,7 @@ import { UpdateSubCategoryDto } from '@categories/sub-categories/dtos/update-sub
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoriesController } from '@categories/sub-categories/sub-categories.controller';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
+import { User } from '@users/entities/user.entity';
 
 import {
   MockSubCategoriesService,
@@ -66,6 +67,58 @@ describe('SubCategoriesController', () => {
       const subCat = await controller.getTopics(mockSubCat.id);
 
       expect(subCat.topics).toEqual(topics);
+    });
+  });
+
+  describe('getModerators', () => {
+    it('should return the moderators of the sub category with the provided id', async () => {
+      jest
+        .spyOn(subCatService, 'getModerators')
+        .mockResolvedValue(mockSubCat.moderators);
+
+      const moderators = await controller.getModerators(mockSubCat.id);
+
+      expect(moderators).toBe(mockSubCat.moderators);
+    });
+  });
+
+  describe('addModerator', () => {
+    it('should return the moderators including the added moderator', async () => {
+      const newModerator = { id: '1', name: 'User XYZ' } as User;
+      mockSubCat.moderators = mockSubCat.moderators.concat(newModerator);
+
+      jest.spyOn(subCatService, 'addModerator').mockResolvedValue(mockSubCat);
+
+      const subCat = await controller.addModerator(
+        mockSubCat.id,
+        { userId: newModerator.id },
+        mockRequestWithUser,
+      );
+
+      expect(subCat.moderators).toEqual(mockSubCat.moderators);
+      expect(subCat.moderators).toContain(newModerator);
+    });
+  });
+
+  describe('deleteModerator', () => {
+    it('should return the moderators without the deleted moderator', async () => {
+      const deletedModerator = mockSubCat.moderators[0];
+      mockSubCat.moderators = mockSubCat.moderators.filter(
+        (mod) => mod.id !== deletedModerator.id,
+      );
+
+      jest
+        .spyOn(subCatService, 'deleteModerator')
+        .mockResolvedValue(mockSubCat);
+
+      const subCat = await controller.deleteModerator(
+        mockSubCat.id,
+        deletedModerator.id,
+        mockRequestWithUser,
+      );
+
+      expect(subCat.moderators).toBe(mockSubCat.moderators);
+      expect(subCat.moderators).not.toContain(deletedModerator);
     });
   });
 

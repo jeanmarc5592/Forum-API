@@ -6,6 +6,7 @@ import { SubCategoriesModule } from '@categories/sub-categories/sub-categories.m
 import { UsersModule } from '@users/users.module';
 
 import { Topic } from './entities/topic.entity';
+import { TopicsAbilityService } from './topics.ability.service';
 import { TopicsController } from './topics.controller';
 import { TopicsService } from './topics.service';
 import { TopicsUtils } from './topics.utils';
@@ -16,8 +17,9 @@ import { TopicsUtils } from './topics.utils';
     SubCategoriesModule,
     UsersModule,
     AbilityModule,
+    SubCategoriesModule,
   ],
   controllers: [TopicsController],
-  providers: [TopicsService, TopicsUtils],
+  providers: [TopicsService, TopicsUtils, TopicsAbilityService],
 })
 export class TopicsModule {}

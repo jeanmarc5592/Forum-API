@@ -23,6 +23,7 @@ import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Topic } from './entities/topic.entity';
 import { TopicCollectionInterceptor } from './interceptors/topic-collection.interceptor';
 import { TopicInterceptor } from './interceptors/topic.interceptor';
+import { TopicsAbilityService } from './topics.ability.service';
 import { TopicsService } from './topics.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
@@ -31,6 +32,7 @@ export class TopicsController {
   constructor(
     private readonly topicsService: TopicsService,
     private readonly abilityService: AbilityService,
+    private readonly topicsAbilityService: TopicsAbilityService,
   ) {}
 
   @UseInterceptors(TopicCollectionInterceptor)
@@ -55,7 +57,12 @@ export class TopicsController {
     @Req() req: { user: RequestUser },
   ) {
     const topicToUpdate = await this.topicsService.getById(id);
-    this.abilityService.canUpdate(req.user, body, topicToUpdate);
+
+    if (topicToUpdate.user.id === req.user.id) {
+      this.abilityService.canUpdate(req.user, body, topicToUpdate);
+    } else {
+      await this.topicsAbilityService.canManage(req.user, topicToUpdate);
+    }
 
     return this.topicsService.update(body, id);
   }
@@ -64,7 +71,12 @@ export class TopicsController {
   @Delete('/:id')
   async delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {
     const topicToDelete = await this.topicsService.getById(id);
-    this.abilityService.canDelete(req.user, topicToDelete);
+
+    if (topicToDelete.user.id === req.user.id) {
+      this.abilityService.canDelete(req.user, topicToDelete);
+    } else {
+      await this.topicsAbilityService.canManage(req.user, topicToDelete);
+    }
 
     return this.topicsService.delete(id);
   }

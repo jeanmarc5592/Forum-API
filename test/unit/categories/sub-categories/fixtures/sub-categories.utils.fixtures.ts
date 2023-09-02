@@ -7,5 +7,6 @@ export const MockSubCategoriesUtils: Provider = {
   useValue: {
     transform: jest.fn(),
     getTopics: jest.fn(),
+    getModerators: jest.fn(),
   },
 };

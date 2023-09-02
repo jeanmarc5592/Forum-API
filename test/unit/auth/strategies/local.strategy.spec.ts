@@ -2,24 +2,9 @@ import { UnauthorizedException } from '@nestjs/common';
 import { Strategy } from 'passport-local';
 
 import { AuthService } from '@auth/auth.service';
-import { Roles } from '@auth/auth.types';
 import { LocalStrategy } from '@auth/strategies/local.strategy';
-import { User } from '@users/entities/user.entity';
 
-const mockUser: User = {
-  id: '1',
-  name: 'Test User',
-  email: 'test@example.com',
-  password: 'My Password',
-  age: '18',
-  bio: 'User bio',
-  created_at: new Date(),
-  updated_at: new Date(),
-  refreshToken: 'Token',
-  topics: [],
-  role: Roles.USER,
-  generateId: jest.fn(),
-};
+import { mockUser } from '../../users/fixtures/users.fixtures';
 
 describe('LocalStrategy', () => {
   let strategy: LocalStrategy;

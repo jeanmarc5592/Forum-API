@@ -8,10 +8,12 @@ import {
   UpdateDateColumn,
   Unique,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Roles } from '@auth/auth.types';
+import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { Topic } from '@topics/entities/topic.entity';
 
 @Entity()
@@ -45,8 +47,11 @@ export class User {
   @Column({ type: 'enum', enum: Roles, default: Roles.USER })
   role: Roles;
 
-  @OneToMany(() => Topic, (topic) => topic.user, { cascade: ['remove'] })
+  @OneToMany(() => Topic, (topic) => topic.user)
   topics: Topic[];
+
+  @ManyToMany(() => SubCategory, (subCategory) => subCategory.moderators)
+  subCategories: SubCategory[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

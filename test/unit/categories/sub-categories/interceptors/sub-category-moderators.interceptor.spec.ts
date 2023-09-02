@@ -2,13 +2,13 @@ import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
-import { SubCategoryTopicsInterceptor } from '@categories/sub-categories/interceptors/sub-category-topics.interceptor';
+import { SubCategoryModeratorsInterceptor } from '@categories/sub-categories/interceptors/sub-category-moderators.interceptor';
 import { SubCategoriesUtils } from '@categories/sub-categories/sub-categories.utils';
 
 import { mockSubCat } from '../fixtures/sub-categories.fixtures';
 
 describe('SubCategoryTopicsInterceptor', () => {
-  let interceptor: SubCategoryTopicsInterceptor;
+  let interceptor: SubCategoryModeratorsInterceptor;
   let subCatUtils: SubCategoriesUtils;
 
   beforeEach(async () => {
@@ -20,7 +20,7 @@ describe('SubCategoryTopicsInterceptor', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        SubCategoryTopicsInterceptor,
+        SubCategoryModeratorsInterceptor,
         {
           provide: SubCategoriesUtils,
           useValue: subCatUtils,
@@ -28,8 +28,8 @@ describe('SubCategoryTopicsInterceptor', () => {
       ],
     }).compile();
 
-    interceptor = module.get<SubCategoryTopicsInterceptor>(
-      SubCategoryTopicsInterceptor,
+    interceptor = module.get<SubCategoryModeratorsInterceptor>(
+      SubCategoryModeratorsInterceptor,
     );
   });
 
@@ -37,14 +37,16 @@ describe('SubCategoryTopicsInterceptor', () => {
     expect(interceptor).toBeDefined();
   });
 
-  it('should return the topics of the provided sub category', (done) => {
+  it('should return the moderators of the provided sub category', (done) => {
     const context = {
       switchToHttp: () => ({
         getRequest: () => ({}),
       }),
     } as ExecutionContext;
 
-    jest.spyOn(subCatUtils, 'getTopics').mockReturnValue(mockSubCat.topics);
+    jest
+      .spyOn(subCatUtils, 'getModerators')
+      .mockReturnValue(mockSubCat.moderators);
 
     const mockCallHandler = {
       handle: () => of(mockSubCat),
@@ -52,8 +54,8 @@ describe('SubCategoryTopicsInterceptor', () => {
 
     const result = interceptor.intercept(context, mockCallHandler);
 
-    result.subscribe((topics) => {
-      expect(topics).toEqual(mockSubCat.topics);
+    result.subscribe((moderators) => {
+      expect(moderators).toEqual(mockSubCat.moderators);
       done();
     });
   });
