@@ -1,0 +1,52 @@
+name: Build Nest.js app
+
+on: 
+  push: 
+    branches: 
+      - master
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+    
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout respository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+
+      - name: Set environment variables
+        run: |
+          echo "DB_TYPE=${{ secrets.DB_TYPE }}"
+          echo "DB_HOST=${{ secrets.DB_HOST }}"
+          echo "DB_PORT=${{ secrets.DB_PORT }}"
+          echo "DB_USER=${{ secrets.DB_USER }}"
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}"
+          echo "DB_NAME=${{ secrets.DB_NAME }}"
+          echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}"
+          echo "JWT_REFRESH_EXPIRATION=${{ secrets.JWT_REFRESH_EXPIRATION }}"
+          echo "JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}"
+          echo "JWT_ACCESS_EXPIRATION=${{ secrets.JWT_ACCESS_EXPIRATION }}"
+
+      - name: Build Nest.js app
+        run: npm run build
