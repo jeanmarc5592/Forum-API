@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Roles } from '@auth/auth.types';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
+import { Comment } from '@comments/entities/comment.entity';
 import { Topic } from '@topics/entities/topic.entity';
 
 @Entity()
@@ -52,6 +53,9 @@ export class User {
 
   @ManyToMany(() => SubCategory, (subCategory) => subCategory.moderators)
   subCategories: SubCategory[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
