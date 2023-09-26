@@ -20,6 +20,6 @@ export class TopicCommentsInterceptor implements NestInterceptor {
   ): Observable<any> {
     return next
       .handle()
-      .pipe(map((topic: Topic) => this.topicsUtils.transformComments(topic)));
+      .pipe(map((topic: Topic) => this.topicsUtils.getComments(topic)));
   }
 }

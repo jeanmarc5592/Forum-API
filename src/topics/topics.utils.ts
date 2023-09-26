@@ -20,7 +20,7 @@ export class TopicsUtils {
     };
   }
 
-  transformComments(topic: Topic): Comment[] {
+  getComments(topic: Topic): Comment[] {
     return topic.comments;
   }
 }
