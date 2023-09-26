@@ -48,6 +48,8 @@ export class CommentsService {
       user,
     });
 
+    // TODO: Do not return all user and topic information
+
     return this.commentsRepository.save(newComment);
   }
 
