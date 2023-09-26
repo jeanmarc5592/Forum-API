@@ -45,6 +45,20 @@ export class TopicsService {
     return topic;
   }
 
+  async getComments(id: string) {
+    const topic = await this.topicsRepository
+      .createQueryBuilder('topic')
+      .leftJoinAndSelect('topic.comments', 'comments')
+      .where('topic.id = :id', { id })
+      .getOne();
+
+    if (!topic) {
+      throw new NotFoundException(`Topic with id '${id}' not found.`);
+    }
+
+    return topic;
+  }
+
   async update(topicDTO: UpdateTopicDTO, id: string) {
     const topic = await this.findTopicById(id);
 

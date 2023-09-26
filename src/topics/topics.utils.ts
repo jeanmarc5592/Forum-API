@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { Comment } from '@/comments/entities/comment.entity';
+
 import { Topic } from './entities/topic.entity';
 import { TransformedTopic } from './topics.types';
 
@@ -16,5 +18,9 @@ export class TopicsUtils {
       created_at: topic.created_at,
       updated_at: topic.updated_at,
     };
+  }
+
+  transformComments(topic: Topic): Comment[] {
+    return topic.comments;
   }
 }
