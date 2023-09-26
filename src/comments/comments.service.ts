@@ -19,11 +19,21 @@ export class CommentsService {
   ) {}
 
   async getById(id: string) {
-    return await this.findCommentById(id);
+    const comment = await this.commentsRepository
+      .createQueryBuilder('comment')
+      .leftJoinAndSelect('comment.user', 'user')
+      .where('comment.id = :id', { id })
+      .getOne();
+
+    if (!comment) {
+      throw new NotFoundException(`Comment with id '${id}' not found.`);
+    }
+
+    return comment;
   }
 
   async update(commentDTO: UpdateCommentDTO, id: string) {
-    const comment = await this.findCommentById(id);
+    const comment = await this.getById(id);
 
     Object.assign(comment, commentDTO);
 
@@ -31,7 +41,7 @@ export class CommentsService {
   }
 
   async delete(id: string) {
-    const comment = await this.findCommentById(id);
+    const comment = await this.getById(id);
 
     return await this.commentsRepository.remove(comment);
   }
@@ -48,18 +58,6 @@ export class CommentsService {
       user,
     });
 
-    // TODO: Do not return all user and topic information
-
     return this.commentsRepository.save(newComment);
-  }
-
-  private async findCommentById(id: string) {
-    const comment = await this.commentsRepository.findOneBy({ id });
-
-    if (!comment) {
-      throw new NotFoundException(`Comment with id '${id}' not found.`);
-    }
-
-    return comment;
   }
 }

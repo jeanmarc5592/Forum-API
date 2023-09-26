@@ -18,7 +18,9 @@ import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.intercepto
 import { CommentsService } from './comments.service';
 import { CreateCommentDTO } from './dtos/create-comment.dto';
 import { UpdateCommentDTO } from './dtos/update-comment.dto';
+import { CommentInterceptor } from './interceptors/comment.interceptor';
 
+@UseInterceptors(CommentInterceptor)
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
