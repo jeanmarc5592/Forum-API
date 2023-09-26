@@ -21,5 +21,6 @@ import { TopicsUtils } from './topics.utils';
   ],
   controllers: [TopicsController],
   providers: [TopicsService, TopicsUtils, TopicsAbilityService],
+  exports: [TopicsService],
 })
 export class TopicsModule {}

@@ -12,6 +12,8 @@ import {
 import { RequestUser } from '@/auth/auth.types';
 
 import { CommentsService } from './comments.service';
+import { CreateCommentDTO } from './dtos/create-comment.dto';
+import { UpdateCommentDTO } from './dtos/update-comment.dto';
 
 @Controller('comments')
 export class CommentsController {
@@ -23,21 +25,17 @@ export class CommentsController {
   }
 
   @Patch('/:id')
-  update(
-    @Param('id') id: string,
-    @Body() body: object,
-    @Req() req: { user: RequestUser },
-  ) {
+  update(@Param('id') id: string, @Body() body: UpdateCommentDTO) {
     return this.commentsService.update(body, id);
   }
 
   @Delete('/:id')
-  delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {
+  delete(@Param('id') id: string) {
     return this.commentsService.delete(id);
   }
 
   @Post()
-  create(@Body() body: object, @Req() req: { user: RequestUser }) {
+  create(@Body() body: CreateCommentDTO, @Req() req: { user: RequestUser }) {
     return this.commentsService.create(body, req.user.id);
   }
 }
