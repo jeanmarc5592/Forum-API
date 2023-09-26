@@ -18,6 +18,7 @@ import { AccessTokenGuard } from '@auth/guards/access-token.guard';
 
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UsersQueryDTO } from './dtos/users-query.dto';
+import { UserCommentsInterceptor } from './interceptors/user-comments.interceptor';
 import { UserTopicsInterceptor } from './interceptors/user-topics.interceptor';
 import { UsersService } from './users.service';
 @UseGuards(AccessTokenGuard)
@@ -45,6 +46,12 @@ export class UsersController {
   @Get('/:id/topics')
   getTopics(@Param('id') id: string) {
     return this.usersService.getTopics(id);
+  }
+
+  @UseInterceptors(UserCommentsInterceptor)
+  @Get('/:id/comments')
+  getComments(@Param('id') id: string) {
+    return this.usersService.getComments(id);
   }
 
   @Patch('/:id')

@@ -55,6 +55,20 @@ export class UsersService {
     return user;
   }
 
+  async getComments(id: string) {
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.comments', 'topic')
+      .where('user.id = :id', { id })
+      .getOne();
+
+    if (!user) {
+      throw new NotFoundException(`User with id '${id}' not found.`);
+    }
+
+    return user;
+  }
+
   async update(userDTO: UpdateUserDTO, id: string) {
     const user = await this.findUserById(id);
 
