@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-import { Comment } from '@/comments/entities/comment.entity';
+import { TransformedComment } from '@/comments/comments.types';
+import { CommentsUtils } from '@/comments/comments.utils';
 
 import { Topic } from './entities/topic.entity';
 import { TransformedTopic } from './topics.types';
 
 @Injectable()
 export class TopicsUtils {
+  constructor(private readonly commentsUtils: CommentsUtils) {}
+
   transform(topic: Topic): TransformedTopic {
     return {
       id: topic.id,
@@ -20,7 +23,9 @@ export class TopicsUtils {
     };
   }
 
-  getComments(topic: Topic): Comment[] {
-    return topic.comments;
+  getComments(topic: Topic): TransformedComment[] {
+    return topic.comments.map((comment) => {
+      return this.commentsUtils.transform(comment);
+    });
   }
 }

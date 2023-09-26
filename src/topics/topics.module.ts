@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { CommentsUtils } from '@/comments/comments.utils';
 import { AbilityModule } from '@ability/ability.module';
 import { SubCategoriesModule } from '@categories/sub-categories/sub-categories.module';
 import { UsersModule } from '@users/users.module';
@@ -20,7 +21,7 @@ import { TopicsUtils } from './topics.utils';
     SubCategoriesModule,
   ],
   controllers: [TopicsController],
-  providers: [TopicsService, TopicsUtils, TopicsAbilityService],
+  providers: [TopicsService, TopicsUtils, TopicsAbilityService, CommentsUtils],
   exports: [TopicsService],
 })
 export class TopicsModule {}

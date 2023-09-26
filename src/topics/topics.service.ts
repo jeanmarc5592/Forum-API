@@ -48,7 +48,8 @@ export class TopicsService {
   async getComments(id: string) {
     const topic = await this.topicsRepository
       .createQueryBuilder('topic')
-      .leftJoinAndSelect('topic.comments', 'comments')
+      .leftJoinAndSelect('topic.comments', 'comment')
+      .leftJoinAndSelect('comment.user', 'user')
       .where('topic.id = :id', { id })
       .getOne();
 
