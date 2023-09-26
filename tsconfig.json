@@ -15,6 +15,7 @@
       "@ability/*": ["src/ability/*"],
       "@auth/*": ["src/auth/*"],
       "@categories/*": ["src/categories/*"],
+      "@comments/*": ["src/comments/"],
       "@topics/*": ["src/topics/*"],
       "@users/*": ["src/users/*"],
       "@utils/*": ["src/utils/*"],
