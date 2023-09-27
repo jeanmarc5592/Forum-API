@@ -9,6 +9,7 @@ import { JwtPayload, RequestUser } from '../auth.types';
 export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(protected readonly configService: ConfigService) {
     super({
+      // TODO: Read jwt from cookies
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.get<string>('jwt.access.secret'),
       ignoreExpiration: false,
