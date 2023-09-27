@@ -22,6 +22,7 @@ export class CommentsService {
     const comment = await this.commentsRepository
       .createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
+      .leftJoinAndSelect('comment.topic', 'topic')
       .where('comment.id = :id', { id })
       .getOne();
 

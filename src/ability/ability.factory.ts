@@ -5,6 +5,7 @@ import {
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { RequestUser, Roles } from '@auth/auth.types';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
@@ -49,6 +50,8 @@ export class AbilityFactory {
 
   private ALLOWED_TOPIC_UPDATE_FIELDS = ['title', 'content'];
 
+  private ALLOWED_COMMENT_UPDATE_FIELDS = ['content'];
+
   private defineAdminAbilities() {
     const { can } = this.builder;
 
@@ -82,6 +85,18 @@ export class AbilityFactory {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     can(Actions.DELETE, Topic, { 'user.id': user.id });
+
+    // COMMENT
+    can(Actions.READ, Comment);
+    can(Actions.CREATE, Comment);
+    can(Actions.UPDATE, Comment, this.ALLOWED_COMMENT_UPDATE_FIELDS, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'user.id': user.id,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    can(Actions.DELETE, Comment, { 'user.id': user.id });
   }
 
   private defineUserAbilities(user: RequestUser) {
@@ -111,5 +126,17 @@ export class AbilityFactory {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     can(Actions.DELETE, Topic, { 'user.id': user.id });
+
+    // COMMENT
+    can(Actions.READ, Comment);
+    can(Actions.CREATE, Comment);
+    can(Actions.UPDATE, Comment, this.ALLOWED_COMMENT_UPDATE_FIELDS, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      'user.id': user.id,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    can(Actions.DELETE, Comment, { 'user.id': user.id });
   }
 }
