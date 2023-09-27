@@ -19,3 +19,16 @@ export const MockCommentsRespository: Provider = {
   provide: getRepositoryToken(Comment),
   useFactory: repositoryMockFactory,
 };
+
+export const mockComment = {
+  id: '1',
+  content: 'This is a comment',
+  topic: {
+    id: '1',
+    title: 'Topic',
+  },
+  user: {
+    id: '1',
+    name: 'User',
+  },
+} as Comment;
