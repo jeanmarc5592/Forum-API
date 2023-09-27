@@ -3,13 +3,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TopicsUtils } from '@topics/topics.utils';
 
 import { mockTopic, mockTransformedTopic } from './fixtures/topics.fixtures';
+import { MockCommentsUtils } from '../comments/fixtures/comments.utils.fixtures';
 
 describe('TopicsUtils', () => {
   let topicsUtils: TopicsUtils;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TopicsUtils],
+      providers: [TopicsUtils, MockCommentsUtils],
     }).compile();
 
     topicsUtils = module.get<TopicsUtils>(TopicsUtils);

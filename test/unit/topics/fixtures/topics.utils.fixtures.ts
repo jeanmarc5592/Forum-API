@@ -6,5 +6,6 @@ export const MockTopicsUtils: Provider = {
   provide: TopicsUtils,
   useValue: {
     transformTopic: jest.fn(),
+    getComments: jest.fn(),
   },
 };

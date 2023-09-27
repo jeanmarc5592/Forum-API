@@ -2,6 +2,7 @@ import { Provider } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { repositoryMockFactory } from '@/app.types';
+import { Comment } from '@/comments/entities/comment.entity';
 import { Topic } from '@/topics/entities/topic.entity';
 import { Roles } from '@auth/auth.types';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
@@ -26,6 +27,10 @@ export const mockUser: User = {
   subCategories: [
     { id: '1', name: 'Sub Category 1' } as SubCategory,
     { id: '2', name: 'Sub Category 2' } as SubCategory,
+  ],
+  comments: [
+    { id: '1', content: 'Topic 1' } as Comment,
+    { id: '2', content: 'Topic 2' } as Comment,
   ],
   role: Roles.USER,
   generateId: jest.fn(),
