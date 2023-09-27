@@ -51,18 +51,18 @@ jobs:
       - name: Build Nest.js app
         run: npm run build 
   
-  deploy: 
-    needs: build
-    runs-on: ubuntu-latest
+  # deploy: 
+  #   needs: build
+  #   runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout respository
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout respository
+  #       uses: actions/checkout@v2
       
-      - name: Deploy to heroku
-        uses: akhileshns/heroku-deploy@v3.12.14
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "${{ secrets.HEROKU_APP_NAME }}"
-          heroku_email: "${{ secrets.HEROKU_EMAIL }}"
-          remote_branch: "master"
+  #     - name: Deploy to heroku
+  #       uses: akhileshns/heroku-deploy@v3.12.14
+  #       with:
+  #         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+  #         heroku_app_name: "${{ secrets.HEROKU_APP_NAME }}"
+  #         heroku_email: "${{ secrets.HEROKU_EMAIL }}"
+  #         remote_branch: "master"
