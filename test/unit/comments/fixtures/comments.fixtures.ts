@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { repositoryMockFactory } from '@/app.types';
 import { CommentsService } from '@/comments/comments.service';
+import { TransformedComment } from '@/comments/comments.types';
 import { Comment } from '@/comments/entities/comment.entity';
 
 export const MockCommentsService: Provider = {
@@ -32,3 +33,14 @@ export const mockComment = {
     name: 'User',
   },
 } as Comment;
+
+export const mockTransformedComment = {
+  id: mockComment.id,
+  content: mockComment.content,
+  user: {
+    id: mockComment.user.id,
+    name: mockComment.user.name,
+  },
+  created_at: mockComment.created_at,
+  updated_at: mockComment.updated_at,
+} as TransformedComment;
