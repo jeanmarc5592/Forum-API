@@ -9,6 +9,7 @@ import { CategoriesModule } from './categories/categories.module';
 import configuration from './config/configuration';
 import { TopicsModule } from './topics/topics.module';
 import { UsersModule } from './users/users.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UsersModule } from './users/users.module';
     AbilityModule,
     CategoriesModule,
     TopicsModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [

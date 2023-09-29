@@ -17,7 +17,7 @@ export class TopicsAbilityService implements AbilityServiceInterface {
 
     if (reqUser.role !== Roles.MODERATOR) {
       throw new ForbiddenException(
-        `User must have '${Roles.MODERATOR}' role to manage other users' topics within this sub category.`,
+        `User must have '${Roles.MODERATOR}' role to manage other users' topics or comments within this sub category.`,
       );
     }
 

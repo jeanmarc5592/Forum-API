@@ -23,7 +23,7 @@ export enum Actions {
 
 export type Subjects =
   | InferSubjects<
-      typeof User | typeof MainCategory | typeof SubCategory | typeof Topic
+      typeof User | typeof MainCategory | typeof SubCategory | typeof Topic | typeof Comment
     >
   | 'all';
 

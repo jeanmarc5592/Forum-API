@@ -12,8 +12,14 @@ describe('TopicCollectionInterceptor', () => {
   let topicsUtils: TopicsUtils;
 
   beforeEach(async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     topicsUtils = {
       transform: jest.fn(),
+      getComments: jest.fn(),
+      commentsUtils: {
+        transform: jest.fn(),
+      },
     };
 
     const module: TestingModule = await Test.createTestingModule({

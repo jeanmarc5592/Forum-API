@@ -22,6 +22,7 @@ import { TopicsQueryDTO } from './dtos/topics-query.dto';
 import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Topic } from './entities/topic.entity';
 import { TopicCollectionInterceptor } from './interceptors/topic-collection.interceptor';
+import { TopicCommentsInterceptor } from './interceptors/topic-comments.interceptor';
 import { TopicInterceptor } from './interceptors/topic.interceptor';
 import { TopicsAbilityService } from './topics.ability.service';
 import { TopicsService } from './topics.service';
@@ -47,6 +48,12 @@ export class TopicsController {
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.topicsService.getById(id);
+  }
+
+  @UseInterceptors(TopicCommentsInterceptor)
+  @Get('/:id/comments')
+  getComments(@Param('id') id: string) {
+    return this.topicsService.getComments(id);
   }
 
   @UseGuards(AccessTokenGuard)

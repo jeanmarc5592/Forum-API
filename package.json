@@ -96,6 +96,7 @@
       "^@ability/(.*)$": "<rootDir>/src/ability/$1",
       "^@auth/(.*)$": "<rootDir>/src/auth/$1",
       "^@categories/(.*)$": "<rootDir>/src/categories/$1",
+      "^@comments/(.*)$": "<rootDir>/src/comments/$1",
       "^@topics/(.*)$": "<rootDir>/src/topics/$1",
       "^@users/(.*)$": "<rootDir>/src/users/$1",
       "^@utils/(.*)$": "<rootDir>/src/utils/$1"

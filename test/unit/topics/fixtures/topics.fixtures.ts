@@ -12,6 +12,7 @@ export const MockTopicsService: Provider = {
   useValue: {
     getAll: jest.fn(),
     getById: jest.fn(),
+    getComments: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
     create: jest.fn(),

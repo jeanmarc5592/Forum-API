@@ -15,6 +15,7 @@ import {
   MockTopicsRepository,
 } from './fixtures/topics.fixtures';
 import { MockSubCategoriesService } from '../categories/sub-categories/fixtures/sub-categories.fixtures';
+import { mockComment } from '../comments/fixtures/comments.fixtures';
 import { MockUsersService } from '../users/fixtures/users.fixtures';
 
 describe('TopicsService', () => {
@@ -88,6 +89,35 @@ describe('TopicsService', () => {
       repositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.getById('12334')).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('getComments', () => {
+    it('should return a topic with its comments', async () => {
+      mockTopic.comments = [mockComment];
+
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockTopic),
+      });
+
+      const topic = await service.getComments(mockTopic.id);
+
+      expect(topic).toHaveProperty('comments');
+      expect(topic.comments).toEqual([mockComment]);
+    });
+
+    it('should throw a NotFoundException if topic was not found', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      });
+
+      await expect(service.getComments('12334')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
