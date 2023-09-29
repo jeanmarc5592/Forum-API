@@ -61,6 +61,7 @@ export const MockUsersService: Provider = {
     getByEmail: jest.fn(),
     getById: jest.fn(),
     getTopics: jest.fn(),
+    getComments: jest.fn(),
     delete: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),

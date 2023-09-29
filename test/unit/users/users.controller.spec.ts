@@ -65,9 +65,21 @@ describe('UsersController', () => {
 
       jest.spyOn(usersService, 'getTopics').mockResolvedValue(mockUser);
 
-      const subCat = await controller.getTopics(mockUser.id);
+      const user = await controller.getTopics(mockUser.id);
 
-      expect(subCat.topics).toEqual(topics);
+      expect(user.topics).toEqual(topics);
+    });
+  });
+
+  describe('getComments', () => {
+    it('should return the comments of the user with the provided id', async () => {
+      const comments = mockUser.comments;
+
+      jest.spyOn(usersService, 'getComments').mockResolvedValue(mockUser);
+
+      const user = await controller.getComments(mockUser.id);
+
+      expect(user.comments).toEqual(comments);
     });
   });
 
