@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { Comment } from '@comments/entities/comment.entity';
 import { User } from '@users/entities/user.entity';
 
 @Entity()
