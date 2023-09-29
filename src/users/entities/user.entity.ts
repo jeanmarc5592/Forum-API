@@ -12,9 +12,9 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { Roles } from '@auth/auth.types';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
-import { Comment } from '@comments/entities/comment.entity';
 import { Topic } from '@topics/entities/topic.entity';
 
 @Entity()
