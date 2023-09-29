@@ -107,9 +107,9 @@ describe('UsersService', () => {
         getOne: jest.fn().mockResolvedValue(mockUser),
       });
 
-      const subCat = await service.getTopics(mockUser.id);
+      const user = await service.getTopics(mockUser.id);
 
-      expect(subCat.topics).toHaveLength(mockUser.topics.length);
+      expect(user.topics).toHaveLength(mockUser.topics.length);
     });
 
     it('should return an empty list for topics', async () => {
@@ -121,9 +121,9 @@ describe('UsersService', () => {
         getOne: jest.fn().mockResolvedValue(mockUser),
       });
 
-      const subCat = await service.getTopics(mockUser.id);
+      const user = await service.getTopics(mockUser.id);
 
-      expect(subCat.topics).toEqual([]);
+      expect(user.topics).toEqual([]);
     });
 
     it('should throw a NotFoundExpception if user was not found', async () => {
@@ -134,6 +134,32 @@ describe('UsersService', () => {
       });
 
       await expect(service.getTopics('12334')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  });
+
+  describe('getComments', () => {
+    it('should return a single user with comments', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(mockUser),
+      });
+
+      const user = await service.getComments(mockUser.id);
+
+      expect(user.comments).toHaveLength(mockUser.comments.length);
+    });
+
+    it('should throw a NotFoundExpception if user was not found', async () => {
+      repositoryMock.createQueryBuilder?.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getOne: jest.fn().mockResolvedValue(null),
+      });
+
+      await expect(service.getComments('12334')).rejects.toThrow(
         NotFoundException,
       );
     });
