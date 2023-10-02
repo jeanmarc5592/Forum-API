@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MockType } from '@/app.types';
 import { CommentsService } from '@/comments/comments.service';
 import { CreateCommentDTO } from '@/comments/dtos/create-comment.dto';
 import { UpdateCommentDTO } from '@/comments/dtos/update-comment.dto';
@@ -13,6 +12,7 @@ import {
   MockCommentsRespository,
   mockComment,
 } from './fixtures/comments.fixtures';
+import { MockType } from '../../test.types';
 import { MockTopicsService } from '../topics/fixtures/topics.fixtures';
 import { MockUsersService } from '../users/fixtures/users.fixtures';
 

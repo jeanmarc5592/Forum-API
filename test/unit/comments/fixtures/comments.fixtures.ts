@@ -1,10 +1,11 @@
 import { Provider } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { repositoryMockFactory } from '@/app.types';
 import { CommentsService } from '@/comments/comments.service';
 import { TransformedComment } from '@/comments/comments.types';
 import { Comment } from '@/comments/entities/comment.entity';
+
+import { repositoryMockFactory } from '../../../test.types';
 
 export const MockCommentsService: Provider = {
   provide: CommentsService,
