@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MockType } from '@/app.types';
+import { MockType } from 'test/test.types';
 import { Roles } from '@auth/auth.types';
 import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
 import { CreateSubCategoryDto } from '@categories/sub-categories/dtos/create-sub-category.dto';

@@ -1,13 +1,14 @@
 import { Provider } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { repositoryMockFactory } from '@/app.types';
 import { User } from '@/users/entities/user.entity';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
 import { TransformedSubCategory } from '@categories/sub-categories/sub-categories.types';
 import { Topic } from '@topics/entities/topic.entity';
+
+import { repositoryMockFactory } from '../../../../test.types';
 
 export const MockSubCategoriesService: Provider = {
   provide: SubCategoriesService,

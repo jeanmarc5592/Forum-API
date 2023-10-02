@@ -1,11 +1,12 @@
 import { Provider } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { repositoryMockFactory } from '@/app.types';
 import { TopicsAbilityService } from '@/topics/topics.ability.service';
 import { Topic } from '@topics/entities/topic.entity';
 import { TopicsService } from '@topics/topics.service';
 import { TransformedTopic } from '@topics/topics.types';
+
+import { repositoryMockFactory } from '../../../test.types';
 
 export const MockTopicsService: Provider = {
   provide: TopicsService,

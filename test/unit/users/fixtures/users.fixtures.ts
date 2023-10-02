@@ -1,14 +1,14 @@
 import { Provider } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { repositoryMockFactory } from '@/app.types';
-import { Comment } from '@/comments/entities/comment.entity';
 import { Topic } from '@/topics/entities/topic.entity';
 import { Roles } from '@auth/auth.types';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
 import { CreateUserDTO } from '@users/dtos/create-user.dto';
 import { User } from '@users/entities/user.entity';
 import { UsersService } from '@users/users.service';
+
+import { repositoryMockFactory } from '../../../test.types';
 
 export const mockUser: User = {
   id: '1',

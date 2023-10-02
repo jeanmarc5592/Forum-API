@@ -1,10 +1,11 @@
 import { Provider } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { repositoryMockFactory } from '@/app.types';
 import { MainCategory } from '@categories/main-categories/entities/main-category.entity';
 import { MainCategoriesService } from '@categories/main-categories/main-categories.service';
 import { SubCategory } from '@categories/sub-categories/entities/sub-category.entity';
+
+import { repositoryMockFactory } from '../../../../test.types';
 
 export const MockMainCategoriesService: Provider = {
   provide: MainCategoriesService,

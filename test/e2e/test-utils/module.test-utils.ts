@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-import { repositoryMockFactory } from '../../../src/app.types';
+import { repositoryMockFactory } from '../../test.types';
 
 export class ModuleTestUtils {
   static async setupTestModule(
