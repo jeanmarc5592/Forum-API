@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CommentsUtils } from '@/comments/comments.utils';
+import { HttpUtils } from '@/utils/http.utils';
 import { AbilityModule } from '@ability/ability.module';
 import { SubCategoriesModule } from '@categories/sub-categories/sub-categories.module';
 import { UsersModule } from '@users/users.module';
@@ -21,7 +22,13 @@ import { TopicsUtils } from './topics.utils';
     SubCategoriesModule,
   ],
   controllers: [TopicsController],
-  providers: [TopicsService, TopicsUtils, TopicsAbilityService, CommentsUtils],
+  providers: [
+    TopicsService,
+    TopicsUtils,
+    TopicsAbilityService,
+    CommentsUtils,
+    HttpUtils,
+  ],
   exports: [TopicsService],
 })
 export class TopicsModule {}

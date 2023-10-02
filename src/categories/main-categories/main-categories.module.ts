@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { HttpUtils } from '@/utils/http.utils';
 import { AbilityModule } from '@ability/ability.module';
 
 import { MainCategory } from './entities/main-category.entity';
@@ -11,7 +12,7 @@ import { MainCategoriesUtils } from './main-categories.utils';
 @Module({
   imports: [TypeOrmModule.forFeature([MainCategory]), AbilityModule],
   controllers: [MainCategoriesController],
-  providers: [MainCategoriesService, MainCategoriesUtils],
+  providers: [MainCategoriesService, MainCategoriesUtils, HttpUtils],
   exports: [MainCategoriesService],
 })
 export class MainCategoriesModule {}

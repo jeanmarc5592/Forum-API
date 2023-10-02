@@ -12,6 +12,7 @@ import {
   ClassSerializerInterceptor,
 } from '@nestjs/common';
 
+import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.interceptor';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
@@ -35,17 +36,19 @@ export class MainCategoriesController {
     return this.mainCategoriesService.getAll();
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.mainCategoriesService.getById(id);
   }
 
-  @UseInterceptors(MainCategorySubCategoriesInterceptor)
+  @UseInterceptors(MainCategorySubCategoriesInterceptor, ParamUUIDInterceptor)
   @Get('/:id/sub-categories')
   getSubCategories(@Param('id') id: string) {
     return this.mainCategoriesService.getSubCategories(id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @UseGuards(AccessTokenGuard)
   @Patch('/:id')
   async update(
@@ -59,6 +62,7 @@ export class MainCategoriesController {
     return this.mainCategoriesService.update(body, id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @UseGuards(AccessTokenGuard)
   @Delete('/:id')
   async delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {

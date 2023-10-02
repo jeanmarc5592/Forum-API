@@ -12,6 +12,7 @@ import {
   Req,
 } from '@nestjs/common';
 
+import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.interceptor';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
@@ -37,23 +38,25 @@ export class UsersController {
     return this.usersService.getAll(limit, page);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.usersService.getById(id);
   }
 
-  @UseInterceptors(UserTopicsInterceptor)
+  @UseInterceptors(UserTopicsInterceptor, ParamUUIDInterceptor)
   @Get('/:id/topics')
   getTopics(@Param('id') id: string) {
     return this.usersService.getTopics(id);
   }
 
-  @UseInterceptors(UserCommentsInterceptor)
+  @UseInterceptors(UserCommentsInterceptor, ParamUUIDInterceptor)
   @Get('/:id/comments')
   getComments(@Param('id') id: string) {
     return this.usersService.getComments(id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @Patch('/:id')
   async update(
     @Param('id') id: string,
@@ -66,6 +69,7 @@ export class UsersController {
     return this.usersService.update(body, id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @Delete('/:id')
   async delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {
     const userToDelete = await this.usersService.getById(id);

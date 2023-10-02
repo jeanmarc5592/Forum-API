@@ -13,6 +13,7 @@ import {
   Query,
 } from '@nestjs/common';
 
+import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.interceptor';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
@@ -44,25 +45,26 @@ export class SubCategoriesController {
     return this.subCategoriesService.getAll(limit, page);
   }
 
-  @UseInterceptors(SubCategoryInterceptor)
+  @UseInterceptors(SubCategoryInterceptor, ParamUUIDInterceptor)
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.subCategoriesService.getById(id);
   }
 
-  @UseInterceptors(SubCategoryTopicsInterceptor)
+  @UseInterceptors(SubCategoryTopicsInterceptor, ParamUUIDInterceptor)
   @Get('/:id/topics')
   getTopics(@Param('id') id: string) {
     return this.subCategoriesService.getTopics(id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @Get('/:id/moderators')
   getModerators(@Param('id') id: string) {
     return this.subCategoriesService.getModerators(id);
   }
 
   @UseGuards(AccessTokenGuard)
-  @UseInterceptors(SubCategoryModeratorsInterceptor)
+  @UseInterceptors(SubCategoryModeratorsInterceptor, ParamUUIDInterceptor)
   @Post('/:id/moderators')
   addModerator(
     @Param('id') id: string,
@@ -76,7 +78,7 @@ export class SubCategoriesController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @UseInterceptors(SubCategoryModeratorsInterceptor)
+  @UseInterceptors(SubCategoryModeratorsInterceptor, ParamUUIDInterceptor)
   @Delete('/:id/moderators/:userId')
   deleteModerator(
     @Param('id') id: string,
@@ -93,6 +95,7 @@ export class SubCategoriesController {
     return this.subCategoriesService.deleteModerator(id, userId);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @UseGuards(AccessTokenGuard)
   @Patch(':id')
   update(
@@ -106,6 +109,7 @@ export class SubCategoriesController {
     return this.subCategoriesService.update(id, body);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @UseGuards(AccessTokenGuard)
   @Delete(':id')
   delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {

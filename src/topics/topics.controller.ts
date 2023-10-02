@@ -13,6 +13,7 @@ import {
   Req,
 } from '@nestjs/common';
 
+import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.interceptor';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
@@ -44,18 +45,19 @@ export class TopicsController {
     return this.topicsService.getAll(limit, page);
   }
 
-  @UseInterceptors(TopicInterceptor)
+  @UseInterceptors(TopicInterceptor, ParamUUIDInterceptor)
   @Get('/:id')
   getById(@Param('id') id: string) {
     return this.topicsService.getById(id);
   }
 
-  @UseInterceptors(TopicCommentsInterceptor)
+  @UseInterceptors(TopicCommentsInterceptor, ParamUUIDInterceptor)
   @Get('/:id/comments')
   getComments(@Param('id') id: string) {
     return this.topicsService.getComments(id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @UseGuards(AccessTokenGuard)
   @Patch('/:id')
   async update(
@@ -74,6 +76,7 @@ export class TopicsController {
     return this.topicsService.update(body, id);
   }
 
+  @UseInterceptors(ParamUUIDInterceptor)
   @UseGuards(AccessTokenGuard)
   @Delete('/:id')
   async delete(@Param('id') id: string, @Req() req: { user: RequestUser }) {
