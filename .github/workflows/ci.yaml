@@ -3,10 +3,13 @@ name: Build Nest.js app
 on: 
   pull_request:
   workflow_dispatch:
+  push:
+    branches: 
+      - master
     
 
 jobs: 
-  build:
+  lint-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,34 +33,23 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
 
-      - name: Set environment variables
-        run: |
-          echo "DB_TYPE=${{ secrets.DB_TYPE }}" >> .env
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
-          echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> .env
-          echo "JWT_REFRESH_EXPIRATION=${{ secrets.JWT_REFRESH_EXPIRATION }}" >> .env
-          echo "JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}" >> .env
-          echo "JWT_ACCESS_EXPIRATION=${{ secrets.JWT_ACCESS_EXPIRATION }}" >> .env
+  build:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout respository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Build Nest.js app
         run: npm run build 
-  
-  # deploy: 
-  #   needs: build
-  #   runs-on: ubuntu-latest
-    
-  #   steps:
-  #     - name: Checkout respository
-  #       uses: actions/checkout@v2
-      
-  #     - name: Deploy to heroku
-  #       uses: akhileshns/heroku-deploy@v3.12.14
-  #       with:
-  #         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-  #         heroku_app_name: "${{ secrets.HEROKU_APP_NAME }}"
-  #         heroku_email: "${{ secrets.HEROKU_EMAIL }}"
-  #         remote_branch: "master"
