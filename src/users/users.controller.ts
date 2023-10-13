@@ -12,13 +12,13 @@ import {
   Req,
 } from '@nestjs/common';
 
+import { PaginationQueryDTO } from '@/utils/dtos/pagination-query.dto';
 import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.interceptor';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
 
 import { UpdateUserDTO } from './dtos/update-user.dto';
-import { UsersQueryDTO } from './dtos/users-query.dto';
 import { UserCommentsInterceptor } from './interceptors/user-comments.interceptor';
 import { UserTopicsInterceptor } from './interceptors/user-topics.interceptor';
 import { UsersService } from './users.service';
@@ -32,7 +32,7 @@ export class UsersController {
   ) {}
 
   @Get()
-  getAll(@Query() query: UsersQueryDTO) {
+  getAll(@Query() query: PaginationQueryDTO) {
     const { limit, page } = query;
 
     return this.usersService.getAll(limit, page);
@@ -52,8 +52,10 @@ export class UsersController {
 
   @UseInterceptors(UserCommentsInterceptor, ParamUUIDInterceptor)
   @Get('/:id/comments')
-  getComments(@Param('id') id: string) {
-    return this.usersService.getComments(id);
+  getComments(@Param('id') id: string, @Query() query: PaginationQueryDTO) {
+    const { limit, page } = query;
+
+    return this.usersService.getComments(id, limit, page);
   }
 
   @UseInterceptors(ParamUUIDInterceptor)
