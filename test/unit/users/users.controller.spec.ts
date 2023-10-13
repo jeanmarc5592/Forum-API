@@ -11,6 +11,7 @@ import {
 } from './fixtures/users.fixtures';
 import { MockUsersUtils } from './fixtures/users.utils.fixtures';
 import { MockAbilityService } from '../ability/fixtures/ability.fixtures';
+import { MockHttpUtils } from '../utils/fixtures/http.utils.fixtures';
 
 const mockRequest = {
   user: {
@@ -28,7 +29,12 @@ describe('UsersController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [MockUsersService, MockAbilityService, MockUsersUtils],
+      providers: [
+        MockUsersService,
+        MockAbilityService,
+        MockUsersUtils,
+        MockHttpUtils,
+      ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);

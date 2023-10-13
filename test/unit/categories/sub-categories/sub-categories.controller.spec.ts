@@ -15,6 +15,7 @@ import {
 import { MockSubCategoriesUtils } from './fixtures/sub-categories.utils.fixtures';
 import { MockAbilityService } from '../../ability/fixtures/ability.fixtures';
 import { mockRequestWithUser } from '../../auth/fixtures/auth.fixtures';
+import { MockHttpUtils } from '../../utils/fixtures/http.utils.fixtures';
 
 describe('SubCategoriesController', () => {
   let controller: SubCategoriesController;
@@ -27,6 +28,7 @@ describe('SubCategoriesController', () => {
         MockSubCategoriesService,
         MockAbilityService,
         MockSubCategoriesUtils,
+        MockHttpUtils,
       ],
     }).compile();
 

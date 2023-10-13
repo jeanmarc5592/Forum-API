@@ -20,6 +20,7 @@ import { MockTopicsUtils } from './fixtures/topics.utils.fixtures';
 import { MockAbilityService } from '../ability/fixtures/ability.fixtures';
 import { mockRequestWithUser } from '../auth/fixtures/auth.fixtures';
 import { mockComment } from '../comments/fixtures/comments.fixtures';
+import { MockHttpUtils } from '../utils/fixtures/http.utils.fixtures';
 
 describe('TopicsController', () => {
   let controller: TopicsController;
@@ -35,6 +36,7 @@ describe('TopicsController', () => {
         MockAbilityService,
         MockTopicsUtils,
         MockTopicsAbilityService,
+        MockHttpUtils,
       ],
     }).compile();
 

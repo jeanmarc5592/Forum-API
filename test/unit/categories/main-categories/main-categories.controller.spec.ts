@@ -14,6 +14,7 @@ import {
 import { MockMainCategoriesUtils } from './fixtures/main-categories.utils.fixtures';
 import { MockAbilityService } from '../../ability/fixtures/ability.fixtures';
 import { mockRequestWithUser } from '../../auth/fixtures/auth.fixtures';
+import { MockHttpUtils } from '../../utils/fixtures/http.utils.fixtures';
 
 describe('MainCategoriesController', () => {
   let controller: MainCategoriesController;
@@ -26,6 +27,7 @@ describe('MainCategoriesController', () => {
         MockMainCategoriesService,
         MockAbilityService,
         MockMainCategoriesUtils,
+        MockHttpUtils,
       ],
     }).compile();
 
