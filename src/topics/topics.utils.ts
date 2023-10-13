@@ -25,7 +25,6 @@ export class TopicsUtils {
   }
 
   transformComments(comments: Comment[]): TransformedComment[] {
-    console.log(comments);
     return comments.map((comment) => {
       return {
         id: comment.id,
