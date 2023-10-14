@@ -44,6 +44,14 @@ export const mockTopic = {
     id: 'user-1',
     name: 'User 1',
   },
+  comments: [
+    {
+      id: '1',
+      content: 'Comment 1',
+      topic: { id: '1', title: 'Topic' },
+      user: { id: '1', name: 'User 1' },
+    },
+  ],
 } as Topic;
 
 export const mockTransformedTopic = {

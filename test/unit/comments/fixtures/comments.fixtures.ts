@@ -42,6 +42,10 @@ export const mockTransformedComment = {
     id: mockComment.user.id,
     name: mockComment.user.name,
   },
+  topic: {
+    id: mockComment.topic.id,
+    title: mockComment.topic.title,
+  },
   created_at: mockComment.created_at,
   updated_at: mockComment.updated_at,
 } as TransformedComment;

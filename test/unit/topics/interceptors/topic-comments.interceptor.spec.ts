@@ -6,7 +6,6 @@ import { Comment } from '@/comments/entities/comment.entity';
 import { TopicCommentsInterceptor } from '@/topics/interceptors/topic-comments.interceptor';
 import { TopicsUtils } from '@topics/topics.utils';
 
-import { mockComment } from '../../comments/fixtures/comments.fixtures';
 import { mockTopic } from '../fixtures/topics.fixtures';
 
 describe('TopicCommentsInterceptor', () => {
@@ -18,10 +17,7 @@ describe('TopicCommentsInterceptor', () => {
     // @ts-ignore
     topicsUtils = {
       transform: jest.fn(),
-      getComments: jest.fn(),
-      commentsUtils: {
-        transform: jest.fn(),
-      },
+      transformComments: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -50,11 +46,12 @@ describe('TopicCommentsInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    jest.spyOn(topicsUtils, 'getComments').mockReturnValue([mockComment]);
+    jest
+      .spyOn(topicsUtils, 'transformComments')
+      .mockReturnValue(mockTopic.comments);
 
-    mockTopic.comments = [mockComment];
     const mockCallHandler = {
-      handle: () => of(mockTopic),
+      handle: () => of(mockTopic.comments),
     } as CallHandler<any>;
 
     const result = interceptor.intercept(context, mockCallHandler);
@@ -70,12 +67,12 @@ describe('TopicCommentsInterceptor', () => {
         expect(comment).toHaveProperty('user.id');
         expect(comment).toHaveProperty('user.name');
 
-        expect(comment.id).toBe(mockComment.id);
-        expect(comment.content).toBe(mockComment.content);
-        expect(comment.topic.id).toBe(mockComment.topic.id);
-        expect(comment.topic.title).toBe(mockComment.topic.title);
-        expect(comment.user.id).toBe(mockComment.user.id);
-        expect(comment.user.name).toBe(mockComment.user.name);
+        expect(comment.id).toBe(mockTopic.comments[0].id);
+        expect(comment.content).toBe(mockTopic.comments[0].content);
+        expect(comment.topic.id).toBe(mockTopic.comments[0].topic.id);
+        expect(comment.topic.title).toBe(mockTopic.comments[0].topic.title);
+        expect(comment.user.id).toBe(mockTopic.comments[0].user.id);
+        expect(comment.user.name).toBe(mockTopic.comments[0].user.name);
       });
 
       done();

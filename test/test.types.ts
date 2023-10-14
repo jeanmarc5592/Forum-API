@@ -19,6 +19,8 @@ export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
       where: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       limit: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
       getOne: jest.fn(),
       getMany: jest.fn(),
     })),

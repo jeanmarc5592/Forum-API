@@ -30,8 +30,12 @@ export const mockUser: User = {
     { id: '2', name: 'Sub Category 2' } as SubCategory,
   ],
   comments: [
-    { id: '1', content: 'Comment 1' } as Comment,
-    { id: '2', content: 'Comment 2' } as Comment,
+    {
+      id: '1',
+      content: 'Comment 1',
+      user: { id: '1', name: 'Test User' },
+      topic: { id: '1', title: 'Topic 1' } as Topic,
+    } as Comment,
   ],
   role: Roles.USER,
   generateId: jest.fn(),

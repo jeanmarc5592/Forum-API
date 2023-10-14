@@ -65,8 +65,8 @@ describe('CommentInterceptor', () => {
 
       expect(comment.id).toBe(mockTransformedComment.id);
       expect(comment.content).toBe(mockTransformedComment.content);
-      expect(comment.user.id).toBe(mockTransformedComment.user.id);
-      expect(comment.user.name).toBe(mockTransformedComment.user.name);
+      expect(comment.user.id).toBe(mockTransformedComment.user?.id);
+      expect(comment.user.name).toBe(mockTransformedComment.user?.name);
       expect(comment.created_at).toBe(mockTransformedComment.created_at);
       expect(comment.updated_at).toBe(mockTransformedComment.updated_at);
       done();

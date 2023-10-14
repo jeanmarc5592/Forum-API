@@ -66,7 +66,7 @@ export class UsersService {
       .createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
       .where('user.id = :id', { id })
-      .orderBy('comment.created_at', 'DESC') // You may want to order the comments in a specific way
+      .orderBy('comment.created_at', 'DESC')
       .skip(skip)
       .take(take)
       .getMany();

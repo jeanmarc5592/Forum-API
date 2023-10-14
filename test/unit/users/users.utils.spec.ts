@@ -3,7 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersUtils } from '@users/users.utils';
 
 import { mockUser } from './fixtures/users.fixtures';
-import { mockComment } from '../comments/fixtures/comments.fixtures';
+import {
+  mockComment,
+  mockTransformedComment,
+} from '../comments/fixtures/comments.fixtures';
 
 describe('UsersUtils', () => {
   let usersUtils: UsersUtils;
@@ -27,10 +30,12 @@ describe('UsersUtils', () => {
   });
 
   it('should extract the comments of given user', () => {
+    delete mockTransformedComment.topic;
+
     mockUser.comments = [mockComment];
 
-    const result = usersUtils.getComments(mockUser);
+    const result = usersUtils.transformComments(mockUser.comments);
 
-    expect(result).toEqual(mockUser.comments);
+    expect(result).toEqual([mockTransformedComment]);
   });
 });
