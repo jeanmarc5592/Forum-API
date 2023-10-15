@@ -6,10 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AbilityModule } from './ability/ability.module';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CommentsModule } from './comments/comments.module';
 import configuration from './config/configuration';
 import { TopicsModule } from './topics/topics.module';
 import { UsersModule } from './users/users.module';
-import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
