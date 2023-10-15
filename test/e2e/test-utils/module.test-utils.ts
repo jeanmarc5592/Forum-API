@@ -9,9 +9,14 @@ export class ModuleTestUtils {
   static async setupTestModule(
     dataSource: DataSource,
     module: any,
-    entity: any,
+    entities: any[],
   ) {
-    const testModule = await Test.createTestingModule({
+    const entityProviders = entities.map((entity) => ({
+      provide: getRepositoryToken(entity),
+      useFactory: repositoryMockFactory,
+    }));
+
+    let testModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({
           load: [() => ({ jwt: { access: { secret: 'your-secret' } } })],
@@ -19,16 +24,20 @@ export class ModuleTestUtils {
         module,
       ],
       providers: [
+        ...entityProviders,
         {
-          provide: getRepositoryToken(entity),
-          useFactory: repositoryMockFactory,
+          provide: DataSource,
+          useValue: dataSource,
         },
       ],
-    })
-      .overrideProvider(getRepositoryToken(entity))
-      .useValue(dataSource)
-      .compile();
+    });
 
-    return testModule.createNestApplication();
+    for (const entity of entities) {
+      testModule = testModule
+        .overrideProvider(getRepositoryToken(entity))
+        .useValue(dataSource);
+    }
+
+    return testModule.compile();
   }
 }

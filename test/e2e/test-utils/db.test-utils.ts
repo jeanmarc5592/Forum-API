@@ -26,6 +26,7 @@ export class DbTestUtils {
       migrationsRun: false,
       migrationsTransactionMode: 'each',
       synchronize: false,
+      logging: false,
     });
 
     await dataSource.initialize();
