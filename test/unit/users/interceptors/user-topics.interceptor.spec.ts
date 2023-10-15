@@ -14,7 +14,7 @@ describe('UserTopicsInterceptor', () => {
   beforeEach(async () => {
     usersUtils = {
       getTopics: jest.fn(),
-      getComments: jest.fn(),
+      transformComments: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

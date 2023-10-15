@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { SubCategoriesService } from '@categories/sub-categories/sub-categories.service';
 import { UsersService } from '@users/users.service';
 
@@ -14,6 +15,8 @@ export class TopicsService {
   constructor(
     @InjectRepository(Topic)
     private readonly topicsRepository: Repository<Topic>,
+    @InjectRepository(Comment)
+    private readonly commentsRepository: Repository<Comment>,
     private readonly subCategoriesService: SubCategoriesService,
     private readonly usersService: UsersService,
   ) {}
@@ -45,19 +48,25 @@ export class TopicsService {
     return topic;
   }
 
-  async getComments(id: string) {
-    const topic = await this.topicsRepository
-      .createQueryBuilder('topic')
-      .leftJoinAndSelect('topic.comments', 'comment')
-      .leftJoinAndSelect('comment.user', 'user')
-      .where('topic.id = :id', { id })
-      .getOne();
+  async getComments(id: string, limit: number, page: number) {
+    const skip = (page - 1) * limit;
 
-    if (!topic) {
-      throw new NotFoundException(`Topic with id '${id}' not found.`);
+    const comments = await this.commentsRepository
+      .createQueryBuilder('comment')
+      .leftJoinAndSelect('comment.topic', 'topic')
+      .where('topic.id = :id', { id })
+      .orderBy('comment.created_at', 'DESC')
+      .skip(skip)
+      .take(limit)
+      .getMany();
+
+    if (!comments) {
+      throw new NotFoundException(
+        `Comments for topic with id '${id}' not found.`,
+      );
     }
 
-    return topic;
+    return comments;
   }
 
   async update(topicDTO: UpdateTopicDTO, id: string) {

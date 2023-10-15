@@ -16,10 +16,7 @@ describe('TopicInterceptor', () => {
     // @ts-ignore
     topicsUtils = {
       transform: jest.fn(),
-      getComments: jest.fn(),
-      commentsUtils: {
-        transform: jest.fn(),
-      },
+      transformComments: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

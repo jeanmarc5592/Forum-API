@@ -13,13 +13,13 @@ import {
   Req,
 } from '@nestjs/common';
 
+import { PaginationQueryDTO } from '@/utils/dtos/pagination-query.dto';
 import { ParamUUIDInterceptor } from '@/utils/interceptors/param.uuid.interceptor';
 import { AbilityService } from '@ability/ability.service';
 import { RequestUser } from '@auth/auth.types';
 import { AccessTokenGuard } from '@auth/guards/access-token.guard';
 
 import { CreateTopicDTO } from './dtos/create-topic.dto';
-import { TopicsQueryDTO } from './dtos/topics-query.dto';
 import { UpdateTopicDTO } from './dtos/update-topic.dto';
 import { Topic } from './entities/topic.entity';
 import { TopicCollectionInterceptor } from './interceptors/topic-collection.interceptor';
@@ -39,7 +39,7 @@ export class TopicsController {
 
   @UseInterceptors(TopicCollectionInterceptor)
   @Get()
-  getAll(@Query() query: TopicsQueryDTO) {
+  getAll(@Query() query: PaginationQueryDTO) {
     const { limit, page } = query;
 
     return this.topicsService.getAll(limit, page);
@@ -53,8 +53,10 @@ export class TopicsController {
 
   @UseInterceptors(TopicCommentsInterceptor, ParamUUIDInterceptor)
   @Get('/:id/comments')
-  getComments(@Param('id') id: string) {
-    return this.topicsService.getComments(id);
+  getComments(@Param('id') id: string, @Query() query: PaginationQueryDTO) {
+    const { limit, page } = query;
+
+    return this.topicsService.getComments(id, limit, page);
   }
 
   @UseInterceptors(ParamUUIDInterceptor)

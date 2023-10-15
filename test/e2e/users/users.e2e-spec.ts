@@ -2,6 +2,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { DataSource } from 'typeorm';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { User } from '@users/entities/user.entity';
 import { UsersModule } from '@users/users.module';
 
@@ -15,7 +16,12 @@ describe('UsersController (e2e)', () => {
   beforeAll(async () => {
     dataSource = await DbTestUtils.setupDatabase();
 
-    app = await ModuleTestUtils.setupTestModule(dataSource, UsersModule, User);
+    const testModule = await ModuleTestUtils.setupTestModule(
+      dataSource,
+      UsersModule,
+      [User, Comment],
+    );
+    app = testModule.createNestApplication();
     await app.init();
   });
 

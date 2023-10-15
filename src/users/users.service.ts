@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { CryptographyUtils } from '@utils/cryptography.utils';
 
 import { CreateUserDTO } from './dtos/create-user.dto';
@@ -17,6 +18,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    @InjectRepository(Comment)
+    private readonly commentsRepository: Repository<Comment>,
     private readonly cryptographyUtils: CryptographyUtils,
   ) {}
 
@@ -55,18 +58,26 @@ export class UsersService {
     return user;
   }
 
-  async getComments(id: string) {
-    const user = await this.usersRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.comments', 'topic')
-      .where('user.id = :id', { id })
-      .getOne();
+  async getComments(id: string, limit: number, page: number) {
+    const skip = (page - 1) * limit;
+    const take = limit;
 
-    if (!user) {
-      throw new NotFoundException(`User with id '${id}' not found.`);
+    const comments = await this.commentsRepository
+      .createQueryBuilder('comment')
+      .leftJoinAndSelect('comment.user', 'user')
+      .where('user.id = :id', { id })
+      .orderBy('comment.created_at', 'DESC')
+      .skip(skip)
+      .take(take)
+      .getMany();
+
+    if (!comments) {
+      throw new NotFoundException(
+        `Comments for user with id '${id}' not found.`,
+      );
     }
 
-    return user;
+    return comments;
   }
 
   async update(userDTO: UpdateUserDTO, id: string) {

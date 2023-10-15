@@ -6,7 +6,6 @@ import { Comment } from '@/comments/entities/comment.entity';
 import { UserCommentsInterceptor } from '@/users/interceptors/user-comments.interceptor';
 import { UsersUtils } from '@/users/users.utils';
 
-import { mockComment } from '../../comments/fixtures/comments.fixtures';
 import { mockUser } from '../fixtures/users.fixtures';
 
 describe('TopicCommentsInterceptor', () => {
@@ -16,7 +15,7 @@ describe('TopicCommentsInterceptor', () => {
   beforeEach(async () => {
     usersUtils = {
       getTopics: jest.fn(),
-      getComments: jest.fn(),
+      transformComments: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -43,11 +42,12 @@ describe('TopicCommentsInterceptor', () => {
       }),
     } as ExecutionContext;
 
-    jest.spyOn(usersUtils, 'getComments').mockReturnValue([mockComment]);
+    jest
+      .spyOn(usersUtils, 'transformComments')
+      .mockReturnValue(mockUser.comments);
 
-    mockUser.comments = [mockComment];
     const mockCallHandler = {
-      handle: () => of(mockUser),
+      handle: () => of(mockUser.comments),
     } as CallHandler<any>;
 
     const result = interceptor.intercept(context, mockCallHandler);
@@ -63,12 +63,12 @@ describe('TopicCommentsInterceptor', () => {
         expect(comment).toHaveProperty('user.id');
         expect(comment).toHaveProperty('user.name');
 
-        expect(comment.id).toBe(mockComment.id);
-        expect(comment.content).toBe(mockComment.content);
-        expect(comment.topic.id).toBe(mockComment.topic.id);
-        expect(comment.topic.title).toBe(mockComment.topic.title);
-        expect(comment.user.id).toBe(mockComment.user.id);
-        expect(comment.user.name).toBe(mockComment.user.name);
+        expect(comment.id).toBe(mockUser.comments[0].id);
+        expect(comment.content).toBe(mockUser.comments[0].content);
+        expect(comment.topic.id).toBe(mockUser.comments[0].topic.id);
+        expect(comment.topic.title).toBe(mockUser.comments[0].topic.title);
+        expect(comment.user.id).toBe(mockUser.comments[0].user.id);
+        expect(comment.user.name).toBe(mockUser.comments[0].user.name);
       });
 
       done();

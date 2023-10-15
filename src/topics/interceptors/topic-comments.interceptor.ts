@@ -7,7 +7,8 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Topic } from '../entities/topic.entity';
+import { Comment } from '@/comments/entities/comment.entity';
+
 import { TopicsUtils } from '../topics.utils';
 
 @Injectable()
@@ -20,6 +21,10 @@ export class TopicCommentsInterceptor implements NestInterceptor {
   ): Observable<any> {
     return next
       .handle()
-      .pipe(map((topic: Topic) => this.topicsUtils.getComments(topic)));
+      .pipe(
+        map((comments: Comment[]) =>
+          this.topicsUtils.transformComments(comments),
+        ),
+      );
   }
 }

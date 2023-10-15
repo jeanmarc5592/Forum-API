@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CommentsUtils } from '@/comments/comments.utils';
+import { Comment } from '@/comments/entities/comment.entity';
 import { HttpUtils } from '@/utils/http.utils';
 import { AbilityModule } from '@ability/ability.module';
 import { SubCategoriesModule } from '@categories/sub-categories/sub-categories.module';
@@ -15,7 +16,7 @@ import { TopicsUtils } from './topics.utils';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Topic]),
+    TypeOrmModule.forFeature([Topic, Comment]),
     SubCategoriesModule,
     UsersModule,
     AbilityModule,

@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsNumber } from 'class-validator';
 
-export class UsersQueryDTO {
+export class PaginationQueryDTO {
   @IsNumber()
   @Transform((obj) => parseInt(obj.value))
   page: number;

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { Comment } from '@/comments/entities/comment.entity';
 import { HttpUtils } from '@/utils/http.utils';
 import { AbilityModule } from '@ability/ability.module';
 import { AccessTokenStrategy } from '@auth/strategies/access-token.strategy';
@@ -13,7 +14,11 @@ import { UsersService } from './users.service';
 import { UsersUtils } from './users.utils';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), AbilityModule, ConfigModule],
+  imports: [
+    TypeOrmModule.forFeature([User, Comment]),
+    AbilityModule,
+    ConfigModule,
+  ],
   controllers: [UsersController],
   providers: [
     UsersService,

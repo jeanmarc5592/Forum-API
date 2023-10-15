@@ -34,8 +34,8 @@ describe('CommentsUtils', () => {
 
     expect(result.id).toBe(mockTransformedComment.id);
     expect(result.content).toBe(mockTransformedComment.content);
-    expect(result.user.id).toBe(mockTransformedComment.user.id);
-    expect(result.user.name).toBe(mockTransformedComment.user.name);
+    expect(result.user?.id).toBe(mockTransformedComment.user?.id);
+    expect(result.user?.name).toBe(mockTransformedComment.user?.name);
     expect(result.created_at).toBe(mockTransformedComment.created_at);
     expect(result.updated_at).toBe(mockTransformedComment.updated_at);
   });

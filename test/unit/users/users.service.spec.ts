@@ -3,28 +3,37 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MockType } from 'test/test.types';
+import { Comment } from '@/comments/entities/comment.entity';
 import { User } from '@users/entities/user.entity';
 import { UsersService } from '@users/users.service';
 import { CryptographyUtils } from '@utils/cryptography.utils';
+import { MockType } from 'test/test.types';
 
 import {
   mockUser,
   mockCreateUser,
   MockUsersRepository,
 } from './fixtures/users.fixtures';
+import { MockCommentsRespository } from '../comments/fixtures/comments.fixtures';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let repositoryMock: MockType<Repository<User>>;
+  let userRepositoryMock: MockType<Repository<User>>;
+  let commentRepositoryMock: MockType<Repository<Comment>>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService, MockUsersRepository, CryptographyUtils],
+      providers: [
+        UsersService,
+        MockUsersRepository,
+        CryptographyUtils,
+        MockCommentsRespository,
+      ],
     }).compile();
 
     service = module.get<UsersService>(UsersService);
-    repositoryMock = module.get(getRepositoryToken(User));
+    userRepositoryMock = module.get(getRepositoryToken(User));
+    commentRepositoryMock = module.get(getRepositoryToken(Comment));
   });
 
   it('should be defined', () => {
@@ -33,7 +42,7 @@ describe('UsersService', () => {
 
   describe('getAll', () => {
     it('should return a list of users', async () => {
-      repositoryMock.find?.mockReturnValue([mockUser]);
+      userRepositoryMock.find?.mockReturnValue([mockUser]);
 
       const users = await service.getAll(1, 1);
 
@@ -41,7 +50,7 @@ describe('UsersService', () => {
     });
 
     it('should return an empty list', async () => {
-      repositoryMock.find?.mockReturnValue([]);
+      userRepositoryMock.find?.mockReturnValue([]);
 
       const users = await service.getAll(1, 1);
 
@@ -51,7 +60,7 @@ describe('UsersService', () => {
 
   describe('getById', () => {
     it('should return a single user', async () => {
-      repositoryMock.findOneBy?.mockReturnValue(mockUser);
+      userRepositoryMock.findOneBy?.mockReturnValue(mockUser);
 
       const user = await service.getById(mockUser.id);
 
@@ -66,7 +75,7 @@ describe('UsersService', () => {
     it('should throw a NotFoundException if a user was not found', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      repositoryMock.findOneBy?.mockReturnValue(null);
+      userRepositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.getById('3234123423')).rejects.toThrow(
         NotFoundException,
@@ -76,7 +85,7 @@ describe('UsersService', () => {
 
   describe('getByEmail', () => {
     it('should return a single user', async () => {
-      repositoryMock.findOneBy?.mockReturnValue(mockUser);
+      userRepositoryMock.findOneBy?.mockReturnValue(mockUser);
 
       const user = await service.getByEmail(mockUser.email);
 
@@ -91,7 +100,7 @@ describe('UsersService', () => {
     it('should throw a NotFoundException if a user was not found', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      repositoryMock.findOneBy?.mockReturnValue(null);
+      userRepositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.getByEmail('3234123423')).rejects.toThrow(
         NotFoundException,
@@ -101,7 +110,7 @@ describe('UsersService', () => {
 
   describe('getTopics', () => {
     it('should return a single user with topics', async () => {
-      repositoryMock.createQueryBuilder?.mockReturnValue({
+      userRepositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getOne: jest.fn().mockResolvedValue(mockUser),
@@ -115,7 +124,7 @@ describe('UsersService', () => {
     it('should return an empty list for topics', async () => {
       Object.assign(mockUser, { topics: [] });
 
-      repositoryMock.createQueryBuilder?.mockReturnValue({
+      userRepositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getOne: jest.fn().mockResolvedValue(mockUser),
@@ -127,7 +136,7 @@ describe('UsersService', () => {
     });
 
     it('should throw a NotFoundExpception if user was not found', async () => {
-      repositoryMock.createQueryBuilder?.mockReturnValue({
+      userRepositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getOne: jest.fn().mockResolvedValue(null),
@@ -140,26 +149,29 @@ describe('UsersService', () => {
   });
 
   describe('getComments', () => {
-    it('should return a single user with comments', async () => {
-      repositoryMock.createQueryBuilder?.mockReturnValue({
+    it('should return the comments from a user', async () => {
+      commentRepositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
-        getOne: jest.fn().mockResolvedValue(mockUser),
+        orderBy: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
+        take: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue(mockUser.comments),
       });
 
-      const user = await service.getComments(mockUser.id);
+      const comments = await service.getComments(mockUser.id, 10, 1);
 
-      expect(user.comments).toHaveLength(mockUser.comments.length);
+      expect(comments).toHaveLength(mockUser.comments.length);
     });
 
     it('should throw a NotFoundExpception if user was not found', async () => {
-      repositoryMock.createQueryBuilder?.mockReturnValue({
+      userRepositoryMock.createQueryBuilder?.mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getOne: jest.fn().mockResolvedValue(null),
       });
 
-      await expect(service.getComments('12334')).rejects.toThrow(
+      await expect(service.getComments('12334', 10, 1)).rejects.toThrow(
         NotFoundException,
       );
     });
@@ -169,8 +181,8 @@ describe('UsersService', () => {
     it('should update an existing user', async () => {
       const updates = { name: 'Updated Name' };
 
-      repositoryMock.findOneBy?.mockReturnValue(mockUser);
-      repositoryMock.save?.mockReturnValue({ ...mockUser, ...updates });
+      userRepositoryMock.findOneBy?.mockReturnValue(mockUser);
+      userRepositoryMock.save?.mockReturnValue({ ...mockUser, ...updates });
 
       const user = await service.update(updates, '1');
 
@@ -181,7 +193,7 @@ describe('UsersService', () => {
     it('should throw a NotFoundException if a user was not found', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      repositoryMock.findOneBy?.mockReturnValue(null);
+      userRepositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.update({}, '3234123423')).rejects.toThrow(
         NotFoundException,
@@ -191,8 +203,8 @@ describe('UsersService', () => {
 
   describe('delete', () => {
     it('should delete an existing user', async () => {
-      repositoryMock.findOneBy?.mockReturnValue(mockUser);
-      repositoryMock.delete?.mockReturnValue(mockUser);
+      userRepositoryMock.findOneBy?.mockReturnValue(mockUser);
+      userRepositoryMock.delete?.mockReturnValue(mockUser);
 
       const user = await service.delete('1');
 
@@ -207,7 +219,7 @@ describe('UsersService', () => {
     it('should throw a NotFoundException if a user was not found', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      repositoryMock.findOneBy?.mockReturnValue(null);
+      userRepositoryMock.findOneBy?.mockReturnValue(null);
 
       await expect(service.delete('3234123423')).rejects.toThrow(
         NotFoundException,
@@ -219,9 +231,9 @@ describe('UsersService', () => {
     it('should create a new user', async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      repositoryMock.findOne?.mockReturnValue(null);
-      repositoryMock.create?.mockReturnValue(mockCreateUser);
-      repositoryMock.save?.mockReturnValue({
+      userRepositoryMock.findOne?.mockReturnValue(null);
+      userRepositoryMock.create?.mockReturnValue(mockCreateUser);
+      userRepositoryMock.save?.mockReturnValue({
         ...mockCreateUser,
         password: 'Hash123!',
       });
@@ -237,7 +249,7 @@ describe('UsersService', () => {
     });
 
     it('should throw a BadRequestException if a user already exists', async () => {
-      repositoryMock.findOne?.mockReturnValue(mockUser);
+      userRepositoryMock.findOne?.mockReturnValue(mockUser);
 
       await expect(service.create(mockCreateUser)).rejects.toThrow(
         BadRequestException,

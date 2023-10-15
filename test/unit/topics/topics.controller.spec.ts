@@ -19,7 +19,6 @@ import {
 import { MockTopicsUtils } from './fixtures/topics.utils.fixtures';
 import { MockAbilityService } from '../ability/fixtures/ability.fixtures';
 import { mockRequestWithUser } from '../auth/fixtures/auth.fixtures';
-import { mockComment } from '../comments/fixtures/comments.fixtures';
 import { MockHttpUtils } from '../utils/fixtures/http.utils.fixtures';
 
 describe('TopicsController', () => {
@@ -72,15 +71,17 @@ describe('TopicsController', () => {
   });
 
   describe('getComments', () => {
-    it('should return the topic with its comments', async () => {
-      mockTopic.comments = [mockComment];
+    it('should return the comments of the topic', async () => {
+      jest
+        .spyOn(topicsService, 'getComments')
+        .mockResolvedValue(mockTopic.comments);
 
-      jest.spyOn(topicsService, 'getComments').mockResolvedValue(mockTopic);
+      const comments = await controller.getComments('1', {
+        limit: 10,
+        page: 1,
+      });
 
-      const topic = await controller.getComments('1');
-
-      expect(topic).toHaveProperty('comments');
-      expect(topic.comments).toEqual([mockComment]);
+      expect(comments).toEqual(mockTopic.comments);
     });
   });
 
