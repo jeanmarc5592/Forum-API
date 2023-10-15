@@ -33,7 +33,7 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
 
-  build:
+  build-and-push:
     needs: lint-and-test
     runs-on: ubuntu-latest
 
@@ -43,13 +43,27 @@ jobs:
       - name: Checkout respository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Configure meta data
+        id: docker_meta
+        uses: docker/metadata-action@v3
         with:
-          node-version: '14'
+          images: jonny5592/forum-api
 
-      - name: Install dependencies
-        run: npm install
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        if: github.event_name != 'pull_request'
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }} 
 
-      - name: Build Nest.js app
-        run: npm run build 
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with: 
+          context: .
+          file: ./Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+
+  # deploy:
+    # TO BE IMPLEMENTED
