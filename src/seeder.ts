@@ -23,11 +23,8 @@ seeder({
           username: config.get<string>('database.user'),
           password: config.get<string>('database.password'),
           database: config.get<string>('database.name'),
-          ssl: process.env.NODE_EV === 'production ? true : false',
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          migrations: ['migrations/*.js'],
           synchronize: true,
-          migrationsRun: true,
         };
       },
     }),
