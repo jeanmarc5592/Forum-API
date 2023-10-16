@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { Factory } from 'nestjs-seeder';
 import {
   Entity,
   Column,
@@ -22,18 +23,22 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Factory('Admin')
   @Column({ nullable: true })
   @Unique(['name'])
   name: string;
 
+  @Factory((faker) => faker?.number.int({ min: 16, max: 90 }))
   @Column({ nullable: true })
   age: string;
 
+  @Factory('admin@forum.com')
   @Column()
   @Unique(['email'])
   @Exclude()
   email: string;
 
+  @Factory('password')
   @Column()
   @Exclude()
   password: string;
@@ -45,6 +50,7 @@ export class User {
   @Exclude()
   refreshToken: string;
 
+  @Factory(Roles.ADMIN)
   @Column({ type: 'enum', enum: Roles, default: Roles.USER })
   role: Roles;
 
