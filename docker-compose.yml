@@ -9,7 +9,6 @@ services:
       - ./:/usr/src/app
     ports:
       - '3000:3000'
-      - '35729:35729'
     depends_on:
       - db
     command: "npm run start:dev"
