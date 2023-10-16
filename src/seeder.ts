@@ -18,7 +18,7 @@ seeder({
       useFactory: (config: ConfigService) => {
         return {
           type: config.get<any>('database.type'),
-          host: config.get<string>('database.host'),
+          host: '127.0.0.1',
           port: config.get<string>('database.port'),
           username: config.get<string>('database.user'),
           password: config.get<string>('database.password'),
