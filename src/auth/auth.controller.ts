@@ -1,4 +1,5 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
 
 import { CreateUserDTO } from '@users/dtos/create-user.dto';
 
@@ -14,8 +15,20 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  signin(@Req() req: { user: RequestUser }) {
-    return this.authService.signin(req.user);
+  async signin(
+    @Req() req: { user: RequestUser },
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const tokens = await this.authService.signin(req.user);
+
+    res.cookie('accessToken', tokens.accessToken, {
+      secure: true,
+      httpOnly: true,
+    });
+    res.cookie('refreshToken', tokens.refreshToken, {
+      secure: true,
+      httpOnly: true,
+    });
   }
 
   @Post('signup')
