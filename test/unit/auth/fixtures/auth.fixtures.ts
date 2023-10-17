@@ -38,4 +38,5 @@ export const mockRequestWithUser = {
 
 export const mockResponse = {
   cookie: jest.fn(),
+  clearCookie: jest.fn(),
 } as unknown as Response;

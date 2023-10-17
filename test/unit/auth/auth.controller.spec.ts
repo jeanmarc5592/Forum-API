@@ -93,15 +93,7 @@ describe('AuthController', () => {
     const user = { id: '1', name: 'User', email: 'user@example.com' };
     await controller.signout({ user }, mockResponse);
 
-    expect(mockResponse.cookie).toHaveBeenCalledWith(Tokens.ACCESS_TOKEN, '', {
-      expires: new Date(0),
-      secure: true,
-      httpOnly: true,
-    });
-    expect(mockResponse.cookie).toHaveBeenCalledWith(Tokens.REFRESH_TOKEN, '', {
-      expires: new Date(0),
-      secure: true,
-      httpOnly: true,
-    });
+    expect(mockResponse.clearCookie).toHaveBeenCalledWith(Tokens.ACCESS_TOKEN);
+    expect(mockResponse.clearCookie).toHaveBeenCalledWith(Tokens.REFRESH_TOKEN);
   });
 });

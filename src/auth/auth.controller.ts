@@ -73,15 +73,7 @@ export class AuthController {
   async signout(@Req() req: any, @Res({ passthrough: true }) res: Response) {
     await this.authService.signout(req.user);
 
-    res.cookie(Tokens.ACCESS_TOKEN, '', {
-      expires: new Date(0),
-      secure: true,
-      httpOnly: true,
-    });
-    res.cookie(Tokens.REFRESH_TOKEN, '', {
-      expires: new Date(0),
-      secure: true,
-      httpOnly: true,
-    });
+    res.clearCookie(Tokens.ACCESS_TOKEN);
+    res.clearCookie(Tokens.REFRESH_TOKEN);
   }
 }
