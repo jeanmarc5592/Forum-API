@@ -1,9 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { Tokens } from '@/auth/auth.types';
 import { AuthController } from '@auth/auth.controller';
 import { AuthService } from '@auth/auth.service';
 
-import { MockAuthService, mockTokens } from './fixtures/auth.fixtures';
+import {
+  MockAuthService,
+  mockResponse,
+  mockTokens,
+} from './fixtures/auth.fixtures';
 import { mockUser, mockCreateUser } from '../users/fixtures/users.fixtures';
 
 describe('AuthController', () => {
@@ -28,13 +33,18 @@ describe('AuthController', () => {
     it('should return the correct token pair', async () => {
       jest.spyOn(authService, 'signin').mockResolvedValue(mockTokens);
 
-      const tokens = await controller.signin({ user: mockUser });
+      await controller.signin({ user: mockUser }, mockResponse);
 
-      expect(tokens).toHaveProperty('accessToken');
-      expect(tokens.accessToken).toBe(mockTokens.accessToken);
-
-      expect(tokens).toHaveProperty('refreshToken');
-      expect(tokens.refreshToken).toBe(mockTokens.refreshToken);
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        Tokens.ACCESS_TOKEN,
+        mockTokens.accessToken,
+        { secure: true, httpOnly: true },
+      );
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        Tokens.REFRESH_TOKEN,
+        mockTokens.refreshToken,
+        { secure: true, httpOnly: true },
+      );
     });
   });
 
@@ -42,13 +52,18 @@ describe('AuthController', () => {
     it('should return the correct token pair', async () => {
       jest.spyOn(authService, 'signup').mockResolvedValue(mockTokens);
 
-      const tokens = await controller.signup(mockCreateUser);
+      await controller.signup(mockCreateUser, mockResponse);
 
-      expect(tokens).toHaveProperty('accessToken');
-      expect(tokens.accessToken).toBe(mockTokens.accessToken);
-
-      expect(tokens).toHaveProperty('refreshToken');
-      expect(tokens.refreshToken).toBe(mockTokens.refreshToken);
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        Tokens.ACCESS_TOKEN,
+        mockTokens.accessToken,
+        { secure: true, httpOnly: true },
+      );
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        Tokens.REFRESH_TOKEN,
+        mockTokens.refreshToken,
+        { secure: true, httpOnly: true },
+      );
     });
   });
 
@@ -57,22 +72,36 @@ describe('AuthController', () => {
       jest.spyOn(authService, 'refresh').mockResolvedValue(mockTokens);
 
       const user = { id: '1', refreshToken: 'refresh-token' };
-      const tokens = await controller.refresh({ user });
+      await controller.refresh({ user }, mockResponse);
 
-      expect(tokens).toHaveProperty('accessToken');
-      expect(tokens.accessToken).toBe(mockTokens.accessToken);
-
-      expect(tokens).toHaveProperty('refreshToken');
-      expect(tokens.refreshToken).toBe(mockTokens.refreshToken);
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        Tokens.ACCESS_TOKEN,
+        mockTokens.accessToken,
+        { secure: true, httpOnly: true },
+      );
+      expect(mockResponse.cookie).toHaveBeenCalledWith(
+        Tokens.REFRESH_TOKEN,
+        mockTokens.refreshToken,
+        { secure: true, httpOnly: true },
+      );
     });
   });
 
-  it('should return OK after successful signout', async () => {
+  it('should empty tokens after successfull signout', async () => {
     jest.spyOn(authService, 'signout').mockResolvedValue('OK');
 
     const user = { id: '1', name: 'User', email: 'user@example.com' };
-    const result = await controller.signout({ user });
+    await controller.signout({ user }, mockResponse);
 
-    expect(result).toBe('OK');
+    expect(mockResponse.cookie).toHaveBeenCalledWith(Tokens.ACCESS_TOKEN, '', {
+      expires: new Date(0),
+      secure: true,
+      httpOnly: true,
+    });
+    expect(mockResponse.cookie).toHaveBeenCalledWith(Tokens.REFRESH_TOKEN, '', {
+      expires: new Date(0),
+      secure: true,
+      httpOnly: true,
+    });
   });
 });

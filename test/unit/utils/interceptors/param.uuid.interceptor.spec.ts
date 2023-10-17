@@ -11,6 +11,7 @@ describe('ParamUUIDInterceptor', () => {
   beforeEach(async () => {
     httpUtils = {
       checkIfParamIsUuid: jest.fn(),
+      extractCookieFromRequest: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

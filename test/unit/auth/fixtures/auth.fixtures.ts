@@ -1,8 +1,9 @@
 import { Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 import { AuthService } from '@auth/auth.service';
-import { Roles, RequestUser } from '@auth/auth.types';
+import { Roles, RequestUser, TokensMap } from '@auth/auth.types';
 
 export const MockAuthService: Provider = {
   provide: AuthService,
@@ -14,7 +15,7 @@ export const MockAuthService: Provider = {
   },
 };
 
-export const mockTokens = {
+export const mockTokens: TokensMap = {
   accessToken: 'access-token',
   refreshToken: 'refresh-token',
 };
@@ -34,3 +35,7 @@ export const mockRequestWithUser = {
     role: Roles.USER,
   } as RequestUser,
 };
+
+export const mockResponse = {
+  cookie: jest.fn(),
+} as unknown as Response;

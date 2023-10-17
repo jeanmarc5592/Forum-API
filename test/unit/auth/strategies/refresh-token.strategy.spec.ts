@@ -2,8 +2,10 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
 
-import { JwtPayload } from '@auth/auth.types';
+import { HttpUtils } from '@/utils/http.utils';
 import { RefreshTokenStrategy } from '@auth/strategies/refresh-token.strategy';
+
+import { mockTokens } from '../fixtures/auth.fixtures';
 
 class MockConfigService extends ConfigService {
   get(key: string) {
@@ -17,10 +19,16 @@ class MockConfigService extends ConfigService {
 
 describe('RefreshTokenStrategy', () => {
   let strategy: RefreshTokenStrategy;
+  let httpUtils: HttpUtils;
 
   beforeEach(() => {
+    httpUtils = {
+      checkIfParamIsUuid: jest.fn(),
+      extractCookieFromRequest: jest.fn(),
+    };
     const mockConfigService = new MockConfigService();
-    strategy = new RefreshTokenStrategy(mockConfigService);
+
+    strategy = new RefreshTokenStrategy(mockConfigService, httpUtils);
   });
 
   it('should create an instance of AccessTokenStrategy', () => {
@@ -29,17 +37,17 @@ describe('RefreshTokenStrategy', () => {
   });
 
   it('should validate the request and payload', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const req = { get: jest.fn(() => 'Bearer token') } as Request;
-    const payload = { sub: 'user123' } as JwtPayload;
+    const req = {} as Request;
+    const payload = { sub: '12345' };
 
-    const validatedData = strategy.validate(req, payload);
+    const refreshToken = mockTokens.refreshToken;
 
-    expect(req.get).toHaveBeenCalledWith('Authorization');
-    expect(validatedData).toEqual({
-      id: 'user123',
-      refreshToken: 'token',
-    });
+    jest
+      .spyOn(httpUtils, 'extractCookieFromRequest')
+      .mockReturnValue(refreshToken);
+
+    const result = strategy.validate(req, payload);
+
+    expect(result).toEqual({ id: '12345', refreshToken });
   });
 });

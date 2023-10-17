@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Strategy } from 'passport-jwt';
 
+import { HttpUtils } from '@/utils/http.utils';
 import { AccessTokenStrategy } from '@auth/strategies/access-token.strategy';
 
 class MockConfigService extends ConfigService {
@@ -15,10 +16,16 @@ class MockConfigService extends ConfigService {
 
 describe('AccessTokenStrategy', () => {
   let strategy: AccessTokenStrategy;
+  let httpUtils: HttpUtils;
 
   beforeEach(() => {
+    httpUtils = {
+      checkIfParamIsUuid: jest.fn(),
+      extractCookieFromRequest: jest.fn(),
+    };
     const mockConfigService = new MockConfigService();
-    strategy = new AccessTokenStrategy(mockConfigService);
+
+    strategy = new AccessTokenStrategy(mockConfigService, httpUtils);
   });
 
   it('should create an instance of AccessTokenStrategy', () => {
