@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Request } from 'express';
 
 import { HttpUtils } from '@/utils/http.utils';
 
@@ -63,6 +64,40 @@ describe('HttpUtils', () => {
       );
 
       expect(spy).not.toHaveReturned();
+    });
+  });
+
+  describe('extractCookieFromRequest', () => {
+    it('should return the extracted cookie from the request', () => {
+      const cookieName = 'foo';
+      const cookieValue = 'bar';
+
+      const req = { cookies: { [cookieName]: cookieValue } } as Request;
+
+      const cookie = httpUtils.extractCookieFromRequest(req, cookieName);
+
+      expect(cookie).toBe(cookieValue);
+    });
+
+    it('should return an empty string if there is no request object', () => {
+      const req = undefined;
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const cookie = httpUtils.extractCookieFromRequest(req, 'notACookie');
+
+      expect(cookie).toBe('');
+    });
+
+    it('should return undefined if the cookie is not in the request', () => {
+      const cookieName = 'foo';
+      const cookieValue = 'bar';
+
+      const req = { cookies: { [cookieName]: cookieValue } } as Request;
+
+      const cookie = httpUtils.extractCookieFromRequest(req, 'notACookie');
+
+      expect(cookie).toBe(undefined);
     });
   });
 });

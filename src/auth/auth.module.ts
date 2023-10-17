@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
+import { HttpUtils } from '@/utils/http.utils';
 import { UsersModule } from '@users/users.module';
 import { CryptographyUtils } from '@utils/cryptography.utils';
 
@@ -20,6 +21,7 @@ import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
     AccessTokenStrategy,
     RefreshTokenStrategy,
     CryptographyUtils,
+    HttpUtils,
   ],
   exports: [AuthService],
 })

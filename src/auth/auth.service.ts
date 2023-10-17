@@ -7,7 +7,7 @@ import { User } from '@users/entities/user.entity';
 import { UsersService } from '@users/users.service';
 import { CryptographyUtils } from '@utils/cryptography.utils';
 
-import { JwtPayload, RequestUser } from './auth.types';
+import { JwtPayload, RequestUser, TokensMap } from './auth.types';
 import { LoginDTO } from './dtos/login.dto';
 
 @Injectable()
@@ -87,6 +87,11 @@ export class AuthService {
   }
 
   private generateTokens(user: RequestUser) {
+    const tokens: TokensMap = {
+      accessToken: '',
+      refreshToken: '',
+    };
+
     const accessTokenPayload: JwtPayload = {
       sub: user.id,
       name: user.name,
@@ -98,16 +103,16 @@ export class AuthService {
       sub: user.id,
     };
 
-    const accessToken = this.jwtService.sign(accessTokenPayload, {
+    tokens.accessToken = this.jwtService.sign(accessTokenPayload, {
       secret: this.configService.get<string>('jwt.access.secret'),
       expiresIn: this.configService.get<string>('jwt.access.expiration'),
     });
 
-    const refreshToken = this.jwtService.sign(refreshTokenPayload, {
+    tokens.refreshToken = this.jwtService.sign(refreshTokenPayload, {
       secret: this.configService.get<string>('jwt.refresh.secret'),
       expiresIn: this.configService.get<string>('jwt.refresh.expiration'),
     });
 
-    return { accessToken, refreshToken };
+    return tokens;
   }
 }

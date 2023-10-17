@@ -6,5 +6,6 @@ export const MockHttpUtils: Provider = {
   provide: HttpUtils,
   useValue: {
     checkIfParamIsUuid: jest.fn(),
+    extractCookieFromRequest: jest.fn(),
   },
 };
