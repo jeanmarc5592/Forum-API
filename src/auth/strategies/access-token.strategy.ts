@@ -6,7 +6,7 @@ import { Strategy } from 'passport-jwt';
 
 import { HttpUtils } from '@/utils/http.utils';
 
-import { JwtPayload, RequestUser } from '../auth.types';
+import { JwtPayload, RequestUser, Tokens } from '../auth.types';
 
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -16,7 +16,7 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   ) {
     super({
       jwtFromRequest: (req: Request) => {
-        return httpUtils.extractCookieFromRequest(req, 'accessToken');
+        return httpUtils.extractCookieFromRequest(req, Tokens.ACCESS_TOKEN);
       },
       secretOrKey: configService.get<string>('jwt.access.secret'),
       ignoreExpiration: false,

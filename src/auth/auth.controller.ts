@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { CreateUserDTO } from '@users/dtos/create-user.dto';
 
 import { AuthService } from './auth.service';
-import { RequestUser } from './auth.types';
+import { RequestUser, Tokens } from './auth.types';
 import { AccessTokenGuard } from './guards/access-token.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
@@ -21,11 +21,11 @@ export class AuthController {
   ) {
     const tokens = await this.authService.signin(req.user);
 
-    res.cookie('accessToken', tokens.accessToken, {
+    res.cookie(Tokens.ACCESS_TOKEN, tokens.accessToken, {
       secure: true,
       httpOnly: true,
     });
-    res.cookie('refreshToken', tokens.refreshToken, {
+    res.cookie(Tokens.REFRESH_TOKEN, tokens.refreshToken, {
       secure: true,
       httpOnly: true,
     });

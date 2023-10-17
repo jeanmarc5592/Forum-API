@@ -17,3 +17,12 @@ export type RequestUser = {
   name?: string;
   role?: Roles;
 };
+
+export enum Tokens {
+  ACCESS_TOKEN = 'accessToken',
+  REFRESH_TOKEN = 'refreshToken',
+}
+
+export type TokensMap = {
+  [K in Tokens]: string;
+};
