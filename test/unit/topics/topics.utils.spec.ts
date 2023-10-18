@@ -26,7 +26,8 @@ describe('TopicsUtils', () => {
     expect(result).toHaveProperty('id');
     expect(result).toHaveProperty('title');
     expect(result).toHaveProperty('content');
-    expect(result).toHaveProperty('userId');
+    expect(result).toHaveProperty('user.id');
+    expect(result).toHaveProperty('user.name');
     expect(result).toHaveProperty('subCategoryId');
     expect(result).toHaveProperty('closed');
     expect(result).toHaveProperty('created_at');
@@ -34,7 +35,8 @@ describe('TopicsUtils', () => {
     expect(result.id).toBe(mockTransformedTopic.id);
     expect(result.title).toBe(mockTransformedTopic.title);
     expect(result.content).toBe(mockTransformedTopic.content);
-    expect(result.userId).toBe(mockTransformedTopic.userId);
+    expect(result.user.id).toBe(mockTransformedTopic.user.id);
+    expect(result.user.name).toBe(mockTransformedTopic.user.name);
     expect(result.subCategoryId).toBe(mockTransformedTopic.subCategoryId);
     expect(result.closed).toBe(mockTransformedTopic.closed);
   });
@@ -47,15 +49,15 @@ describe('TopicsUtils', () => {
     result.forEach((comment) => {
       expect(comment).toHaveProperty('id');
       expect(comment).toHaveProperty('content');
-      expect(comment).toHaveProperty('topic.id');
-      expect(comment).toHaveProperty('topic.title');
+      expect(comment).toHaveProperty('user.id');
+      expect(comment).toHaveProperty('user.name');
       expect(comment).toHaveProperty('created_at');
       expect(comment).toHaveProperty('updated_at');
 
       expect(comment.id).toBe(mockTopic.comments[0].id);
       expect(comment.content).toBe(mockTopic.comments[0].content);
-      expect(comment.topic?.id).toBe(mockTopic.comments[0].topic.id);
-      expect(comment.topic?.title).toBe(mockTopic.comments[0].topic.title);
+      expect(comment.user?.id).toBe(mockTopic.comments[0].user.id);
+      expect(comment.user?.name).toBe(mockTopic.comments[0].user.name);
       expect(comment.created_at).toBe(mockTopic.comments[0].created_at);
       expect(comment.updated_at).toBe(mockTopic.comments[0].updated_at);
     });
