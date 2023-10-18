@@ -96,8 +96,6 @@ export class TopicsService {
       user,
     });
 
-    // TODO: Do not return all user and subcategory information
-
     return this.topicsRepository.save(newTopic);
   }
 
