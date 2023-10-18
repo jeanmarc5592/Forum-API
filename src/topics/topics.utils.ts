@@ -13,7 +13,10 @@ export class TopicsUtils {
       id: topic.id,
       title: topic.title,
       content: topic.content,
-      userId: topic.user.id,
+      user: {
+        id: topic.user.id,
+        name: topic.user.name,
+      },
       subCategoryId: topic.subCategory.id,
       closed: topic.closed,
       created_at: topic.created_at,
