@@ -31,9 +31,9 @@ export class TopicsUtils {
         content: comment.content,
         created_at: comment.created_at,
         updated_at: comment.updated_at,
-        topic: {
-          id: comment.topic.id,
-          title: comment.topic.title,
+        user: {
+          id: comment.user.id,
+          name: comment.user.name,
         },
       };
     });
