@@ -57,7 +57,8 @@ describe('TopicCollectionInterceptor', () => {
       expect(topics[0]).toHaveProperty('id');
       expect(topics[0]).toHaveProperty('title');
       expect(topics[0]).toHaveProperty('content');
-      expect(topics[0]).toHaveProperty('userId');
+      expect(topics[0]).toHaveProperty('user.id');
+      expect(topics[0]).toHaveProperty('user.name');
       expect(topics[0]).toHaveProperty('subCategoryId');
       expect(topics[0]).toHaveProperty('closed');
       expect(topics[0]).toHaveProperty('created_at');
@@ -65,7 +66,8 @@ describe('TopicCollectionInterceptor', () => {
       expect(topics[0].id).toBe(mockTransformedTopic.id);
       expect(topics[0].title).toBe(mockTransformedTopic.title);
       expect(topics[0].content).toBe(mockTransformedTopic.content);
-      expect(topics[0].userId).toBe(mockTransformedTopic.userId);
+      expect(topics[0].user.id).toBe(mockTransformedTopic.user.id);
+      expect(topics[0].user.name).toBe(mockTransformedTopic.user.name);
       expect(topics[0].subCategoryId).toBe(mockTransformedTopic.subCategoryId);
       expect(topics[0].closed).toBe(mockTransformedTopic.closed);
       done();

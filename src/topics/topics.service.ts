@@ -54,6 +54,7 @@ export class TopicsService {
     const comments = await this.commentsRepository
       .createQueryBuilder('comment')
       .leftJoinAndSelect('comment.topic', 'topic')
+      .leftJoinAndSelect('comment.user', 'user')
       .where('topic.id = :id', { id })
       .orderBy('comment.created_at', 'DESC')
       .skip(skip)
@@ -95,8 +96,6 @@ export class TopicsService {
       subCategory,
       user,
     });
-
-    // TODO: Do not return all user and subcategory information
 
     return this.topicsRepository.save(newTopic);
   }

@@ -58,7 +58,10 @@ export const mockTransformedTopic = {
   id: mockTopic.id,
   title: mockTopic.title,
   content: mockTopic.content,
-  userId: mockTopic.user.id,
+  user: {
+    id: mockTopic.user.id,
+    name: mockTopic.user.name,
+  },
   subCategoryId: mockTopic.subCategory.id,
   closed: mockTopic.closed,
   created_at: mockTopic.created_at,
